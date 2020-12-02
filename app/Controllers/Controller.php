@@ -1,0 +1,19 @@
+<?php
+
+namespace Controller;
+
+class Controller{
+
+	const VIEW_FOLDER=__DIR__."/../Views/";
+
+	protected function renderHtml(string $view, array $vars){
+		extract($vars);
+		ob_start();
+		require(self::VIEW_FOLDER."layout/header.php");
+		require(self::VIEW_FOLDER.$view.".php");
+		require(self::VIEW_FOLDER."layout/footer.php");
+		$content = ob_get_clean();
+		return $content;
+	}
+	protected function renderJson(){}
+}
