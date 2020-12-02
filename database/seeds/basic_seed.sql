@@ -1,0 +1,1 @@
+insert into cities (name) values ("Bogotá"),("Medellín"),("Cali"),("Barranquilla"),("Pereira");
