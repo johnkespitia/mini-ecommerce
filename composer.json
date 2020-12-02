@@ -1,0 +1,11 @@
+{
+    "name": "johnk/mini_ecommerce",
+    "description": "Basic system for ecommerce administration",
+    "authors": [
+        {
+            "name": "Johnk Espitia",
+            "email": "jcespitia1@gmail.com"
+        }
+    ],
+    "require": {}
+}
