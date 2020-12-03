@@ -12,20 +12,4 @@ class CityModel extends Model{
 		    yield $row;
 		}
 	}
-
-	public function findBy(){
-		
-	}
-
-	public function create(){
-		
-	}
-
-	public function update(){
-		
-	}
-
-	public function delete(){
-		
-	}
 }

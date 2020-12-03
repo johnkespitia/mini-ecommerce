@@ -2,7 +2,9 @@
 mini-ecommerce test HHISELECTION
 
 ## Install
-Copie la carpeta del proyecto en el document root de su server y configure el virtual host para que la ruta apunte directamente a la carpeta public del proyecto:
+Copie la carpeta del proyecto en el document root de su server y ejecute el comando `composer install` 
+
+Configure el virtual host para que la ruta apunte directamente a la carpeta public del proyecto:
 
 Ejemplo de vhost:
 ```
@@ -141,3 +143,7 @@ Las vistas se almacenan en la carpeta `app/Views`, son archivos php simples y pu
 
 Todas las vistas renderizadas con `renderHtml` icluiran el header y el footer de la carpeta `app/Views/layout`, se recomienda crear una carpeta de views para cada controller
 
+
+## Public
+
+Es el entrypoint de la app y en esa carpeta se deben almacenar todos los archivos estáticos que requiera (assets, imagenes, js, css, etc)
