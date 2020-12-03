@@ -22,7 +22,7 @@ class OrderItemModel extends Model{
 
 	public function create($fields){
 		$sql = "INSERT INTO ".self::TABLE." (order_id, product_id, product_price_sold, product_status) values ({$fields["order_id"]},{$fields["product_id"]},{$fields["product_price_sold"]}, '{$fields["product_status"]}')";
-		return this->db->exec($sql);
+		return $this->db->exec($sql);
 	}
 
 	public function update($fields, $id){
@@ -33,12 +33,12 @@ class OrderItemModel extends Model{
 				product_id={$fields["product_id"]},
 				product_status='{$fields["product_status"]}',
 			WHERE id = {$id}";
-		return this->db->exec($sql);
+		return $this->db->exec($sql);
 	}
 
 	public function delete($id){
 		$sql = "DELETE FROM ".self::TABLE." 
 			WHERE id = {$id}";
-		return this->db->exec($sql);	
+		return $this->db->exec($sql);	
 	}
 }

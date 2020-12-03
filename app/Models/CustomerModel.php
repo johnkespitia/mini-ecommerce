@@ -22,7 +22,7 @@ class CustomerModel extends Model{
 
 	public function create($fields){
 		$sql = "INSERT INTO ".self::TABLE." (name, phone, address, city_id, password, email) values ('{$fields["name"]}','{$fields["phone"]}','{$fields["address"]}',{$fields["city_id"]},'{$fields["password"]}','{$fields["email"]}')";
-		return this->db->exec($sql);
+		return $this->db->exec($sql);
 	}
 
 	public function update($fields, $id){
@@ -35,12 +35,12 @@ class CustomerModel extends Model{
 				password='{$fields["password"]}', 
 				email='{$fields["email"]}'
 			WHERE id = {$id}";
-		return this->db->exec($sql);
+		return $this->db->exec($sql);
 	}
 
 	public function delete($id){
 		$sql = "DELETE FROM ".self::TABLE." 
 			WHERE id = {$id}";
-		return this->db->exec($sql);	
+		return $this->db->exec($sql);	
 	}
 }

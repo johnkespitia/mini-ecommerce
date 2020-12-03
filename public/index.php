@@ -19,7 +19,7 @@ try {
 	if(class_exists($controller)){
 		$handler = new $controller();
 		if(method_exists($handler, $action)){
-			echo $handler->$action();			
+			echo $handler->$action(["post"=>$_POST, "get"=>$_GET, "params"=>$url]);			
 			return;
 		}
 	}
