@@ -30,6 +30,9 @@
 		      <li class="nav-item">
 		        <a class="nav-link" href="/order/">Pedidos</a>
 		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="/report/">Reportes</a>
+		      </li>
 		    </ul>
 		  </div>
 		</nav>
