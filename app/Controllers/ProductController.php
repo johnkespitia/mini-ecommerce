@@ -24,7 +24,7 @@ class ProductController extends Controller{
 		$productModel = new ProductModel();
 		$product = $productModel->find($params["params"][2]);
 		if(empty($product)){
-			throw new \Exception("Cliente no encontrado", 404);
+			throw new \Exception("Producto no encontrado", 404);
 		}
 		$params["post"]["password"] = (!empty($params["post"]["password"]))?md5($params["post"]["password"].$params["post"]["email"]):$product["password"];
 		$productsList = $productModel->update($params["post"], $product["id"]);
@@ -36,7 +36,7 @@ class ProductController extends Controller{
 		$productModel = new ProductModel();
 		$product = $productModel->find($params["params"][2]);
 		if(empty($product)){
-			throw new \Exception("Cliente no encontrado", 404);
+			throw new \Exception("Producto no encontrado", 404);
 		}
 		return $this->renderHtml("product/edit", ["product"=>$product]);
 	}
@@ -45,7 +45,7 @@ class ProductController extends Controller{
 		$productModel = new ProductModel();
 		$product = $productModel->find($params["params"][2]);
 		if(empty($product)){
-			throw new \Exception("Cliente no encontrado", 404);
+			throw new \Exception("Producto no encontrado", 404);
 		}
 		$product = $productModel->delete($product["id"]);
 		header("location:/product/");

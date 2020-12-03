@@ -7,7 +7,7 @@ class CustomerController extends Controller{
 	public function indexAction($params = []){
 		$customerModel = new CustomerModel();
 		$customerList = $customerModel->all();
-		$cityModel = new cityModel();
+		$cityModel = new CityModel();
 		$cityList = [];
 		$genCity = $cityModel->all();
 		foreach ($genCity as $c) {
@@ -17,7 +17,7 @@ class CustomerController extends Controller{
 	}
 
 	public function newAction($params = []){
-		$cityModel = new cityModel();
+		$cityModel = new CityModel();
 		$cityList = $cityModel->all();
 		return $this->renderHtml("customer/new", ["cityList"=>$cityList]);
 	}
@@ -47,7 +47,7 @@ class CustomerController extends Controller{
 		if(empty($customer)){
 			throw new \Exception("Cliente no encontrado", 404);
 		}
-		$cityModel = new cityModel();
+		$cityModel = new CityModel();
 		$cityList = $cityModel->all();
 		return $this->renderHtml("customer/edit", ["cityList"=>$cityList, "customer"=>$customer]);
 	}
