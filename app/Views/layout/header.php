@@ -25,10 +25,10 @@
 		        <a class="nav-link" href="/customer/">Clientes</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="/products/">Productos</a>
+		        <a class="nav-link" href="/product/">Productos</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="/order/">Productos</a>
+		        <a class="nav-link" href="/order/">Pedidos</a>
 		      </li>
 		    </ul>
 		  </div>

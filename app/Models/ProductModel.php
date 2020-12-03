@@ -22,7 +22,7 @@ class ProductModel extends Model{
 
 	public function create($fields){
 		$sql = "INSERT INTO ".self::TABLE." (sku, name, price) values ('{$fields["sku"]}','{$fields["name"]}',{$fields["price"]})";
-		return this->db->exec($sql);
+		return $this->db->exec($sql);
 	}
 
 	public function update($fields, $id){
@@ -32,12 +32,12 @@ class ProductModel extends Model{
 				sku='{$fields["sku"]}', 
 				price={$fields["price"]}
 			WHERE id = {$id}";
-		return this->db->exec($sql);
+		return $this->db->exec($sql);
 	}
 
 	public function delete($id){
 		$sql = "DELETE FROM ".self::TABLE." 
 			WHERE id = {$id}";
-		return this->db->exec($sql);	
+		return $this->db->exec($sql);	
 	}
 }

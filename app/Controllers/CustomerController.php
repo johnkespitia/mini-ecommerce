@@ -17,8 +17,6 @@ class CustomerController extends Controller{
 	}
 
 	public function newAction($params = []){
-		$customerModel = new CustomerModel();
-		$customerList = $customerModel->all();
 		$cityModel = new cityModel();
 		$cityList = $cityModel->all();
 		return $this->renderHtml("customer/new", ["cityList"=>$cityList]);
