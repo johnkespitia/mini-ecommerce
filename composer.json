@@ -11,6 +11,9 @@
         "vlucas/phpdotenv": "^5.2"
     },
     "autoload": {
-    	"psr-4": {"Controller\\": "app/Controllers/"}
+    	"psr-4": {
+            "Controller\\": "app/Controllers/",
+            "Model\\": "app/Models/"
+        }
     }
 }

@@ -15,5 +15,10 @@ class Controller{
 		$content = ob_get_clean();
 		return $content;
 	}
-	protected function renderJson(){}
+	protected function renderJson(array $vars = []){
+		header('Content-Type: application/json');
+		return json_encode($vars);
+	}
+
+	
 }

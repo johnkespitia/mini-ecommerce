@@ -1,0 +1,1 @@
+<h1>Welcome to <?= $_ENV['SITE_NAME'] ?></h1>

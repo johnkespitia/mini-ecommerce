@@ -1,1 +1,1 @@
-<h1><?= $error??"nothing" ?></h1>
+<h1><?= $code ?> - <?= $error??"nothing" ?></h1>
