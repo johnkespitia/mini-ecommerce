@@ -40,4 +40,8 @@ class Model{
 		}
 		return $queryWhere;
 	}
+
+	public function getLastId(){
+		return $this->db->lastInsertId();
+	}
 }

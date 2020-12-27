@@ -13,12 +13,12 @@ class Try2Api {
 	/**
 	 * @var string
 	 */
-	private $authKey = "PUT YOUR API AUTH KEY HERE";
+	private $authKey = "HEDcdIco4FbBlviOB0fzsFP82JayagYHGgueQHzrR3g=";
 	
 	/**
 	 * @var string
 	 */
-	private $requestKey = "PUT YOUR API REQUEST KEY HERE";
+	private $requestKey = "Uo6KxOggs9Yq5gVK289MyA5u8hkrlp32FOIvRhigzkU=";
 	
 	/**
 	 * @var array
@@ -87,7 +87,7 @@ class Try2Api {
 	private function encrypt_xor($str, $key) {
 		$key = strval($key);
 		for($is=0;$is<strlen($str);$is++) {
-			$str[$is] = chr(ord($str[$is]) ^ ord($key{$is % strlen($key)}));
+			$str[$is] = chr(ord($str[$is]) ^ ord($key[$is % strlen($key)]));
 		}
 		return base64_encode($str);
 	}
@@ -103,7 +103,7 @@ class Try2Api {
 		$str = base64_decode($str);
 		$key = strval($key);
 		for($is=0;$is<strlen($str);$is++) {
-			$str[$is] = chr(ord($str[$is]) ^ ord($key{$is % strlen($key)}));
+			$str[$is] = chr(ord($str[$is]) ^ ord($key[$is % strlen($key)]));
 		}
 		return $str;
 	}
@@ -169,7 +169,6 @@ class Try2Api {
 		
 		if (isset($request["data"]) && !empty($request["data"]))
 			$request["data"] = $this->encrypt_xor(json_encode($request["data"]), base64_decode($this->requestKey));
-			
 		$response_raw = "";
 		$send_success = false;
 		$send_error = array();
@@ -255,7 +254,6 @@ class Try2Api {
 			$this->error = "invalid response: ".$response_raw;
 			return false;
 		}
-		
 		if (!$response_arr["success"]) {
 			$this->error_code = 6;
 			$this->error = "bad response | message: ".$response_arr["message"] . (isset($response_arr["data"]) ? " | data: ". json_encode($response_arr["data"]) : "");

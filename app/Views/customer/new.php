@@ -17,7 +17,7 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputCredits">Credits</label>
-				<input required type="number" step="0.5" class="form-control" name="credits" id="exampleInputCredits" >
+				<input required type="text" class="form-control" name="credits" id="exampleInputCredits" >
 			</div>
 			<div class="form-group">
 				<label for="exampledefault_response">Default checker response</label>

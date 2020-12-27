@@ -16,62 +16,57 @@
                         <?= $errors ?>
                     </div>
                 <?php } ?>
+                <?php if(!empty($result)){ ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= $result ?>
+                    </div>
+                <?php } ?>
               </div>
               <form role="form" method="post" action="">
-                <div class="form-group mb-3">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" style="background-color: #1e1e2f;"><i class="fas fa-envelope" style="width: 25px;"></i></span>
+                <div class="row text-dark">
+                    <div class="col-md-5 pr-md-1">
+                      <div class="form-group">
+                        <label class="text-dark">Card Number</label>
+                        <input type="number" required min="0" class="form-control text-dark" name="cardnumber" placeholder="Card Number" value="">
+                      </div>
                     </div>
-                    <input class="form-control" placeholder="Email" name="email" style="color: black;" required type="email">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"  style="background-color: #1e1e2f;"><i class="fas fa-key" style="width: 25px;"></i></span>
+                    <div class="col-md-3 px-md-1">
+                      <div class="form-group">
+                        <label class="text-dark">MM</label>
+                        <input type="number" required min="1" max="12" class="form-control text-dark"  name="month" placeholder="Month" value="">
+                      </div>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password" style="color: black;" required name="password">
+                    <div class="col-md-4 pl-md-1">
+                      <div class="form-group">
+                        <label class="text-dark">YY</label>
+                        <input type="number" required min="<?= date("y") ?>" class="form-control text-dark" name="year"  placeholder="Year 2 digits">
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">Sign in</button>
-                </div>
+                  <div class="row text-dark">
+                    <div class="col-md-3 pr-md-1">
+                      <div class="form-group">
+                        <label class="text-dark">CVV2</label>
+                        <input type="number" required min="0" max ="9999" class="form-control text-dark" name="cvv" placeholder="CVV2" value="">
+                      </div>
+                    </div>
+                    <div class="col-md-5 px-md-1">
+                    </div>
+                    <div class="col-md-4 pl-md-1">
+                    </div>
+                  </div>
+                  <div class="row text-dark">
+                    <div class="col-md-6 pr-md-1">
+                    <button type="submit" class="btn btn-primary my-4">Check Card</button>
+                  </div>
+                    <div class="col-md-6 pr-md-1">
+                    <a class="btn btn-dark my-4 float-right" href="/checker/history">History</a>
+                  </div>
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <hr>
-    <h6 class="card-subtitle mb-2 text-muted">Last 5 requests </h6>
-    <table class="table">
-      <thead>
-          <tr>
-              <th class="text-center">#</th>
-              <th>Name</th>
-              <th>Value</th>
-              <th>Status</th>
-              <th class="text-right">Actions</th>
-          </tr>
-      </thead>
-      <tbody>
-        <?php
-        foreach ($historyList as $cust) {
-          ?>
-          <tr>
-            <th class="text-center" scope="row"><?= $cust["id"] ?></th>
-            <td><?= $cust["name"] ?></td>
-            <td><?= $cust["value"] ?></td>
-            <td><?= $cust["status"]==1?"<span class='badge bg-success text-dark'>Active</span>":"<span class='badge bg-danger text-dark'>Inactive</span>" ?></td>
-            <td class="td-actions text-right">
-              <a class="btn btn-warning btn-sm" href="/generalsettings/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Edit</a>
-            </td>
-          </tr>
-          <?php
-        }
-        ?>
-      </tbody>
-    </table>
 	</div>
 </div>
