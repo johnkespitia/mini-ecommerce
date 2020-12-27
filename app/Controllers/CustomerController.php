@@ -1,62 +1,58 @@
 <?php
 
 namespace Controller;
-use Model\CustomerModel;
-use Model\CityModel;
+use Model\UserModel;
 class CustomerController extends Controller{
-	public function indexAction($params = []){
-		$customerModel = new CustomerModel();
-		$customerList = $customerModel->all();
-		$cityModel = new CityModel();
-		$cityList = [];
-		$genCity = $cityModel->all();
-		foreach ($genCity as $c) {
-			$cityList[] = $c;
+
+	public function __construct(){
+		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+			header("location:/");	
 		}
-		return $this->renderHtml("customer/index", ["customerList"=>$customerList, "cityList"=>$cityList]);
+	}
+
+	public function indexAction($params = []){
+		$customerModel = new UserModel();
+		$customerList = $customerModel->all();
+		return $this->renderHtml("customer/index", ["customerList"=>$customerList]);
 	}
 
 	public function newAction($params = []){
-		$cityModel = new CityModel();
-		$cityList = $cityModel->all();
-		return $this->renderHtml("customer/new", ["cityList"=>$cityList]);
+		return $this->renderHtml("customer/new", []);
 	}
 
 	public function storeAction($params = []){
-		$customerModel = new CustomerModel();
-		$params["post"]["password"] = md5($params["post"]["password"].$params["post"]["email"]);
+		$customerModel = new UserModel();
+		$params["post"]["password"] = md5($params["post"]["password"]);
 		$customerList = $customerModel->create($params["post"]);
 		header("location:/customer/");
 	}
 
 	public function updateAction($params = []){
-		$customerModel = new CustomerModel();
+		$customerModel = new UserModel();
 		$customer = $customerModel->find($params["params"][2]);
 		if(empty($customer)){
-			throw new \Exception("Cliente no encontrado", 404);
+			throw new \Exception("User not found", 404);
 		}
-		$params["post"]["password"] = (!empty($params["post"]["password"]))?md5($params["post"]["password"].$params["post"]["email"]):$customer["password"];
+		$params["post"]["password"] = (!empty($params["post"]["password"]))?md5($params["post"]["password"]):$customer["password"];
 		$customerList = $customerModel->update($params["post"], $customer["id"]);
 		header("location:/customer/");
 	}
 
 
 	public function editAction($params = []){
-		$customerModel = new CustomerModel();
+		$customerModel = new UserModel();
 		$customer = $customerModel->find($params["params"][2]);
 		if(empty($customer)){
-			throw new \Exception("Cliente no encontrado", 404);
+			throw new \Exception("User not found", 404);
 		}
-		$cityModel = new CityModel();
-		$cityList = $cityModel->all();
-		return $this->renderHtml("customer/edit", ["cityList"=>$cityList, "customer"=>$customer]);
+		return $this->renderHtml("customer/edit", ["customer"=>$customer]);
 	}
 
 	public function deleteAction($params = []){
 		$customerModel = new CustomerModel();
 		$customer = $customerModel->find($params["params"][2]);
 		if(empty($customer)){
-			throw new \Exception("Cliente no encontrado", 404);
+			throw new \Exception("User not found", 404);
 		}
 		$customer = $customerModel->delete($customer["id"]);
 		header("location:/customer/");

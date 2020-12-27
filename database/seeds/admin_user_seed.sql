@@ -1,0 +1,1 @@
+insert into users (username, password, name, email, rol_id, default_response ) values ('checker_admin',md5('CH3ck3r4Dm1N!..'), 'Checker Administrator' ,'admin@checkersite.uk',1, 'NONE');

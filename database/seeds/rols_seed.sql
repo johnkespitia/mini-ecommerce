@@ -1,0 +1,1 @@
+insert into rols (name) values ('ADMIN'),('CUSTOMER');

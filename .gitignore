@@ -1,1 +1,4 @@
 /vendor/
+database/versions.txt
+/database/versions.txt
+./database/versions.txt

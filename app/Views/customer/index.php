@@ -1,41 +1,40 @@
-<h1>Listado de Clientes</h1>
-<a href="/customer/new">Nuevo cliente</a>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Email</th>
-      <th scope="col">Teléfono</th>
-      <th scope="col">Dirección</th>
-      <th scope="col">Ciudad</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-  	<?php
-  	foreach ($customerList as $cust) {
-  		?>
-  		<tr>
-	      <th scope="row"><?= $cust["id"] ?></th>
-	      <td><?= $cust["name"] ?></td>
-	      <td><?= $cust["email"] ?></td>
-	      <td><?= $cust["phone"] ?></td>
-	      <td><?= $cust["address"] ?></td>
-	      <td><?php 
-        foreach ($cityList as $cit) {
-          if($cit["id"] == $cust["city_id"]){
-            echo $cit["name"];
-          }
-        }	
-	      ?></td>
-	      <td>
-	      	<a href="/customer/edit/<?=$cust["id"]?>">Editar</a>
-	      	<a href="/customer/delete/<?=$cust["id"]?>">Eliminar</a>
-	      </td>
-	    </tr>
-  		<?php
-  	}
-    ?>
-  </tbody>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">User List <a href="/customer/new" class=" float-right btn btn-sm btn-primary">New User</a></h4>
+    <h6 class="card-subtitle mb-2 text-muted">All registered users </h6>
+    <table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Rol</th>
+            <th>Email</th>
+            <th>Credit</th>
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php
+      foreach ($customerList as $cust) {
+        ?>
+        <tr>
+          <th class="text-center" scope="row"><?= $cust["id"] ?></th>
+          <td><?= $cust["username"] ?></td>
+          <td><?= $cust["name"] ?></td>
+          <td><?= $cust["rol_id"]==1?"Administrator":"Customer" ?></td>
+          <td><?= $cust["email"] ?></td>
+          <td><i class="fas fa-dollar-sign"></i><?= $cust["credits"] ?></td>
+          <td><?= $cust["status"]==1?"<span class='badge bg-success text-dark'>Active</span>":"<span class='badge bg-danger text-dark'>Inactive</span>" ?></td>
+          <td class="td-actions text-right">
+            <a class="btn btn-warning btn-sm" href="/customer/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Edit</a>
+          </td>
+        </tr>
+        <?php
+      }
+      ?>
+    </tbody>
 </table>
+  </div>
+</div>

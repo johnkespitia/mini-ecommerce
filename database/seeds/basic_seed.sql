@@ -1,1 +1,1 @@
-insert into cities (name) values ("Bogotá"),("Medellín"),("Cali"),("Barranquilla"),("Pereira");
+insert into general_settings (name,value) values ("ACTIVE_CHECKERS","ON"),("DECLINE_MANUAL_MESSAGE","Transaction Declined"),("REJECTED_MANUAL_MESSAGE","Transaction rejected"),("APPROVED_MANUAL_MESSAGE","Transaction approved"),("BLOCKED_MANUAL_MESSAGE","Transaction blocked");
