@@ -1,15 +1,15 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Listado de Producto <a href="/product/new" class=" float-right btn btn-sm btn-primary">Nuevo Producto</a></h4>
-    <h6 class="card-subtitle mb-2 text-muted">Todos los Producto registrados </h6>
+    <h4 class="card-title">Listado de Productos <a href="/product/new" class=" float-right btn btn-sm btn-primary">Nuevo Producto</a></h4>
+    <h6 class="card-subtitle mb-2 text-muted">Todos los Productos registrados </h6>
     <table class="table">
     <thead class="thead-light">
         <tr>
             <th class="text-center">#</th>
             <th scope="col">Nombre</th>
-			<th scope="col">SKU</th>
-			<th scope="col">precio</th>
-			<th scope="col">Cantidad</th>
+            <th scope="col">SKU</th>
+            <th scope="col">precio</th>
+            <th scope="col">Cantidad</th>
             <th class="text-right">Acciones</th>
         </tr>
     </thead>

@@ -1,3 +1,5 @@
+<div class="card">
+  <div class="card-body">
 <div class="row">
 <div class="col-6">
 	<div class="card">
@@ -66,5 +68,7 @@
 		</table>
 	  </div>
 	</div>
+</div>
+</div>
 </div>
 </div>

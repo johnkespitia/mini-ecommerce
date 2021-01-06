@@ -25,6 +25,16 @@ class ProductModel extends Model{
 		return $this->db->exec($sql);
 	}
 
+	public function findBy($where, $singleRow = false){
+		$sql = 'SELECT * FROM '.self::TABLE.' '.$this->where($where).' ORDER BY id desc';
+		foreach ($this->db->query($sql) as $row) {
+			if($singleRow)
+				return $row;
+			else
+				yield $row;
+		}	
+	}
+
 	public function update($fields, $id){
 		$sql = "UPDATE ".self::TABLE." 
 			SET

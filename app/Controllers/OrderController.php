@@ -49,7 +49,6 @@ class OrderController extends Controller{
 	public function storeAction($params = []){
 		$orderModel = new OrderModel();
 		$params["post"]["total"]=0;
-		$params["post"]["date_order"] = date("Y-m-d");
 		$productsList = $orderModel->create($params["post"]);
 		header("location:/order/");
 	}
@@ -63,7 +62,10 @@ class OrderController extends Controller{
 		}
 		$productModel = new ProductModel();
 		$productList = [];
-		$genPrd = $productModel->all();
+		$genPrd = $productModel->findBy([
+			["quantity",ProductModel::GT,"0"],
+		]);
+
 		foreach ($genPrd as $c) {
 			$productList[] = $c;
 		}
@@ -84,6 +86,12 @@ class OrderController extends Controller{
 		$orderItemModel->delete($oi["id"]);
 		$order["total"] = $order["total"]-$oi["product_price_sold"];
 		$orderModel->update($order,$order["id"]);
+
+		$productModel = new ProductModel();
+		$product = $productModel->find($oi["product_id"]);
+		$product["quantity"] = $product["quantity"] + 1;
+		$productModel->update($product,$product["id"]);
+		
 		header("location:/order/");
 	}
 
@@ -99,6 +107,9 @@ class OrderController extends Controller{
 		if(empty($product)){
 			throw new \Exception("Producto no encontrado", 404);
 		}
+		$product["quantity"] = $product["quantity"] - 1;
+		$productModel->update($product,$product["id"]);
+
 		$orderItemModel = new OrderItemModel();
 		$params["post"]["order_id"]=$order["id"];
 		$params["post"]["product_price_sold"]=$product["price"];
