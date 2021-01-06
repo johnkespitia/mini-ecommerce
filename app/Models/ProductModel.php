@@ -21,7 +21,7 @@ class ProductModel extends Model{
 	}
 
 	public function create($fields){
-		$sql = "INSERT INTO ".self::TABLE." (sku, name, price) values ('{$fields["sku"]}','{$fields["name"]}',{$fields["price"]})";
+		$sql = "INSERT INTO ".self::TABLE." (sku, name, price, quantity) values ('{$fields["sku"]}','{$fields["name"]}',{$fields["price"]},{$fields["quantity"]})";
 		return $this->db->exec($sql);
 	}
 
@@ -30,7 +30,8 @@ class ProductModel extends Model{
 			SET
 				name='{$fields["name"]}', 
 				sku='{$fields["sku"]}', 
-				price={$fields["price"]}
+				price={$fields["price"]},
+				quantity={$fields["quantity"]}
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}

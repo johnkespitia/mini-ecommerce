@@ -1,8 +1,8 @@
-<h1>Editar cliente <?= $customer["name"] ?></h1>
-<a href="/customer">Todos los clientes</a>
 <div class="card">
   <div class="card-body">
-    <h2 class="card-title">Datos del cliente</h2>
+    <h4 class="card-title">Editar Cliente <span  class="badge badge-primary"><?= $customer["name"] ?></span><a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
+	<h6 class="card-subtitle mb-2 text-muted">Editar Cliente registrado </h6>
+	<hr>
 	<form method="post" action="/customer/update/<?= $customer["id"] ?>">
 	  <div class="form-group">
 	    <label for="exampleInputEmail1">Email</label>
@@ -29,12 +29,7 @@
 	    	} ?>
 	    </select>
 	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
-	    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>
-  </div>
+	</div>
 </div>
-

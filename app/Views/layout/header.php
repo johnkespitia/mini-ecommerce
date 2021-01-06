@@ -3,36 +3,148 @@
 <head>
 	<title><?= $_ENV["SITE_NAME"] ?></title>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--  Fonts and icons  -->
+    <!--     Fonts and icons     -->
+	<link rel="icon" href="/themes/<?= $_ENV["THEME"] ?>/assets/img/brand/favicon.png" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="/themes/<?= $_ENV["THEME"] ?>/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="/themes/<?= $_ENV["THEME"] ?>/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="/themes/<?= $_ENV["THEME"] ?>/assets/css/argon.css?v=1.2.0" type="text/css">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    
 </head>
 <body>
-	<div class="container">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		  <a class="navbar-brand" href="#"><?= $_ENV["SITE_NAME"] ?></a>
-		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-		    <span class="navbar-toggler-icon"></span>
-		  </button>
-
-		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item">
-		        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="/customer/">Clientes</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="/product/">Productos</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="/order/">Pedidos</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="/report/">Reportes</a>
-		      </li>
-		    </ul>
-		  </div>
+	<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+		<div class="scrollbar-inner">
+			<div class="sidenav-header  align-items-center">
+        		<a class="navbar-brand" href="javascript:void(0)">
+		  			<img src="/themes/<?= $_ENV["THEME"] ?>/assets/img/brand/brand.png" class="navbar-brand-img" alt="">
+		  				<br/>CRM
+        		</a>
+			</div>
+		<div class="navbar-inner">
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="/"><i class="fas fa-home  text-primary"></i> Inicio</a>
+					</li>
+					<?php if(empty($_SESSION)){ ?>
+					<li class="nav-item">
+						<a class="nav-link" href="/home/login"><i class="fas fa-sign-in-alt  text-primary"></i> Iniciar Sesión</a>
+					</li>	
+					<?php }else{ 
+					if($_SESSION["rol_id"] == 1){ ?>
+					<li class="nav-item">
+						<a class="nav-link" href="/user/index">
+							<i class="fas fa-users  text-primary"></i> Usuarios
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customer/">
+						<i class="fas fa-user-tie  text-primary"></i> Clientes
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/product/">
+						<i class="fas fa-warehouse  text-primary"></i> Productos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/order/">
+							<i class="fas fa-archive  text-primary"></i> Pedidos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/report/">
+							<i class="fas fa-chart-pie  text-primary"></i> Reportes
+						</a>
+					</li>
+					<?php } else{ ?>
+					<li class="nav-item">
+						<a class="nav-link" href="/customer/">
+						<i class="fas fa-user-tie  text-primary"></i> Clientes
+						</a>
+					</li>
+					<?php
+					} 
+				} ?>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</nav>	
+	<div class="main-content" id="panel">
+	<?php if(!empty($_SESSION)){ ?>
+		<nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+      		<div class="container-fluid">
+        		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+          			
+          			<!-- Navbar links -->
+          			<ul class="navbar-nav align-items-center  ml-md-auto ">
+            			<li class="nav-item d-xl-none">
+              			<!-- Sidenav toggler -->
+              				<div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                				<div class="sidenav-toggler-inner">
+                  					<i class="sidenav-toggler-line"></i>
+									<i class="sidenav-toggler-line"></i>
+									<i class="sidenav-toggler-line"></i>
+                				</div>
+              				</div>
+            			</li>
+            			<li class="nav-item d-sm-none">
+              				<a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                				<i class="ni ni-zoom-split-in"></i>
+              				</a>
+            			</li>
+          			</ul>
+          			<ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            			<li class="nav-item dropdown">
+              				<a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                				<div class="media align-items-center">
+                  					<span class="avatar avatar-sm rounded-circle">
+										  <img src="/themes/<?= $_ENV["THEME"] ?>/assets/img/theme/usericon.png" />                    
+                  					</span>
+                  					<div class="media-body  ml-2  d-none d-lg-block">
+                    					<span class="mb-0 text-sm  font-weight-bold"><?= $_SESSION["name"] ?></span>
+                  					</div>
+                				</div>
+              				</a>
+              				<div class="dropdown-menu  dropdown-menu-right ">
+                				<div class="dropdown-header noti-title">
+				                  <h6 class="text-overflow m-0">Bienvenido!</h6>
+                				</div>
+                				<a href="#!" class="dropdown-item">
+                  					<i class="ni ni-single-02"></i>
+                  					<span>My profile</span>
+                				</a>
+                				<a href="#!" class="dropdown-item">
+                  					<i class="ni ni-settings-gear-65"></i>
+                  					<span>Settings</span>
+                				</a>
+                				<a href="#!" class="dropdown-item">
+                  					<i class="ni ni-calendar-grid-58"></i>
+                  					<span>Activity</span>
+                				</a>
+                				<a href="#!" class="dropdown-item">
+                  					<i class="ni ni-support-16"></i>
+                  					<span>Support</span>
+                				</a>
+                				<div class="dropdown-divider"></div>
+                					<a href="/home/logout" class="dropdown-item">
+                  					<i class="ni ni-user-run"></i>
+                  					<span>Logout</span>
+                				</a>
+              				</div>
+            			</li>
+          			</ul>
+				</div>
+      		</div>
 		</nav>
+		<?php } ?>
+				

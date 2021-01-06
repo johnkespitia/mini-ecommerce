@@ -4,6 +4,11 @@ namespace Controller;
 use Model\ProductModel;
 
 class ProductController extends Controller{
+	public function __construct(){
+		if(empty($_SESSION)){
+			header("location:/");	
+		}
+	}
 	public function indexAction($params = []){
 		$productModel = new ProductModel();
 		$productsList = $productModel->all();

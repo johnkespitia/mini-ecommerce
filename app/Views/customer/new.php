@@ -1,8 +1,8 @@
-<h1>Nuevo cliente</h1>
-<a href="/customer">Todos los clientes</a>
 <div class="card">
   <div class="card-body">
-    <h2 class="card-title">Datos del nuevo cliente</h2>
+    <h4 class="card-title">Nuevo Cliente <a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
+	<h6 class="card-subtitle mb-2 text-muted">Registrar un nuevo Clientes </h6>
+	<hr>
 	<form method="post" action="/customer/store">
 	  <div class="form-group">
 	    <label for="exampleInputEmail1">Email</label>
@@ -28,12 +28,7 @@
 	    	} ?>
 	    </select>
 	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
-	    <input required type="password" class="form-control" name="password" id="exampleInputPassword1">
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>
-  </div>
+	</div>
 </div>
-

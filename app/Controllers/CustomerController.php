@@ -4,6 +4,11 @@ namespace Controller;
 use Model\CustomerModel;
 use Model\CityModel;
 class CustomerController extends Controller{
+	public function __construct(){
+		if(empty($_SESSION)){
+			header("location:/");	
+		}
+	}
 	public function indexAction($params = []){
 		$customerModel = new CustomerModel();
 		$customerList = $customerModel->all();
