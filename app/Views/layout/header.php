@@ -61,6 +61,11 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="/contact/">
+							<i class="fas fa-calendar-alt text-primary"></i> Agenda
+						</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="/report/">
 							<i class="fas fa-chart-pie  text-primary"></i> Reportes
 						</a>
@@ -74,6 +79,11 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/order/">
 							<i class="fas fa-archive  text-primary"></i> Pedidos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/contact/">
+							<i class="fas fa-calendar-alt text-primary"></i> Agenda
 						</a>
 					</li>
 					<li class="nav-item">
