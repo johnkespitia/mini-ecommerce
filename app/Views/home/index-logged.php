@@ -27,7 +27,7 @@
         </div>
     <p></p>
     <div class="card-description">
-        <p>Puedes Registrar clientes, gestionar comunicaciones con clientes (Preventa y Postventa), registrar ventas y demás procesos permitidos en este poderpsp CRM 😎        
+        <p>Puedes Registrar clientes, gestionar comunicaciones con clientes (Preventa y Postventa), registrar ventas y demás procesos permitidos en este poderoso CRM 😎        
     </div>
     </div>
     <div class="card-footer">

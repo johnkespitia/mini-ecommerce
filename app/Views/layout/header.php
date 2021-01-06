@@ -71,6 +71,16 @@
 						<i class="fas fa-user-tie  text-primary"></i> Clientes
 						</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/order/">
+							<i class="fas fa-archive  text-primary"></i> Pedidos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/report/">
+							<i class="fas fa-chart-pie  text-primary"></i> Reportes
+						</a>
+					</li>
 					<?php
 					} 
 				} ?>
@@ -119,21 +129,9 @@
                 				<div class="dropdown-header noti-title">
 				                  <h6 class="text-overflow m-0">Bienvenido!</h6>
                 				</div>
-                				<a href="#!" class="dropdown-item">
+                				<a href="/user/edit/<?= $_SESSION["id"]?>" class="dropdown-item">
                   					<i class="ni ni-single-02"></i>
-                  					<span>My profile</span>
-                				</a>
-                				<a href="#!" class="dropdown-item">
-                  					<i class="ni ni-settings-gear-65"></i>
-                  					<span>Settings</span>
-                				</a>
-                				<a href="#!" class="dropdown-item">
-                  					<i class="ni ni-calendar-grid-58"></i>
-                  					<span>Activity</span>
-                				</a>
-                				<a href="#!" class="dropdown-item">
-                  					<i class="ni ni-support-16"></i>
-                  					<span>Support</span>
+                  					<span>Mi Usuario</span>
                 				</a>
                 				<div class="dropdown-divider"></div>
                 					<a href="/home/logout" class="dropdown-item">

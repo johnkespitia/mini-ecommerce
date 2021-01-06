@@ -4,23 +4,26 @@ namespace Controller;
 use Model\UserModel;
 class UserController extends Controller{
 
-	public function __construct(){
+	public function indexAction($params = []){
 		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
 			header("location:/");	
 		}
-	}
-
-	public function indexAction($params = []){
 		$userModel = new UserModel();
 		$userList = $userModel->all();
 		return $this->renderHtml("user/index", ["userList"=>$userList]);
 	}
 
 	public function newAction($params = []){
+		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+			header("location:/");	
+		}
 		return $this->renderHtml("user/new", []);
 	}
 
 	public function storeAction($params = []){
+		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+			header("location:/");	
+		}
 		$userModel = new UserModel();
 		$params["post"]["password"] = md5($params["post"]["password"]);
 		$userList = $userModel->create($params["post"]);
@@ -28,6 +31,9 @@ class UserController extends Controller{
 	}
 
 	public function updateAction($params = []){
+		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+			header("location:/");	
+		}
 		$userModel = new UserModel();
 		$user = $userModel->find($params["params"][2]);
 		if(empty($user)){
@@ -40,6 +46,9 @@ class UserController extends Controller{
 
 
 	public function editAction($params = []){
+		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+			header("location:/");	
+		}
 		$userModel = new UserModel();
 		$user = $userModel->find($params["params"][2]);
 		if(empty($user)){
@@ -49,6 +58,9 @@ class UserController extends Controller{
 	}
 
 	public function deleteAction($params = []){
+		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+			header("location:/");	
+		}
 		$userModel = new userModel();
 		$user = $userModel->find($params["params"][2]);
 		if(empty($user)){

@@ -1,6 +1,8 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Editar Usuario <span  class="badge badge-primary"><?= $customer["name"] ?></span><a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de usuarios</a></h4>
+	<h4 class="card-title">Editar Usuario <span  class="badge badge-primary"><?= $customer["name"] ?></span>
+		<?php if($_SESSION["rol_id"] == 1 ){ ?> <a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de usuarios</a> <?php } ?> 
+	</h4>
 	<h6 class="card-subtitle mb-2 text-muted">Editar usuario registrado </h6>
 	<hr>
 		<form method="post" action="/user/update/<?= $customer["id"] ?>">
@@ -27,6 +29,7 @@
 				<label for="exampleInputPassword1">Password</label>
 				<input type="password" class="form-control" name="password" id="exampleInputPassword1">
 			</div>
+			<?php if($_SESSION["rol_id"] == 1 ){ ?>
 			<div class="form-group">
 				<label for="exampleInputStatus">Estado</label>
 				<select class="form-control" name="status" id="exampleInputStatus" >
@@ -34,6 +37,7 @@
 					<option <?= ($customer["status"]=="2")?"selected":"" ?> value='2'>Inactivo</option>
 				</select>
 			</div>
+			<?php } ?>
 			<button type="submit" class="btn btn-primary">Guardar</button>
 		</form>
 	</div>
