@@ -29,7 +29,6 @@ class CustomerController extends Controller{
 
 	public function storeAction($params = []){
 		$customerModel = new CustomerModel();
-		$params["post"]["password"] = md5($params["post"]["password"].$params["post"]["email"]);
 		$customerList = $customerModel->create($params["post"]);
 		header("location:/customer/");
 	}
@@ -40,7 +39,6 @@ class CustomerController extends Controller{
 		if(empty($customer)){
 			throw new \Exception("Cliente no encontrado", 404);
 		}
-		$params["post"]["password"] = (!empty($params["post"]["password"]))?md5($params["post"]["password"].$params["post"]["email"]):$customer["password"];
 		$customerList = $customerModel->update($params["post"], $customer["id"]);
 		header("location:/customer/");
 	}

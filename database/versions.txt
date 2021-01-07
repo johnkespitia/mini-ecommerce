@@ -10,3 +10,4 @@ rols_seed.sql
 users_seed.sql
 8-product-details.sql
 9-order_add_product_sku.sql
+10-contact-table.sql
