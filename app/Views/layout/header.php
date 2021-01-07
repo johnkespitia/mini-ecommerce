@@ -157,7 +157,7 @@
                 				<div class="dropdown-divider"></div>
                 					<a href="/home/logout" class="dropdown-item">
                   					<i class="ni ni-user-run"></i>
-                  					<span>Logout</span>
+                  					<span>Cerrar Sesión</span>
                 				</a>
               				</div>
             			</li>

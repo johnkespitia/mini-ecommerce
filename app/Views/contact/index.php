@@ -53,6 +53,7 @@
       selectMirror: true,
       events: [
           <?php
+          if(!empty($contactList)){
             foreach ($contactList as $value) {
 echo <<<AAA
     {
@@ -68,6 +69,7 @@ echo <<<AAA
     },
 AAA;
             }
+          }
             ?>    
       ]
     });
