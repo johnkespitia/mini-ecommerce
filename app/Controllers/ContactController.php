@@ -104,4 +104,44 @@ class ContactController extends Controller{
 		$customerList = $contactModel->update($params["post"], $contact["id"]);
 		header("location:/contact/");
 	}
+
+	public function customerAction($params = []){
+		$customerModel = new CustomerModel();
+		$customer = $customerModel->find($params["params"][2]);
+		if(empty($customer)){
+			throw new \Exception("Cliente no encontrado", 404);
+		}
+		$contactModel = new ContactModel();
+		if($_SESSION["rol_id"]==1){
+			$contactList = $contactModel->findBy([
+				["c.customer_id",ContactModel::EQUAL,$params["params"][2]]
+			]);
+		}else{
+			$contactList = $contactModel->findBy([
+				["user_id",ContactModel::EQUAL,$_SESSION["id"]],
+				["c.customer_id",ContactModel::EQUAL,$params["params"][2]]
+			]);
+		}
+		return $this->renderHtml("contact/customer",["contactList"=>$contactList, "customer"=>$customer]);
+	}
+
+	public function orderAction($params = []){
+		$orderModel = new OrderModel();
+		$order = $orderModel->find($params["params"][2]);
+		if(empty($order)){
+			throw new \Exception("Pedido no encontrado", 404);
+		}
+		$contactModel = new ContactModel();
+		if($_SESSION["rol_id"]==1){
+			$contactList = $contactModel->findBy([
+				["order_id",ContactModel::EQUAL,$params["params"][2]]
+			]);
+		}else{
+			$contactList = $contactModel->findBy([
+				["user_id",ContactModel::EQUAL,$_SESSION["id"]],
+				["order_id",ContactModel::EQUAL,$params["params"][2]]
+			]);
+		}
+		return $this->renderHtml("contact/order",["contactList"=>$contactList, "order"=>$order]);
+	}
 }

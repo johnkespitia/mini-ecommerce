@@ -39,7 +39,8 @@
         }	
 	      ?></ul></td>
 	      <td class="td-actions text-right">
-          <a class="btn btn-info btn-sm" href="/order/additem/<?=$cust["id"]?>"><i class="fas fa-plus-circle"></i> Añadir Items</a>
+          <a class="btn btn-primary btn-sm" href="/order/additem/<?=$cust["id"]?>"><i class="fas fa-plus-circle"></i> Añadir Items</a>
+          <a class="btn btn-info btn-sm" href="/contact/order/<?=$cust["id"]?>"><i class="fas fa-calendar-alt"></i> Ver eventos</a>
           <?php if(count($orderItemList)==0){ ?>
             <a class="btn btn-danger btn-sm" href="/order/delete/<?=$cust["id"]?>"><i class="fas fa-trash"></i> Eliminar</a>
           <?php } ?>

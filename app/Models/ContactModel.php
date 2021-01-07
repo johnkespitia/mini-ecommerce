@@ -36,7 +36,7 @@ class ContactModel extends Model{
 		FROM '.self::TABLE." c  INNER JOIN users ON c.user_id = users.id INNER JOIN customers ON c.customer_id = customers.id
 			 LEFT JOIN orders on c.order_id=orders.id
 			 ".$whereBuild."
-			 ORDER BY id desc";
+			 ORDER BY c.id desc";
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;
