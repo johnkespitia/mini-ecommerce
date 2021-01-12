@@ -24,7 +24,7 @@
 		  <td>$ <?= number_format($cust["price"],2,",",".") ?></td>
 		  <td><?= $cust["quantity"] ?></td>
 	      <td class="td-actions text-right">
-        <a class="btn btn-warning btn-sm" href="/product/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Edit</a>
+        <a class="btn btn-warning btn-sm" href="/product/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Editar</a>
         <a class="btn btn-danger btn-sm" href="/product/delete/<?=$cust["id"]?>"><i class="fas fa-trash"></i> Eliminar</a>
 	      </td>
 	    </tr>

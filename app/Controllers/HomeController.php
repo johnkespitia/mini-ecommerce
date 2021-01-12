@@ -3,7 +3,7 @@
 namespace Controller;
 
 use Model\UserModel;
-
+use Services\MailService;
 
 class HomeController extends Controller{
 	public function indexAction($params = []){
@@ -11,6 +11,16 @@ class HomeController extends Controller{
 			return $this->renderHtml("home/index", $params);
 		}else{
 			return $this->renderHtml("home/index-logged", $params);
+		}
+		
+	}
+
+	public function testemailAction($params = []){
+		if(empty($_SESSION)){
+			return $this->renderHtml("home/index", $params);
+		}else{
+			$mailer = new MailService();
+			$mailer->testMail($_ENV["MAILER_USERNAME"],"test mail","test content");
 		}
 		
 	}

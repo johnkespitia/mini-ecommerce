@@ -7,14 +7,14 @@ class ProductModel extends Model{
 	const TABLE = "products";
 
 	public function all(){
-		$sql = 'SELECT * FROM '.self::TABLE.' ORDER BY id';
+		$sql = 'SELECT * FROM '.self::TABLE.' ORDER BY name';
 		foreach ($this->db->query($sql) as $row) {
 		    yield $row;
 		}
 	}
 
 	public function find($id){
-		$sql = 'SELECT * FROM '.self::TABLE.' WHERE id='.$id.' ORDER BY id';
+		$sql = 'SELECT * FROM '.self::TABLE.' WHERE id='.$id.' ORDER name id';
 		foreach ($this->db->query($sql) as $row) {
 		    return $row;
 		}	

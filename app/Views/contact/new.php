@@ -25,6 +25,19 @@
 	    </select>
 	  </div>
 	  <div class="form-group">
+	    <label for="exampleInputMethod">Método de comunicación</label>
+	    <select class="form-control" name="method" id="exampleInputMethod" >
+	    	<option value='Llamada'>Llamada</option>
+	    	<option value='Correo'>Correo</option>
+	    	<option value='Whatsapp'>Whatsapp</option>
+	    	<option value='SMS'>SMS</option>
+	    	<option value='Visita'>Visita</option>
+	    	<option value='Videollamada'>Videollamada</option>
+	    	<option value='Redes Sociales'>Redes Sociales</option>
+	    	<option value='Otro'>Otro</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
 	    <label for="exampleInputDescription">Descripción</label>
 	    <textarea id="exampleInputDescription" name="description" class="form-control" ></textarea>
 	  </div>
@@ -38,6 +51,24 @@
 	  
 	    <label for="datetime_end">Fecha de Fin</label>
 	    <input required type="text" class="form-control" name="datetime_end" id="datetime_end"  value="<?=$paramsEvent[4]?>">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputreminder">Recordar</label>
+	    <select class="form-control" name="reminder" id="exampleInputreminder" >
+	    	<option value='10 minutos'>10 minutos antes</option>
+	    	<option value='1 hora'>1 hora antes</option>
+	    	<option value='1 día'>1 día antes</option>
+	    	<option value='2 días'>2 días antes</option>
+	    	<option value='3 días'>3 días antes</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputrepeattimes">Se repite (número de veces)</label>
+	    <input required type="number" min="0" class="form-control" name="repeat_times" id="exampleInputrepeattimes" value="0" >
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputrepeatPeriod">Se repite cada (días)</label>
+	    <input required type="number" min="0" class="form-control" name="repeat_period" id="exampleInputrepeatPeriod" value="0" >
 	  </div>
 	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>

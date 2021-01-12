@@ -27,7 +27,7 @@
         </div>
     <p></p>
     <div class="card-description">
-        <p>EL mensaje de error es:        </p>
+        <p>El mensaje de error es:        </p>
         <div class="alert alert-danger" role="alert">
             <?= $error??"nothing" ?>
         </div>

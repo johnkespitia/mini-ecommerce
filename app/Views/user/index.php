@@ -26,7 +26,7 @@
           <td><?= $cust["email"] ?></td>
           <td><?= $cust["status"]==1?"<span class='badge bg-success text-dark'>Activo</span>":"<span class='badge bg-danger text-dark'>Inactivo</span>" ?></td>
           <td class="td-actions text-right">
-            <a class="btn btn-warning btn-sm" href="/user/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Edit</a>
+            <a class="btn btn-warning btn-sm" href="/user/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Editar</a>
           </td>
         </tr>
         <?php

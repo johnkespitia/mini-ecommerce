@@ -31,10 +31,11 @@
 	      <td><ul><?php 
         foreach ($orderItemList as $cit) {
           if($cit["order_id"] == $cust["id"]){
-            $prod = array_filter($productList, function($prd) use($cit){
+            $prodArr = array_filter($productList, function($prd) use($cit){
               return $cit["product_id"]==$prd["id"];
             });
-            echo "<li>{$cit["item_sku"]} - {$prod[0]["name"]} <a class='btn btn-danger btn-sm' href='/order/deleteitem/{$cit["id"]}'><i class='fas fa-minus-circle'></i> Eliminar Item</a></li>";
+            $prod = reset($prodArr);
+            echo "<li>{$cit["item_sku"]} - {$prod["name"]} <a class='btn btn-danger btn-sm' href='/order/deleteitem/{$cit["id"]}'><i class='fas fa-minus-circle'></i> Eliminar Item</a></li>";
           }
         }	
 	      ?></ul></td>

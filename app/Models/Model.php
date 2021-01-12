@@ -46,4 +46,8 @@ class Model{
 		return $this->db->lastInsertId();
 	}
 
+	public function getLastError(){
+		return $this->db->errorInfo();
+	}
+
 }

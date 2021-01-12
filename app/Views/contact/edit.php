@@ -26,6 +26,19 @@
 	    </select>
 	  </div>
 	  <div class="form-group">
+	    <label for="exampleInputMethod">Método de comunicación</label>
+	    <select class="form-control" name="method" id="exampleInputMethod" >
+	    	<option <?= ($contact["method"]=="Llamada")?"selected":"" ?> value='Llamada'>Llamada</option>
+	    	<option <?= ($contact["method"]=="Correo")?"selected":"" ?> value='Correo'>Correo</option>
+	    	<option <?= ($contact["method"]=="Whatsapp")?"selected":"" ?> value='Whatsapp'>Whatsapp</option>
+	    	<option <?= ($contact["method"]=="SMS")?"selected":"" ?> value='SMS'>SMS</option>
+	    	<option <?= ($contact["method"]=="Visita")?"selected":"" ?> value='Visita'>Visita</option>
+	    	<option <?= ($contact["method"]=="Videollamada")?"selected":"" ?> value='Videollamada'>Videollamada</option>
+	    	<option <?= ($contact["method"]=="Redes Sociales")?"selected":"" ?> value='Redes Sociales'>Redes Sociales</option>
+	    	<option <?= ($contact["method"]=="Otro")?"selected":"" ?> value='Otro'>Otro</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
 	    <label for="exampleInputDescription">Descripción</label>
 	    <textarea id="exampleInputDescription" name="description" class="form-control" ><?=$contact["description"]?></textarea>
 	  </div>
@@ -39,6 +52,16 @@
 	  
 	    <label for="datetime_end">Fecha de Fin</label>
 	    <input required type="text" class="form-control" name="datetime_end" id="datetime_end"   value="<?=$contact["datetime_end"]?>">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputreminder">Recordar</label>
+	    <select class="form-control" name="reminder" id="exampleInputreminder" >
+	    	<option value='10 minutos'  <?= ($contact["reminder"]=="10 minutos")?"selected":"" ?>>10 minutos antes</option>
+	    	<option value='1 hora'  <?= ($contact["reminder"]=="1 hora")?"selected":"" ?>>1 hora antes</option>
+	    	<option value='1 día' <?= ($contact["reminder"]=="1 día")?"selected":"" ?>>1 día antes</option>
+	    	<option value='2 días'  <?= ($contact["reminder"]=="2 días")?"selected":"" ?>>2 días antes</option>
+	    	<option value='3 días'  <?= ($contact["reminder"]=="3 días")?"selected":"" ?>>3 días antes</option>
+	    </select>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>

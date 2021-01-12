@@ -29,7 +29,7 @@
         calendar.unselect()
       },
       eventClick: function(arg) {
-        $("#eventModalLabel").html(arg.event.title)
+        $("#eventModalLabel").html(`<span class="badge badge-dark text-light">${arg.event.extendedProps.method}</span> ${arg.event.extendedProps.internal}`)
         
         let startDate = `${arg.event.start.getFullYear()}-${addingZero(arg.event.start.getMonth()+1)}-${addingZero(arg.event.start.getDate())} ${addingZero(arg.event.start.getHours())}:${addingZero(arg.event.start.getMinutes())}`
         let endDate = `${arg.event.end.getFullYear()}-${addingZero(arg.event.end.getMonth()+1)}-${addingZero(arg.event.end.getDate())} ${addingZero(arg.event.end.getHours())}:${addingZero(arg.event.end.getMinutes())}`
@@ -43,6 +43,7 @@
         </ul>`
         $("#eventContent").html(content)
         $("#eventEdit").attr("href",`/contact/edit/${arg.event.id}`)
+        $("#eventResults").attr("href",`/contact/results/${arg.event.id}`)
         $("#eventModal").modal('show')
       },
       initialDate: "<?= date("Y-m-d") ?>",
@@ -58,7 +59,9 @@
 echo <<<AAA
     {
         id:{$value["id"]},
-        title: '{$value["title"]}',
+        title: '{$value["method"]} - {$value["title"]}',
+        internal: '{$value["title"]}',
+        method: '{$value["method"]}',
         start: '{$value["datetime_start"]}',
         end: '{$value["datetime_end"]}',
         type: '{$value["type"]}',
@@ -93,8 +96,9 @@ AAA;
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <a id="eventEdit" href="#"  class="btn btn-primary">Editar</a>
+        <a id="eventResults" href="#"  class="btn btn-info">Ver Seguimiento</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
