@@ -57,7 +57,7 @@ class ContactResultModel extends Model{
 	}
 
 	public function update($fields, $id){
-		echo $sql = "UPDATE ".self::TABLE." 
+		$sql = "UPDATE ".self::TABLE." 
 			SET
 			title = '".addslashes($fields["title"])."', 
 			description = '".addslashes($fields["description"])."', 

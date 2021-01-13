@@ -36,6 +36,31 @@ class OrderController extends Controller{
 		return $this->renderHtml("order/index", ["productList"=>$productList, "orderList"=>$ordersList, "customerList"=>$customerList, "orderItemList"=>$orderItemList]);
 	}
 
+	public function customerAction($params = []){
+		$orderModel = new OrderModel();
+		$ordersList = $orderModel->findBy([
+			["customer_id",OrderModel::EQUAL,$params["params"][2]]
+		]);
+		$productModel = new ProductModel();
+		$productList = [];
+		$genPrd = $productModel->all();
+		foreach ($genPrd as $c) {
+			$productList[] = $c;
+		}
+		$customerModel = new CustomerModel();
+		$customer = $customerModel->find($params["params"][2]);
+		if(empty($customer)){
+			throw new \Exception("Cliente no encontrado", 404);
+		}
+		$orderItemModel = new OrderItemModel();
+		$orderItemList = [];
+		$genOI = $orderItemModel->all();
+		foreach ($genOI as $c) {
+			$orderItemList[] = $c;
+		}
+		return $this->renderHtml("order/customer", ["productList"=>$productList, "orderList"=>$ordersList, "customer"=>$customer, "orderItemList"=>$orderItemList]);
+	}
+
 	public function newAction($params = []){
 		$customerModel = new CustomerModel();
 		$customerList = [];

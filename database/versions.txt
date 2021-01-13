@@ -16,3 +16,8 @@ users_seed.sql
 13-reminder-and-repeating-fields.sql
 14-repeat-period.sql
 15-repeat-times.sql
+16-categories.sql
+17-add_category_product.sql
+18-add-products-field.sql
+18-add-products-field copy.sql
+19-add-clients-field.sql

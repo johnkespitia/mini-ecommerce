@@ -4,17 +4,17 @@
 - Tarea programada de recordatorio (OK)
 - Reporte de gestión
 - PRODUCTOS:
-    - Categorías y subcategorías
-    - descripción PRODUCTOS
-    - imagen
+    - Categorías y subcategorías (OK)
+    - descripción PRODUCTOS (OK)
+    - imagen (OK)
     - importar xls
     - exportar xls
 - CLIENTES
-    - agregar nit o CC y validar único
+    - agregar nit o CC y validar único (OK)
     - importar xls
     - exportar xls
-    - ver pedidos x CLIENTE
-    - Agregar todas las ciudades
+    - ver pedidos x CLIENTE (ok)
+    - Agregar todas las ciudades (ok)
 - eventos
     - evento repetitivo  (OK)
     - límite de repeticiones (OK)

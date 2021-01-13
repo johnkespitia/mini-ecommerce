@@ -21,7 +21,7 @@ class CustomerModel extends Model{
 	}
 
 	public function create($fields){
-		$sql = "INSERT INTO ".self::TABLE." (name, phone, address, city_id, email) values ('{$fields["name"]}','{$fields["phone"]}','{$fields["address"]}',{$fields["city_id"]},'{$fields["email"]}')";
+		$sql = "INSERT INTO ".self::TABLE." (name, phone, address, city_id, email, dni) values ('{$fields["name"]}','{$fields["phone"]}','{$fields["address"]}',{$fields["city_id"]},'{$fields["email"]}','{$fields["dni"]}')";
 		return $this->db->exec($sql);
 	}
 
@@ -32,7 +32,8 @@ class CustomerModel extends Model{
 				phone='{$fields["phone"]}', 
 				address='{$fields["address"]}', 
 				city_id={$fields["city_id"]}, 
-				email='{$fields["email"]}'
+				email='{$fields["email"]}',
+				dni = '{$fields["dni"]}'
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}

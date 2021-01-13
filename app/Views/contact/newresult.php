@@ -33,7 +33,7 @@
 	    <label for="exampleInputMethod">Siguiente paso</label>
 	    <select class="form-control" name="next_step" id="exampleInputMethod" >
 	    	<option value='Otro evento'>Otro evento</option>
-	    	<option value='Cotización'>Cotización</option>
+	    	<option value='Cotizacion'>Cotización</option>
 	    	<option value='Venta'>Venta</option>
 	    	<option value='Proceso finalizado'>Proceso finalizado</option>
 	    </select>

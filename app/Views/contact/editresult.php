@@ -33,7 +33,7 @@
 	    <label for="exampleInputMethod">Siguiente paso</label>
 	    <select class="form-control" name="next_step" id="exampleInputMethod" >
 	    	<option value='Otro evento' <?= $contactResult["next_step"]=="Otro evento"?"selected":"" ?>>Otro evento</option>
-	    	<option value='Cotización' <?= $contactResult["next_step"]=="Cotización"?"selected":"" ?>>Cotización</option>
+	    	<option value='Cotizacion' <?= $contactResult["next_step"]=="Cotizacion"?"selected":"" ?>>Cotización</option>
 	    	<option value='Venta' <?= $contactResult["next_step"]=="Venta"?"selected":"" ?>>Venta</option>
 	    	<option value='Proceso finalizado' <?= $contactResult["next_step"]=="Proceso finalizado"?"selected":"" ?>>Proceso finalizado</option>
 	    </select>

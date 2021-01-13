@@ -11,6 +11,7 @@ class Model{
 	const GTE = ">=";
 	const LT = "<";
 	const LTE = "<=";
+	const ISNULL = "is null";
 
 	protected $db;
 	
@@ -32,6 +33,8 @@ class Model{
 		foreach($where as $validation){
 			if($validation[1] == self::CONTAIN){
 				$queryWhere.= " {$and} {$validation[0]} ".self::CONTAIN." '".addslashes($validation[2])."'";
+			}if($validation[1] == self::ISNULL){
+				$queryWhere.= " {$and} {$validation[0]} {$validation[1]} ";
 			}else{
 				$queryWhere.= " {$and} {$validation[0]} {$validation[1]} '".addslashes($validation[2])."'";
 			}

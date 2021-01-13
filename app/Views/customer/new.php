@@ -5,12 +5,16 @@
 	<hr>
 	<form method="post" action="/customer/store">
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Email</label>
-	    <input required type="email" class="form-control" name="email" id="exampleInputEmail1" >
-	  </div>
-	  <div class="form-group">
 	    <label for="exampleInputName">Nombre</label>
 	    <input required type="text" class="form-control" name="name" id="exampleInputName" >
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputDNI">Identificación</label>
+	    <input required type="text" maxlength="20" class="form-control" name="dni" id="exampleInputDNI"  value="<?= $customer["dni"] ?>">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Email</label>
+	    <input required type="email" class="form-control" name="email" id="exampleInputEmail1" >
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputPhone">Teléfono</label>

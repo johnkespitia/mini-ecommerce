@@ -20,6 +20,17 @@ class OrderModel extends Model{
 		}	
 	}
 
+
+	public function findBy($where, $singleRow = false){
+		$sql = 'SELECT * FROM '.self::TABLE.' '.$this->where($where).' ORDER BY id desc';
+		foreach ($this->db->query($sql) as $row) {
+			if($singleRow)
+				return $row;
+			else
+				yield $row;
+		}	
+	}
+
 	public function create($fields){
 		$sql = "INSERT INTO ".self::TABLE." (customer_id, date_order, total) values ('{$fields["customer_id"]}','{$fields["date_order"]}',{$fields["total"]})";
 		return $this->db->exec($sql);
