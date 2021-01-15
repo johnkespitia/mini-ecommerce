@@ -20,7 +20,8 @@ class HomeController extends Controller{
 			return $this->renderHtml("home/index", $params);
 		}else{
 			$mailer = new MailService();
-			$mailer->testMail($_ENV["MAILER_USERNAME"],"test mail","test content");
+			$content = $this->renderEmail("mail/test",[]);
+			$mailer->testMail($_ENV["MAILER_USERNAME"],"test mail",$content);
 		}
 		
 	}

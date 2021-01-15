@@ -47,19 +47,10 @@
         <div class="block block-three"></div>
         <div class="block block-four"></div>
         <a href="javascript:void(0)">
-            <h5 class="title"><h1>Recordatorio desde <?= $_ENV['SITE_NAME'] ?></h1></h5>
+            <h5 class="title"><h1>TEST DE EMAIL PARA <?= $_ENV['SITE_NAME'] ?></h1></h5>
         </a>
         <p class="description">
-            Hola <?= $contact["user"] ?> Tienes un evento programado con el cliente: 
-            <h3><?= $contact["customer"] ?></h3>
-            <ul>
-                <li><strong>Asunto:</strong> <?= $contact["title"] ?></li>
-                <li><strong>Tipo:</strong> <?= $contact["type"] ?></li>
-                <li><strong>Canal:</strong> <?= $contact["method"] ?></li>
-                <li><strong>Inicio:</strong> <?= $contact["datetime_start"] ?></li>
-                <li><strong>Final:</strong> <?= $contact["datetime_end"] ?></li>
-                <li><strong>Descripción:</strong> <?= $contact["description"] ?></li>
-            </ul>
+            Hola este es un test de email para el usuario 
         </p>
         </div>
     <p></p>

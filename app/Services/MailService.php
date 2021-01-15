@@ -20,6 +20,7 @@ class MailService {
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $this->mailer->Port       = $_ENV["MAILER_PORT"];   
         $this->mailer->setFrom($_ENV["MAILER_USERNAME"], $_ENV["SITE_NAME"]);
+        $this->mailer->AddEmbeddedImage($_ENV["STORAGE_IMAGES"].'/email/brand.png', 'brand.png');
         $this->mailer->isHTML(true);   
     }
 
