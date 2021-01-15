@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Nuevo Cliente <a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
+    <h4 class="card-title">Nuevo Cliente <a href="/customer/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
 	<h6 class="card-subtitle mb-2 text-muted">Registrar un nuevo Clientes </h6>
 	<hr>
 	<form method="post" action="/customer/store">

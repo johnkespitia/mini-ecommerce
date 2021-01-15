@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Editar Cliente <span  class="badge badge-primary"><?= $customer["name"] ?></span><a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
+    <h4 class="card-title">Editar Cliente <span  class="badge badge-primary"><?= $customer["name"] ?></span><a href="/customer/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
 	<h6 class="card-subtitle mb-2 text-muted">Editar Cliente registrado </h6>
 	<hr>
 	<form method="post" action="/customer/update/<?= $customer["id"] ?>">

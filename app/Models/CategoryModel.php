@@ -31,7 +31,7 @@ class CategoryModel extends Model{
 
 	public function findBy($where, $singleRow = false){
 		$sql = 'SELECT  c.*, p.id parent_id, p.name parent_name FROM '.self::TABLE.' c
-		left join  '.self::TABLE.' p ON c.parent_category = p.id '.$this->where($where).' ORDER BY c,parent_category asc';
+		left join  '.self::TABLE.' p ON c.parent_category = p.id '.$this->where($where).' ORDER BY c.parent_category asc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;

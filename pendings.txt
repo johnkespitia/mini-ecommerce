@@ -7,12 +7,12 @@
     - Categorías y subcategorías (OK)
     - descripción PRODUCTOS (OK)
     - imagen (OK)
-    - importar xls
+    - importar xls (OK)
     - exportar xls
 - CLIENTES
     - agregar nit o CC y validar único (OK)
-    - importar xls
-    - exportar xls
+    - importar xls (OK)
+    - exportar xls 
     - ver pedidos x CLIENTE (ok)
     - Agregar todas las ciudades (ok)
 - eventos

@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Listado de Productos <a href="/product/new" class=" float-right btn btn-sm btn-primary">Nuevo Producto</a><a href="/product/categories" class=" float-right btn btn-sm btn-info mr-2">Listado de categorías</a> </h4>
+    <h4 class="card-title">Listado de Productos <a href="/product/loadfile" class=" float-right btn btn-sm btn-secondary">Creación masiva de productos</a>  <a href="/product/new" class=" float-right btn btn-sm btn-primary">Nuevo Producto</a><a href="/product/exportxls" class=" float-right btn btn-sm btn-warning mr-2">Exportar todos los productos</a><a href="/product/categories" class=" float-right btn btn-sm btn-info mr-2">Listado de categorías</a> </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los Productos registrados </h6>
       <form action="/product/" method="post" >
         <div class="p-4 bg-secondary input-group">

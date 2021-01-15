@@ -3,6 +3,8 @@
 namespace Controller;
 use Model\ProductModel;
 use Model\CategoryModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ProductController extends Controller{
 	public function __construct(){
@@ -140,10 +142,108 @@ class ProductController extends Controller{
 		header("location:/product/");
 	}
 
+	public function exportxlsAction($params=[]){
+		$productModel = new ProductModel();
+		$productsList = $productModel->all();
+		$spreadsheet = new Spreadsheet();
+ 
+		$spreadsheet->getProperties()
+			->setCreator($_ENV["SITE_NAME"])
+			->setLastModifiedBy($_ENV["SITE_NAME"])
+			->setTitle("Listado completo de productos")
+			->setSubject("Listado completo de productos")
+			->setDescription(
+				"Listado completo de productos"
+			)
+			->setCategory("Productos");
+		$sheet = $spreadsheet->getActiveSheet(); 
+		
+		// Set the value of cell A1 
+		$sheet->setCellValue("A1", "ID"); 
+		$sheet->setCellValue("B1", "Categoría"); 
+		$sheet->setCellValue("C1", "SKU (Identificador)"); 
+		$sheet->setCellValue("D1", "Nombre"); 
+		$sheet->setCellValue("E1", "Descripción"); 
+		$sheet->setCellValue("F1", "Precio"); 
+		$sheet->setCellValue("G1", "Cantidad"); 
+		$sheet->setCellValue("H1", "URL imagen"); 
+		foreach ($productsList as $key => $prd) {
+			$cellNumber=$key+2; 
+			$sheet->setCellValue("A{$cellNumber}", $prd["id"]); 
+			$sheet->setCellValue("B{$cellNumber}", $prd["category_name"]); 
+			$sheet->setCellValue("C{$cellNumber}", $prd["sku"]); 
+			$sheet->setCellValue("D{$cellNumber}", $prd["name"]); 
+			$sheet->setCellValue("E{$cellNumber}", $prd["description"]); 
+			$sheet->setCellValue("F{$cellNumber}", $prd["price"]); 
+			$sheet->setCellValue("G{$cellNumber}", $prd["quantity"]); 
+			$sheet->setCellValue("H{$cellNumber}", $prd["images"]); 
+		}	
+		// Write an .xlsx file  
+		$writer = new Xlsx($spreadsheet); 
+		
+		// Save .xlsx file to the current directory 
+		$filePath = $_ENV["STORAGE_FILES"]."/products/products-export.xlsx";
+		$writer->save($filePath); 
+		header("location:/files/products/products-export.xlsx");
+	}
+
+	public function loadfileAction($params = []){
+		return $this->renderHtml("product/loadfile",[]);
+	}
+
+	public function storexlsAction($params = []){
+		$load_file=$this->uploadXls($_FILES);
+		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+		$spreadsheet = $reader->load($load_file);
+		$sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+		$categoryModel = new CategoryModel();
+		$productModel = new ProductModel();
+		$errorMessage=[];
+		$successMessage=[];
+		foreach ($sheetData as $key => $value) {
+			if($key == 1){
+				continue;
+			}
+			$cat = $categoryModel->findBy([
+				["c.name",CategoryModel::EQUAL,$value["F"]],
+				["c.parent_category",CategoryModel::NOTEQUAL,"NULL"]
+			],true);
+			if(empty($cat->getReturn())){
+				$errorMessage[$key] = "tiene errores, no se pudo insertar Categoría no válida";
+			}else{
+				$data=[
+					"sku"=>$value["A"],
+					"name"=>$value["B"],
+					"price"=>$value["C"],
+					"quantity"=>$value["D"],
+					"description"=>$value["E"],
+					"category_id"=>$cat->getReturn()["id"],
+					"images"=>"",
+				];
+				if(!$productModel->create($data)){
+					$errorMessage[$key] = "tiene errores, no se pudo insertar ".$productModel->getLastError()[2];
+				}else{
+					$successMessage[$key] = "Registrada correctamente";
+				}
+			}
+		}
+		return $this->renderHtml("product/loadfile",["errorMessage"=>$errorMessage,"successMessage"=>$successMessage]);
+	}
+
+
 	protected function uploadProductImage($files){
 			$file_name = $_FILES['images']['name'];
 			$file_tmp =$_FILES['images']['tmp_name'];
-			move_uploaded_file($file_tmp,$_ENV["STORAGE_IMAGES"]."/products/".$file_name);
-			return $_ENV["SITE_URL"]."/images/products/{$file_name}";
+			$nameFile = time().$file_name;
+			move_uploaded_file($file_tmp,$_ENV["STORAGE_IMAGES"]."/products/".$nameFile);
+			return $_ENV["SITE_URL"]."/images/products/{$nameFile}";
+	}
+
+	protected function uploadXls($files){
+		$file_name = $_FILES['load_file']['name'];
+		$file_tmp =$_FILES['load_file']['tmp_name'];
+		$filePath = $_ENV["STORAGE_FILES"]."/products/".time().$file_name;
+		move_uploaded_file($file_tmp,$filePath);
+		return $filePath;
 	}
 }
