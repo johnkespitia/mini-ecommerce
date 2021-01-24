@@ -53,12 +53,17 @@ class ContactController extends Controller{
 		}else{
 			$params["post"]["order_id"] = "NULL";	
 		}
-
+		if(strtotime($params["post"]["datetime_start"])>=strtotime($params["post"]["datetime_end"])){
+			throw new \Exception("La Fecha de Fin debe ser mayor a la fecha de inicio", 401);
+		}
 		$params["post"]["user_id"] = $_SESSION["id"];
 		$contactModel = new ContactModel();
-		$customerList = $contactModel->create($params["post"]);
-		$this->repeatedEvents($params["post"]["repeat_times"],$params["post"]["repeat_period"],$params["post"]);
-		header("location:/contact/");
+		if(!$contactModel->create($params["post"])){
+			throw new \Exception("Error al crear el evento, verifique la información proporcionada", 403);
+		}else{
+			$this->repeatedEvents($params["post"]["repeat_times"],$params["post"]["repeat_period"],$params["post"]);
+			header("location:/contact/");
+		}
 	}
 
 	public function editAction($params = []){
@@ -113,8 +118,14 @@ class ContactController extends Controller{
 		}else{
 			$params["post"]["order_id"] = "NULL";	
 		}
-		$customerList = $contactModel->update($params["post"], $contact["id"]);
-		header("location:/contact/");
+		if(strtotime($params["post"]["datetime_start"])>=strtotime($params["post"]["datetime_end"])){
+			throw new \Exception("La Fecha de Fin debe ser mayor a la fecha de inicio", 401);
+		}
+		if(!$contactModel->update($params["post"], $contact["id"])){
+			throw new \Exception("Error al editar el evento, verifique la información proporcionada", 403);
+		}else{
+			header("location:/contact/");
+		}
 	}
 
 	public function customerAction($params = []){
@@ -256,7 +267,7 @@ class ContactController extends Controller{
 		$params["post"]["contact_id"]=$contactResult["contact_id"];
 		$resultModel = new ContactResultModel();
 		if(!$resultModel->update($params["post"],$contactResult["id"])){
-			throw new \Exception("Error creando el seguimiento, valide los datos", 401);
+			throw new \Exception("Error actualizando el seguimiento, valide los datos", 401);
 		}else{
 			header("location:/contact/results/{$contactResult["contact_id"]}");
 		}

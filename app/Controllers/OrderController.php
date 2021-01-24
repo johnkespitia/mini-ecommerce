@@ -74,8 +74,11 @@ class OrderController extends Controller{
 	public function storeAction($params = []){
 		$orderModel = new OrderModel();
 		$params["post"]["total"]=0;
-		$productsList = $orderModel->create($params["post"]);
-		header("location:/order/");
+		if(!$orderModel->create($params["post"])){
+			throw new \Exception("Error creando la orden, valide los datos", 401);
+		}else{
+			header("location:/order/");
+		}
 	}
 
 
@@ -110,13 +113,16 @@ class OrderController extends Controller{
 		}
 		$orderItemModel->delete($oi["id"]);
 		$order["total"] = $order["total"]-$oi["product_price_sold"];
-		$orderModel->update($order,$order["id"]);
-
+		if(!$orderModel->update($order,$order["id"])){
+			throw new \Exception("No fue posible eliminar el producto al pedido", 401);
+		}
 		$productModel = new ProductModel();
 		$product = $productModel->find($oi["product_id"]);
 		$product["quantity"] = $product["quantity"] + 1;
-		$productModel->update($product,$product["id"]);
 		
+		if(!$productModel->update($product,$product["id"])){
+			throw new \Exception("El producto no fue eliminado del pedido pero la cantidad de productos no pude ser aumentada", 401);
+		}
 		header("location:/order/");
 	}
 
@@ -135,13 +141,22 @@ class OrderController extends Controller{
 		$product["quantity"] = $product["quantity"] - 1;
 		$productModel->update($product,$product["id"]);
 
+		if(!$productModel->update($product,$product["id"])){
+			throw new \Exception("No fue posible agregar el producto al pedido", 401);
+		}
+
 		$orderItemModel = new OrderItemModel();
 		$params["post"]["order_id"]=$order["id"];
 		$params["post"]["product_price_sold"]=$product["price"];
 		$params["post"]["product_status"]="COMPRADO";
-		$orderItemModel->create($params["post"]);
+		if(!$orderItemModel->create($params["post"])){
+			throw new \Exception("no fue posible agregar el producto al pedido", 401);
+		}
 		$order["total"] = $order["total"]+$product["price"];
 		$orderModel->update($order, $order["id"]);
+		if(!$orderItemModel->create($params["post"])){
+			throw new \Exception("no es posile agregar el producto al pedido", 401);
+		}
 		header("location:/order/");
 	}
 
@@ -151,7 +166,9 @@ class OrderController extends Controller{
 		if(empty($order)){
 			throw new \Exception("Pedido no encontrado", 404);
 		}
-		$orderModel->delete($order["id"]);
+		if(!$orderModel->delete($order["id"])){
+			throw new \Exception("No se pudo eliminar el pedido, verifique que no tenga productos agregados o eventos asociados", 404);
+		}
 		header("location:/order/");
 	}
 

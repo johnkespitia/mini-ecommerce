@@ -33,7 +33,8 @@ class CustomerModel extends Model{
 				address='{$fields["address"]}', 
 				city_id={$fields["city_id"]}, 
 				email='{$fields["email"]}',
-				dni = '{$fields["dni"]}'
+				dni = '{$fields["dni"]}',
+				newsletter = '{$fields["newsletter"]}'
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}
@@ -42,5 +43,15 @@ class CustomerModel extends Model{
 		$sql = "DELETE FROM ".self::TABLE." 
 			WHERE id = {$id}";
 		return $this->db->exec($sql);	
+	}
+
+	public function findBy($where, $singleRow = false){
+		$sql = 'SELECT * FROM '.self::TABLE.' '.$this->where($where).' ORDER BY id desc';
+		foreach ($this->db->query($sql) as $row) {
+			if($singleRow)
+				return $row;
+			else
+				yield $row;
+		}	
 	}
 }

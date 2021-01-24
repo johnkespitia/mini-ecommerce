@@ -53,7 +53,7 @@ class ProductController extends Controller{
 	public function newcategoryAction($params = []){
 		$catModel = new CategoryModel();
 		$categories = $catModel->findBy([
-			["parent_category", CategoryModel::ISNULL]
+			["c.parent_category", CategoryModel::ISNULL]
 		]);
 		return $this->renderHtml("category/new",["categories"=>$categories]);
 	}
@@ -65,7 +65,11 @@ class ProductController extends Controller{
 		}else{
 			$params["post"]["images"]="";
 		}
-		$productsList = $productModel->create($params["post"]);
+		if(!$productModel->create($params["post"])){
+			throw new \Exception("No fue posible crear la categoría, verifique la información proporcionada", 404);
+		}else{
+			header("location:/product/");
+		}
 		header("location:/product/");
 	}
 	public function storecategoryAction($params = []){
@@ -74,8 +78,11 @@ class ProductController extends Controller{
 		if(empty($params["post"]["parent_category"])){
 			$params["post"]["parent_category"] = "NULL";
 		}
-		$catModel->create($params["post"]);
-		header("location:/product/");
+		if(!$catModel->create($params["post"])){
+			throw new \Exception("No fue posible crear la categoría, verifique la información proporcionada", 404);
+		}else{
+			header("location:/product/categories");
+		}
 	}
 
 	public function updateAction($params = []){
@@ -89,8 +96,12 @@ class ProductController extends Controller{
 		}else{
 			$params["post"]["images"]="";
 		}
-		$productsList = $productModel->update($params["post"], $product["id"]);
-		header("location:/product/");
+		
+		if(!$productModel->update($params["post"], $product["id"])){
+			throw new \Exception("No fue posible actualizar el producto, verifique la información proporcionada", 404);
+		}else{
+			header("location:/product/");
+		}
 	}
 	
 	public function updatecategoryAction($params = []){
@@ -99,7 +110,11 @@ class ProductController extends Controller{
 		if(empty($category)){
 			throw new \Exception("Categoría no encontrada", 404);
 		}
-		$catModel->update($params["post"], $category["id"]);
+		if(!$catModel->update($params["post"], $category["id"])){
+			throw new \Exception("No fue posible actualizar la categoría, verifique la información proporcionada", 404);
+		}else{
+			header("location:/product/categories");
+		}
 		header("location:/product/categories");
 	}
 
@@ -138,8 +153,11 @@ class ProductController extends Controller{
 		if(empty($product)){
 			throw new \Exception("Producto no encontrado", 404);
 		}
-		$product = $productModel->delete($product["id"]);
-		header("location:/product/");
+		if(!$productModel->delete($product["id"])){
+			throw new \Exception("No fue posible eliminar el producto, verifique no esté asociado a ninguna orden", 404);
+		}else{
+			header("location:/product/");
+		}
 	}
 
 	public function exportxlsAction($params=[]){

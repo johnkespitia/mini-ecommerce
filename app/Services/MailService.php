@@ -24,6 +24,10 @@ class MailService {
         $this->mailer->isHTML(true);   
     }
 
+    public function addAttachment($file){
+        $this->mailer->addAttachment($file);
+    }
+
     public function sendMail($to, $subject, $body){
         $this->mailer->addAddress($to); 
         if($_ENV["SITE_ENVIRONMENT"]=="DEV"){
@@ -34,10 +38,17 @@ class MailService {
         $this->mailer->send();
     }
 
-    public function testMail($to, $subject, $body){
+    public function testMail($to = null, $subject, $body, $bcc = []){
         
         //die;
-        $this->mailer->addAddress($to); 
+        if(!empty($to)){
+            $this->mailer->addAddress($to); 
+        }
+        if(!empty($bcc)){
+            foreach ($bcc as $mailBcc) {
+                $this->mailer->addBcc($mailBcc);
+            }
+        }
         if($_ENV["SITE_ENVIRONMENT"]=="DEV"){
             $this->mailer->addAddress($_ENV["MAILER_USERNAME"]); 
         }

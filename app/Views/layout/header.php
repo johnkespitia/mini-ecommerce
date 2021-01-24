@@ -77,6 +77,11 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="/notification/createnewsletter/">
+							<i class="fas fa-mail-bulk  text-primary"></i> Newsletter
+						</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="/report/">
 							<i class="fas fa-chart-pie  text-primary"></i> Reportes
 						</a>

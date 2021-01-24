@@ -26,8 +26,11 @@ class UserController extends Controller{
 		}
 		$userModel = new UserModel();
 		$params["post"]["password"] = md5($params["post"]["password"]);
-		$userList = $userModel->create($params["post"]);
-		header("location:/user/");
+		if(!$userModel->create($params["post"])){
+			throw new \Exception("No fue posible crear el usuario, verifique la información proporcionada", 404);
+		}else{
+			header("location:/user/");
+		}
 	}
 
 	public function updateAction($params = []){
@@ -40,8 +43,12 @@ class UserController extends Controller{
 			throw new \Exception("User not found", 404);
 		}
 		$params["post"]["password"] = (!empty($params["post"]["password"]))?md5($params["post"]["password"]):$user["password"];
-		$userList = $userModel->update($params["post"], $user["id"]);
-		header("location:/user/");
+		if(!$userModel->update($params["post"], $user["id"])){
+			throw new \Exception("No fue posible actualizar el usuario, verifique la información proporcionada", 404);
+		}else{
+			header("location:/user/");
+		}
+		
 	}
 
 
@@ -66,8 +73,12 @@ class UserController extends Controller{
 		if(empty($user)){
 			throw new \Exception("User not found", 404);
 		}
-		$user = $userModel->delete($user["id"]);
-		header("location:/user/");
+		
+		if(!$userModel->delete($user["id"])){
+			throw new \Exception("No fue posible eliminar el usuario, verifique que no tenga eventos creados", 404);
+		}else{
+			header("location:/user/");
+		}
 	}
 
 }

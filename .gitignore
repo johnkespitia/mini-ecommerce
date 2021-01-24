@@ -1,3 +1,4 @@
 /vendor/
 database/versions.txt
 public/images/products/*
+public/files/attachments/*

@@ -119,8 +119,11 @@ class CustomerController extends Controller{
 
 	public function storeAction($params = []){
 		$customerModel = new CustomerModel();
-		$customerList = $customerModel->create($params["post"]);
-		header("location:/customer/");
+		if(!$customerModel->create($params["post"])){
+			throw new \Exception("Error al registrar el cliente, verifique la información proporcionada", 403);
+		}else{
+			header("location:/customer/");
+		}
 	}
 
 	public function updateAction($params = []){
@@ -129,8 +132,12 @@ class CustomerController extends Controller{
 		if(empty($customer)){
 			throw new \Exception("Cliente no encontrado", 404);
 		}
-		$customerList = $customerModel->update($params["post"], $customer["id"]);
-		header("location:/customer/");
+		$params["post"]["newsletter"] = $customer["newsletter"];
+		if(!$customerModel->update($params["post"], $customer["id"])){
+			throw new \Exception("Error al actualizar el cliente, verifique la información proporcionada", 403);
+		}else{
+			header("location:/customer/");
+		}
 	}
 
 
@@ -151,8 +158,11 @@ class CustomerController extends Controller{
 		if(empty($customer)){
 			throw new \Exception("Cliente no encontrado", 404);
 		}
-		$customer = $customerModel->delete($customer["id"]);
-		header("location:/customer/");
+		if(!$customerModel->delete($customer["id"])){
+			throw new \Exception("Error al eliminar el cliente, verifique que no tenga eventos ni ordenes asociadas antes de borrarlo de lo contrario no podrám eliminar el cliente", 403);
+		}else{
+			header("location:/customer/");
+		}
 	}
 
 	protected function uploadXls($files){

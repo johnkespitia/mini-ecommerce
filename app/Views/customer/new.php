@@ -10,7 +10,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputDNI">Identificación</label>
-	    <input required type="text" maxlength="20" class="form-control" name="dni" id="exampleInputDNI"  value="<?= $customer["dni"] ?>">
+	    <input required type="text" maxlength="20" class="form-control" name="dni" id="exampleInputDNI" >
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1">Email</label>

@@ -21,3 +21,4 @@ users_seed.sql
 18-add-products-field.sql
 18-add-products-field copy.sql
 19-add-clients-field.sql
+20-add-newslewtter-status.sql

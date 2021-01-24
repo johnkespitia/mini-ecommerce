@@ -8,7 +8,65 @@ use Services\MailService;
 
 class NotificationController extends Controller{
 
-	public function sendreminderAction($params){
+
+	public function createnewsletterAction($params=[]){
+		if(empty($_SESSION)){
+			header("location:/");	
+		}
+		$customerModel = new CustomerModel();
+		return $this->renderHtml("notifications/newsletter", $params);
+	}
+	public function unsuscribeAction($params=[]){
+		$customerModel = new CustomerModel();
+		$customerResult= $customerModel->findBy([
+			["email", CustomerModel::EQUAL, $params["params"][2]]
+		], true);
+		$customer = $customerResult->getReturn();
+		if(empty($customer)){
+			return $this->renderEmail("notifications/unsuscribe-locked", ["customer"=>$customer]);
+		}
+		if(!empty($params["post"])){
+			if($params["post"]["confirm"] == "si" && $params["post"]["confirm"] == "si" && $customer["id"] == $params["post"]["id"]){
+				$customer["newsletter"]="0";
+				$customerModel->update($customer, $customer["id"]);
+				return $this->renderEmail("notifications/unsuscribe-confirm", ["customer"=>$customer]);
+			}else{
+				return $this->renderEmail("notifications/unsuscribe-reject", ["customer"=>$customer]);
+			}
+		}else{
+			if($customer["newsletter"]==1){
+				return $this->renderEmail("notifications/unsuscribe", ["customer"=>$customer]);
+			}else{
+				return $this->renderEmail("notifications/unsuscribe-locked", ["customer"=>$customer]);
+			}
+		}
+	}
+
+	public function sendAction($params=[]){
+		if(empty($_SESSION)){
+			header("location:/");	
+		}
+		set_time_limit( 0 );
+		$attachments = $this->uploadAttachmentFiles($_FILES["load_file"]);
+		$customerModel=new CustomerModel();
+		$customerList = $customerModel->findBy([
+			["newsletter", CustomerModel::EQUAL, 1]
+		]);
+		$mailer = new MailService();
+		$emailAddresses=[];
+		foreach ($attachments as $file) {
+			$mailer->addAttachment($file);
+		}
+		foreach ($customerList as $customer) {
+			$contentreplace = str_replace("[[cliente]]", $customer["name"] ,$params["post"]["body"]);
+			$content = $this->renderEmail("mail/newsletter",["body"=>$contentreplace, "email"=>$customer["email"]]);
+			$mailer->sendMail($customer["email"],$params["post"]["subject"],$content);
+		}
+		return $this->renderHtml("notifications/newsletter", ["status"=>"ok"]);
+	}
+
+
+	public function sendreminderAction($params=[]){
 		if($params["params"][2]!= md5($_ENV["SITE_HASH"])){
 			throw new \Exception("Acceso no autorizado", 403);
 		}
@@ -66,6 +124,19 @@ class NotificationController extends Controller{
 			$mailer->sendMail($contact["user_email"],$title,$content);
 		}
 		die;
+	}
+
+	protected function uploadAttachmentFiles($files){
+		$filesList = [];
+		for ($i=0; $i < count($files["name"]); $i++) { 
+			$file_name = $files['name'][$i];
+			$file_tmp = $files['tmp_name'][$i];
+			$nameFile = time().$file_name;
+			$filePath=$_ENV["STORAGE_FILES"]."/attachments/".$nameFile;
+			move_uploaded_file($file_tmp,$filePath);
+			$filesList[]=$filePath;
+		}		
+		return $filesList;
 	}
 	
 }
