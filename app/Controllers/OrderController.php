@@ -139,7 +139,6 @@ class OrderController extends Controller{
 			throw new \Exception("Producto no encontrado", 404);
 		}
 		$product["quantity"] = $product["quantity"] - 1;
-		$productModel->update($product,$product["id"]);
 
 		if(!$productModel->update($product,$product["id"])){
 			throw new \Exception("No fue posible agregar el producto al pedido", 401);
@@ -153,8 +152,7 @@ class OrderController extends Controller{
 			throw new \Exception("no fue posible agregar el producto al pedido", 401);
 		}
 		$order["total"] = $order["total"]+$product["price"];
-		$orderModel->update($order, $order["id"]);
-		if(!$orderItemModel->create($params["post"])){
+		if(!$orderModel->update($order, $order["id"])){
 			throw new \Exception("no es posile agregar el producto al pedido", 401);
 		}
 		header("location:/order/");

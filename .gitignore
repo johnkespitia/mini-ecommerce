@@ -2,3 +2,5 @@
 database/versions.txt
 public/images/products/*
 public/files/attachments/*
+public/files/customers/*
+public/files/products/*
