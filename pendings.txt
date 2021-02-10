@@ -1,0 +1,20 @@
+- Método de contacto en eventos (OK)
+- Registrar seguimiento de eventos (OK)
+- Ver consolidado de eventos (OK)
+- Tarea programada de recordatorio (OK)
+- Reporte de gestión
+- PRODUCTOS:
+    - Categorías y subcategorías (OK)
+    - descripción PRODUCTOS (OK)
+    - imagen (OK)
+    - importar xls (OK)
+    - exportar xls
+- CLIENTES
+    - agregar nit o CC y validar único (OK)
+    - importar xls (OK)
+    - exportar xls 
+    - ver pedidos x CLIENTE (ok)
+    - Agregar todas las ciudades (ok)
+- eventos
+    - evento repetitivo  (OK)
+    - límite de repeticiones (OK)

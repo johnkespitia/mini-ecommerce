@@ -21,7 +21,7 @@ class CustomerModel extends Model{
 	}
 
 	public function create($fields){
-		$sql = "INSERT INTO ".self::TABLE." (name, phone, address, city_id, password, email) values ('{$fields["name"]}','{$fields["phone"]}','{$fields["address"]}',{$fields["city_id"]},'{$fields["password"]}','{$fields["email"]}')";
+		$sql = "INSERT INTO ".self::TABLE." (name, phone, address, city_id, email, dni) values ('{$fields["name"]}','{$fields["phone"]}','{$fields["address"]}',{$fields["city_id"]},'{$fields["email"]}','{$fields["dni"]}')";
 		return $this->db->exec($sql);
 	}
 
@@ -32,8 +32,9 @@ class CustomerModel extends Model{
 				phone='{$fields["phone"]}', 
 				address='{$fields["address"]}', 
 				city_id={$fields["city_id"]}, 
-				password='{$fields["password"]}', 
-				email='{$fields["email"]}'
+				email='{$fields["email"]}',
+				dni = '{$fields["dni"]}',
+				newsletter = '{$fields["newsletter"]}'
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}
@@ -42,5 +43,15 @@ class CustomerModel extends Model{
 		$sql = "DELETE FROM ".self::TABLE." 
 			WHERE id = {$id}";
 		return $this->db->exec($sql);	
+	}
+
+	public function findBy($where, $singleRow = false){
+		$sql = 'SELECT * FROM '.self::TABLE.' '.$this->where($where).' ORDER BY id desc';
+		foreach ($this->db->query($sql) as $row) {
+			if($singleRow)
+				return $row;
+			else
+				yield $row;
+		}	
 	}
 }

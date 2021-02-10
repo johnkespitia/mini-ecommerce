@@ -1,15 +1,19 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
+session_start();
 use Controller\ExceptionController;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
 $dotenv->load();
-error_reporting(E_ALL);
-ini_set("display_errors",1);
-$environment = $_ENV['SITE_ENVIRONMENT'];
+
+if($_ENV['SITE_ENVIRONMENT']=="DEV"){
+	error_reporting(E_ALL);
+	ini_set("display_errors",1);
+}
 try {
 	$url = isset($_SERVER["PATH_INFO"])? explode('/', ltrim($_SERVER["PATH_INFO"],'/')):"/";
 	$controller = "Controller\\".$_ENV['DEFAULT_CONTROLLER']."Controller";	
 	$action = $_ENV['DEFAULT_ACTION']."Action";	
+	
 	if(!empty($url[0]) && $url[0]!="/"){
 		$controller = "Controller\\".ucfirst($url[0])."Controller";	
 	}

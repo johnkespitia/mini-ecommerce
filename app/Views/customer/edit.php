@@ -1,16 +1,20 @@
-<h1>Editar cliente <?= $customer["name"] ?></h1>
-<a href="/customer">Todos los clientes</a>
 <div class="card">
   <div class="card-body">
-    <h2 class="card-title">Datos del cliente</h2>
+    <h4 class="card-title">Editar Cliente <span  class="badge badge-primary"><?= $customer["name"] ?></span><a href="/customer/index" class=" float-right btn btn-sm btn-primary">Listado de Clientes</a></h4>
+	<h6 class="card-subtitle mb-2 text-muted">Editar Cliente registrado </h6>
+	<hr>
 	<form method="post" action="/customer/update/<?= $customer["id"] ?>">
-	  <div class="form-group">
-	    <label for="exampleInputEmail1">Email</label>
-	    <input required type="email" class="form-control" name="email" id="exampleInputEmail1" value="<?= $customer["email"] ?>" >
-	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputName">Nombre</label>
 	    <input required type="text" class="form-control" name="name" id="exampleInputName"  value="<?= $customer["name"] ?>">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputDNI">Identificación</label>
+	    <input required type="text" maxlength="20" class="form-control" name="dni" id="exampleInputDNI"  value="<?= $customer["dni"] ?>">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Email</label>
+	    <input required type="email" class="form-control" name="email" id="exampleInputEmail1" value="<?= $customer["email"] ?>" >
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputPhone">Teléfono</label>
@@ -29,12 +33,7 @@
 	    	} ?>
 	    </select>
 	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
-	    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>
-  </div>
+	</div>
 </div>
-

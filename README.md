@@ -1,6 +1,3 @@
-# mini-ecommerce
-mini-ecommerce test HHISELECTION
-
 ## Install
 Copie la carpeta del proyecto en el document root de su server y ejecute el comando `composer install` 
 
@@ -9,9 +6,9 @@ Configure el virtual host para que la ruta apunte directamente a la carpeta publ
 Ejemplo de vhost:
 ```
 <VirtualHost *:80>
-    ServerName miniecommerce.local
-    DocumentRoot /srv/www/htdocs/mini_ecommerce/public/
-    <Directory "/srv/www/htdocs/mini_ecommerce/public">
+    ServerName checker.local
+    DocumentRoot /srv/www/htdocs/checker_folder/public/
+    <Directory "/srv/www/htdocs/checker_folder/public">
         Options Indexes FollowSymLinks
         AllowOverride All
         <IfModule mod_rewrite.c>
@@ -26,14 +23,14 @@ Ejemplo de vhost:
 
 Ejemplo de etc/hosts
 ```
-127.0.0.1       miniecommerce.local
+127.0.0.1       checker.local
 ```
 
 debe crear una base de datos y configurar el nombre en el archivo `.env` con todos los datos de conexión a la base de datos así:
 
 ```
 DATABASE_HOST=localhost
-DATABASE_DBNAME=mini_ecommerce
+DATABASE_DBNAME=checker_folder
 DATABASE_USER=johnk
 DATABASE_PASSWORD=
 DATABASE_PORT=3306
@@ -67,7 +64,7 @@ Las variables de entorno se registran en el archivo `.env`, puede encontrar un e
 
 ```
 DATABASE_HOST=localhost
-DATABASE_DBNAME=mini_ecommerce
+DATABASE_DBNAME=checker_folder
 ```
 
 Dentro del código se pueden llamar usando la variable global `$_ENV` así:
@@ -81,7 +78,7 @@ El core de la aplicación lo encuentra en la carpeta app pero el entrypoint de l
 
 ### Structure
 ```
-mini_ecommerce 
+checker_folder 
 				-> app
 					-> Controllers
 						-> Controller.php
@@ -93,10 +90,10 @@ mini_ecommerce
 ```
 
 #### Routing
-El enrutamiento se realiza desde la url partiendo desde la url de la carpeta o la definida por un virtual host (ejemplo `http://miniecommerce.local/`) luego se indicará el controller y el action así:
+El enrutamiento se realiza desde la url partiendo desde la url de la carpeta o la definida por un virtual host (ejemplo `http://checker.local/`) luego se indicará el controller y el action así:
 
 ```
-http://miniecommerce.local/home/index/{... parámetros}
+http://checker.local/home/index/{... parámetros}
 ```
 
 La parte de la url `home` realizará un llamado al archivo `app/Controllers/HomeController.php` y la parte `index` invocará el método `indexAction` del controlador indicado.
