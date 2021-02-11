@@ -22,12 +22,12 @@
             <h5 class="title"><h1>Bienvenido a <?= $_ENV['SITE_NAME'] ?></h1></h5>
         </a>
         <p class="description">
-            Gestiona todos tus clientes y ofréceles un mejor servicio postventa 
+            Sistema de gestión para PORTRANS 
         </p>
         </div>
     <p></p>
     <div class="card-description">
-        <p>Inicia sesión ingresando a la sección de <a href="/home/login">Inicio de sesión</a> y empiza a gestionar tus clientes 😎        
+        <p>Inicia sesión ingresando a la sección de <a href="/home/login">Inicio de sesión</a> y empiza a gestionar tus procesos 😎        
     </div>
     </div>
     <div class="card-footer">

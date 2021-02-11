@@ -1,1 +1,0 @@
-alter table contacts add column repeat_period tinyint;

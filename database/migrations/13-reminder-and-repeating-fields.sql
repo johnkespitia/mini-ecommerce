@@ -1,1 +1,0 @@
-alter table contacts add column reminder enum('10 minutos', '1 hora', '1 día', '2 días', '3 días') not null;

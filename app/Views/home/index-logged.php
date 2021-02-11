@@ -22,12 +22,12 @@
             <h5 class="title"><h1>Bienvenido a <?= $_ENV['SITE_NAME'] ?></h1></h5>
         </a>
         <p class="description">
-            Gestiona todos tus clientes y ofréceles un mejor servicio postventa 
+            Gestiona todos tus clientes y ofréceles un mejor servicio 
         </p>
         </div>
     <p></p>
     <div class="card-description">
-        <p>Puedes Registrar clientes, gestionar comunicaciones con clientes (Preventa y Postventa), registrar ventas y demás procesos permitidos en este poderoso CRM 😎        
+        <p>Puedes Registrar clientes, gestionar procesos y demás procesos permitidos aquí 😎        
     </div>
     </div>
     <div class="card-footer">

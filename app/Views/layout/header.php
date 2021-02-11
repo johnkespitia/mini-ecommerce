@@ -36,7 +36,6 @@
 			<div class="sidenav-header  align-items-center">
         		<a class="navbar-brand" href="javascript:void(0)">
 		  			<img src="/themes/<?= $_ENV["THEME"] ?>/assets/img/brand/brand.png" class="navbar-brand-img" alt="">
-		  				<br/>CRM
         		</a>
 			</div>
 		<div class="navbar-inner">
@@ -62,49 +61,30 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/product/">
-						<i class="fas fa-warehouse  text-primary"></i> Productos
+						<a class="nav-link" href="/cartype/">
+						<i class="fa fa-bus text-primary"></i> Tipo de Vehículos
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/order/">
-							<i class="fas fa-archive  text-primary"></i> Pedidos
+						<a class="nav-link" href="/car/">
+							<i class="fa fa-car  text-primary"></i> Vehículos
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/contact/">
-							<i class="fas fa-calendar-alt text-primary"></i> Agenda
+						<a class="nav-link" href="/employe/">
+							<i class="fa fa-address-card  text-primary"></i> Empleados
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/notification/createnewsletter/">
-							<i class="fas fa-mail-bulk  text-primary"></i> Newsletter
+						<a class="nav-link" href="/dailyreport/">
+							<i class="fas fa-calendar-alt text-primary"></i> Reporte Diario
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/report/">
-							<i class="fas fa-chart-pie  text-primary"></i> Reportes
-						</a>
-					</li>
+					
 					<?php } else{ ?>
-					<li class="nav-item">
-						<a class="nav-link" href="/customer/">
-						<i class="fas fa-user-tie  text-primary"></i> Clientes
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/order/">
-							<i class="fas fa-archive  text-primary"></i> Pedidos
-						</a>
-					</li>
-					<li class="nav-item">
+						<li class="nav-item">
 						<a class="nav-link" href="/contact/">
-							<i class="fas fa-calendar-alt text-primary"></i> Agenda
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/report/">
-							<i class="fas fa-chart-pie  text-primary"></i> Reportes
+							<i class="fas fa-calendar-alt text-primary"></i> Reporte Diario
 						</a>
 					</li>
 					<?php

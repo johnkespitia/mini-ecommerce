@@ -1,1 +1,1 @@
-insert into rols (name) values ('ADMIN'),('ADVISOR');
+insert into rols (name) values ('ADMIN'),('NOMINA');

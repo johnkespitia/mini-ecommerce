@@ -1,1 +1,0 @@
-alter table products add column category_id integer;
