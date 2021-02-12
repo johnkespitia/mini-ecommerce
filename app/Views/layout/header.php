@@ -76,7 +76,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/dailyreport/">
+						<a class="nav-link" href="/daily/">
 							<i class="fas fa-calendar-alt text-primary"></i> Reporte Diario
 						</a>
 					</li>

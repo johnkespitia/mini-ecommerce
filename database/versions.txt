@@ -9,3 +9,4 @@
 basic_seed.sql
 rols_seed.sql
 users_seed.sql
+20210211-dailyReport.sql

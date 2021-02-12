@@ -11,8 +11,10 @@ create table daily_reports (
     lunch_time decimal(4,2) not null,
     service_type varchar(20), 
     area varchar(20), 
-	unique(username),
-    unique(email),
-    FOREIGN KEY (rol_id) REFERENCES rols(id)
+    worked_hours decimal(4,2),
+    abble_hours decimal(4,2),
+    km_start integer,
+    km_end integer,
+    people tinyint
 )
 ENGINE=InnoDB;

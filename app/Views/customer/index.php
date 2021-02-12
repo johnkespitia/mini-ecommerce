@@ -35,8 +35,6 @@
 	      ?></td>
 	      <td class="td-actions text-right">
         <a class="btn btn-warning btn-sm" href="/customer/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Editar</a>
-        <a class="btn btn-info btn-sm" href="/contact/customer/<?=$cust["id"]?>"><i class="fas fa-calendar-alt"></i> Ver eventos</a>
-        <a class="btn btn-secondary btn-sm" href="/order/customer/<?=$cust["id"]?>"><i class="ni ni-cart"></i> Ver pedidos</a>
         <a class="btn btn-danger btn-sm" href="/customer/delete/<?=$cust["id"]?>"><i class="fas fa-trash"></i> Eliminar</a>
 	      </td>
 	    </tr>
