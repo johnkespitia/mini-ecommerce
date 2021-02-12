@@ -3,7 +3,7 @@
     <div class="header-body text-center mb-7">
       <div class="row justify-content-center">
         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-          <img src="/themes/<?= $_ENV["THEME"] ?>/assets/img/brand/brand.png" class="img-fluid" />
+          <img src="/themes/<?= $_ENV["THEME"] ?>/assets/img/brand/centralbanner.jpg" class="img-fluid" />
         </div>
       </div>
     </div>
