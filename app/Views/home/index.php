@@ -1,9 +1,12 @@
-<div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+<div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9" style="    background-image: url(/themes/argon/assets/img/brand/centralbanner1.jpg) !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    height: 700px;">
   <div class="container">
     <div class="header-body text-center mb-7">
       <div class="row justify-content-center">
         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-          <img src="/themes/<?= $_ENV["THEME"] ?>/assets/img/brand/centralbanner.jpg" class="img-fluid" />
         </div>
       </div>
     </div>
