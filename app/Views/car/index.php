@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Listado de vehiculos <a href="/car/new" class=" float-right btn btn-sm btn-primary">Nuevo Vehículo</a></h4>
+    <h4 class="card-title">Listado de vehiculos <a href="/car/loadfile" class=" float-right btn btn-sm btn-secondary">Creación masiva de Vehículos</a> <a href="/car/exportxls" class=" float-right btn btn-sm btn-warning mr-2">Exportar todos los Vehículos</a> <a href="/car/new" class=" float-right btn btn-sm btn-primary mr-2">Nuevo Vehículo</a> </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los vehículos registrados</h6>
     <table class="table">
     <thead class="thead-light">

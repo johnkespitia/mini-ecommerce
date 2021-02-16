@@ -3,6 +3,8 @@
 namespace Controller;
 use Model\CarTypeModel;
 use Model\CarModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class CarController extends Controller{
 
 	public function indexAction($params = []){
@@ -88,4 +90,91 @@ class CarController extends Controller{
 		}
 	}
 
+	public function exportxlsAction($params=[]){
+		$carModel = new CarModel();
+		$carList = $carModel->all();
+		$spreadsheet = new Spreadsheet();
+ 
+		$spreadsheet->getProperties()
+			->setCreator($_ENV["SITE_NAME"])
+			->setLastModifiedBy($_ENV["SITE_NAME"])
+			->setTitle("Listado completo de Vehículos")
+			->setSubject("Listado completo de Vehículos")
+			->setDescription(
+				"Listado completo de Vehículos"
+			)
+			->setCategory("Vehículos");
+		$sheet = $spreadsheet->getActiveSheet(); 
+		
+		// Set the value of cell A1 
+		$sheet->setCellValue("A1", "ID"); 
+		$sheet->setCellValue("B1", "Tipo de Vehículo"); 
+		$sheet->setCellValue("C1", "Placa"); 
+		$sheet->setCellValue("D1", "Modelo"); 
+		$sheet->setCellValue("E1", "Estado"); 
+		foreach ($carList as $key => $prd) {
+			$cellNumber=$key+2; 
+			$sheet->setCellValue("A{$cellNumber}", $prd["id"]); 
+			$sheet->setCellValue("B{$cellNumber}", $prd["type_car"]); 
+			$sheet->setCellValue("C{$cellNumber}", $prd["dni"]); 
+			$sheet->setCellValue("D{$cellNumber}", $prd["modelo"]); 
+			$sheet->setCellValue("E{$cellNumber}", ($prd["status"]==1)?"Activo":"Inactivo"); 
+		}	
+		// Write an .xlsx file  
+		$writer = new Xlsx($spreadsheet); 
+		
+		// Save .xlsx file to the current directory 
+		$filePath = $_ENV["STORAGE_FILES"]."/cars/cars-export.xlsx";
+		$writer->save($filePath); 
+		header("location:/files/cars/cars-export.xlsx");
+	}
+
+	protected function uploadXls($files){
+		$file_name = $_FILES['load_file']['name'];
+		$file_tmp =$_FILES['load_file']['tmp_name'];
+		$filePath = $_ENV["STORAGE_FILES"]."/cars/".time().$file_name;
+		move_uploaded_file($file_tmp,$filePath);
+		return $filePath;
+	}
+
+	public function loadfileAction($params = []){
+		return $this->renderHtml("car/loadfile",[]);
+	}
+
+
+	public function storexlsAction($params = []){
+		$load_file=$this->uploadXls($_FILES);
+		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+		$spreadsheet = $reader->load($load_file);
+		$sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+		$carTypeModel = new CarTypeModel();
+		$customerModel = new CarModel();
+		$errorMessage=[];
+		$successMessage=[];
+		foreach ($sheetData as $key => $value) {
+			if($key == 1){
+				continue;
+			}
+			$carType = $carTypeModel->findBy([
+				["name",CarTypeModel::EQUAL,$value["C"]]
+			],true);
+			
+			if(empty($carType->getReturn())){
+				$errorMessage[$key] = "tiene errores, no se pudo insertar, tipo de vehículo no válido";
+			}else{
+				$data=[
+					"dni"=>$value["A"],
+					"modelo"=>$value["B"],
+					"status"=>$value["D"],
+					"car_type"=>$carType->getReturn()["id"],
+				];
+				if(!$customerModel->create($data)){
+					$errorMessage[$key] = "tiene errores, no se pudo insertar ".$customerModel->getLastError()[2];
+				}else{
+					$successMessage[$key] = "Registrada correctamente";
+				}
+			}
+		}
+		return $this->renderHtml("car/loadfile",["errorMessage"=>$errorMessage,"successMessage"=>$successMessage]);
+	}
 }

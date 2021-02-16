@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Listado de Empleados <a href="/employe/new" class=" float-right btn btn-sm btn-primary">Nuevo Empleado</a></h4>
+    <h4 class="card-title">Listado de Empleados <a href="/employe/loadfile" class=" float-right btn btn-sm btn-secondary">Creación masiva de Empleados</a> <a href="/employe/exportxls" class=" float-right btn btn-sm btn-warning mr-2">Exportar todos los Empleados</a> <a href="/employe/new" class=" float-right btn btn-sm btn-primary mr-2">Nuevo Empleado</a>  </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los empleados registrados </h6>
     <table class="table">
     <thead class="thead-light">
