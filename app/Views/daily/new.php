@@ -9,22 +9,6 @@
 	    <input required type="date" class="form-control" name="date_report" id="exampleInputName" >
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputCity">Cliente</label>
-	    <select class="form-control" name="customer" id="exampleInputCity" >
-	    	<?php foreach ($customerList as $c) {
-	    		echo "<option value='{$c["id"]}'>{$c["name"]}</option>";
-	    	} ?>
-	    </select>
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputCity">Vehículo</label>
-	    <select class="form-control" name="car" id="exampleInputCity" >
-	    	<?php foreach ($carList as $c) {
-	    		echo "<option value='{$c["id"]}'>{$c["dni"]}</option>";
-	    	} ?>
-	    </select>
-	  </div>
-	  <div class="form-group">
 	    <label for="exampleInputCity">Empleado</label>
 	    <select class="form-control" name="employe" id="exampleInputCity" >
 	    	<?php foreach ($employeList as $c) {
@@ -33,12 +17,20 @@
 	    </select>
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Tipo de servicio</label>
-	    <input required type="text" class="form-control" name="service_type" id="exampleInputEmail1" >
+	    <label for="exampleInputCity">Origen</label>
+	    <select class="form-control" name="origin" id="exampleInputCity" >
+	    	<?php foreach ($ctyList as $c) {
+	    		echo "<option value='{$c["id"]}'>{$c["name"]}</option>";
+	    	} ?>
+	    </select>
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Area</label>
-	    <input required type="text" class="form-control" name="area" id="exampleInputEmail1" >
+	    <label for="exampleInputCity">Destino</label>
+	    <select class="form-control" name="destination" id="exampleInputCity" >
+	    	<?php foreach ($ctyList as $c) {
+	    		echo "<option value='{$c["id"]}'>{$c["name"]}</option>";
+	    	} ?>
+	    </select>
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputDNI1">Hora de inicio AM</label>
@@ -80,6 +72,7 @@
 	    <label for="exampleInputDNI">Cantidad Personas</label>
 	    <input required type="number" step="1" class="form-control" name="people" id="exampleInputDNI" >
 	  </div>
+	  <input type="hidden" class="form-control" name="report_group" value="<?=$group["id"]?>" id="exampleInputDNI" >
 	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>
 	</div>

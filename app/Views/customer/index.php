@@ -2,7 +2,7 @@
   <div class="card-body">
     <h4 class="card-title">Listado de Clientes <a href="/customer/loadfile" class=" float-right btn btn-sm btn-secondary">Creación masiva de clientes</a> <a href="/customer/exportxls" class=" float-right btn btn-sm btn-warning mr-2">Exportar todos los clientes</a> <a href="/customer/new" class=" float-right btn btn-sm btn-primary mr-2">Nuevo Cliente</a></h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los clientes registrados </h6>
-    <table class="table">
+    <table class="table table-responsive">
     <thead class="thead-light">
         <tr>
             <th class="text-center">#</th>

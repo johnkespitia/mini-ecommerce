@@ -2,7 +2,7 @@
   <div class="card-body">
     <h4 class="card-title">Listado de usuarios <a href="/user/new" class=" float-right btn btn-sm btn-primary">Nuevo Usuario</a></h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los usuarios registrados </h6>
-    <table class="table">
+    <table class="table table-responsive">
     <thead class="thead-light">
         <tr>
             <th class="text-center">#</th>

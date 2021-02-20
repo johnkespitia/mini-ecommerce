@@ -1,8 +1,10 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Reporte Diario <a href="/daily/exportxls" class=" float-right btn btn-sm btn-warning mr-2">Exportar listado</a> <a href="/daily/new" class=" float-right btn btn-sm btn-primary mr-2">Reportar día</a></h4>
+    <h4 class="card-title">Reporte Diario  <span  class="badge badge-primary">Planilla # <?= $group["id"] ?> Fecha <?= $group["date_report"] ?> </span>
+    <a href="/daily/exportxls/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-warning mr-2">Exportar listado</a> <a href="/daily/loadfile/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-success mr-2">Reportar por excel</a> <a href="/daily/new/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-primary mr-2">Reportar día</a> 
+    <a href="/report/index" class=" float-right btn btn-sm btn-info mr-2">Listado de Planillas</a> </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los reportes diarios registrados </h6>
-    <table class="table">
+    <table class="table table-responsive">
       <thead class="thead-light">
         <tr>
           <th class="text-center">#</th>
@@ -10,8 +12,8 @@
           <th>Cliente</th>
           <th>Empleado</th>
           <th>Vehículo</th>
-          <th>Tipo de Servicio</th>
-          <th>Area</th>
+          <th>Origen</th>
+          <th>Destino</th>
           <th class="text-right">Acciones</th>
         </tr>
       </thead>
@@ -25,8 +27,8 @@
             <td><?= $cust["client_name"] ?></td>
             <td><?= $cust["employe_name"] ?></td>
             <td><?= $cust["car_dni"] ?></td>
-            <td><?= $cust["service_type"] ?></td>
-            <td><?= $cust["area"] ?></td>
+            <td><?= $cust["origin_name"] ?></td>
+            <td><?= $cust["destination_name"] ?></td>
             <td class="td-actions text-right">
               <a class="btn btn-warning btn-sm" href="/daily/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
               <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#productsModal<?= $cust["id"] ?>"><i class="fas fa-eye"></i> Ver detalles</button>
@@ -35,7 +37,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Detalle de Reporte Diario</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Detalle de Reporte Diario Planilla #<?=$group["id"]?></h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -45,6 +47,8 @@
                       <ul style="text-align: left;">
                         <li><strong>Tipo de Servicio</strong> <?= $cust["service_type"] ?></li>
                         <li><strong>Área</strong> <?= $cust["area"] ?></li>
+                        <li><strong>Origen</strong> <?= $cust["origin_name"] ?></li>
+                        <li><strong>Destino</strong> <?= $cust["destination_name"] ?></li>
                         <li><strong>Hora de Inicio AM</strong> <?= $cust["time_start_am"] ?></li>
                         <li><strong>Hora de Final AM</strong> <?= $cust["time_end_am"] ?></li>
                         <li><strong>Tiempo de Almuerzo</strong> <?= $cust["lunch_time"] ?></li>

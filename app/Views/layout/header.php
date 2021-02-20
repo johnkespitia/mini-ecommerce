@@ -76,15 +76,15 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/daily/">
-							<i class="fas fa-calendar-alt text-primary"></i> Reporte Diario
+						<a class="nav-link" href="/report/">
+							<i class="fas fa-clipboard-list text-primary"></i> Planillas
 						</a>
 					</li>
 					
 					<?php } else{ ?>
 						<li class="nav-item">
-						<a class="nav-link" href="/contact/">
-							<i class="fas fa-calendar-alt text-primary"></i> Reporte Diario
+						<a class="nav-link" href="/report/">
+							<i class="fas fa-clipboard-list text-primary"></i> Planilla
 						</a>
 					</li>
 					<?php

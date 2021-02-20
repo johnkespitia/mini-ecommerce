@@ -1,30 +1,12 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Editar Reporte diario <span  class="badge badge-primary"><?= $daily["date_report"] ?></span><a href="/daily/index" class=" float-right btn btn-sm btn-primary">Listado de reportes</a></h4>
+    <h4 class="card-title">Editar Reporte diario <span  class="badge badge-primary"><?= $daily["date_report"] ?></span><a href="/daily/index/<?= $daily["report_group"] ?>" class=" float-right btn btn-sm btn-primary">Listado de reportes</a></h4>
 	<h6 class="card-subtitle mb-2 text-muted">Editar reporte diario registrado </h6>
 	<hr>
 	<form method="post" action="/daily/update/<?= $daily["id"] ?>">
-	<div class="form-group">
+		<div class="form-group">
 	    <label for="exampleInputName">Fecha</label>
 	    <input required type="date" value="<?= $daily["date_report"] ?>" class="form-control" name="date_report" id="exampleInputName" >
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputCity">Cliente</label>
-	    <select class="form-control" name="customer" id="exampleInputCity" >
-	    	<?php foreach ($customerList as $c) {
-				$selected = ($c["id"]==$daily["customer"])?"selected='selected'":"";
-	    		echo "<option {$selected} value='{$c["id"]}'>{$c["name"]}</option>";
-	    	} ?>
-	    </select>
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputCity">Vehículo</label>
-	    <select class="form-control" name="car" id="exampleInputCity" >
-	    	<?php foreach ($carList as $c) {
-				$selected = ($c["id"]==$daily["car"])?"selected='selected'":"";
-	    		echo "<option value='{$c["id"]}'>{$c["dni"]}</option>";
-	    	} ?>
-	    </select>
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputCity">Empleado</label>
@@ -36,12 +18,22 @@
 	    </select>
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Tipo de servicio</label>
-	    <input required type="text"  value="<?= $daily["service_type"] ?>" class="form-control" name="service_type" id="exampleInputEmail1" >
+	    <label for="exampleInputCity">Origen</label>
+	    <select class="form-control" name="origin" id="exampleInputCity" >
+	    	<?php foreach ($ctyList as $c) {
+				$selected = ($c["id"]==$daily["origin"])?"selected='selected'":"";
+	    		echo "<option {$selected} value='{$c["id"]}'>{$c["name"]}</option>";
+	    	} ?>
+	    </select>
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Area</label>
-	    <input required type="text" value="<?= $daily["area"] ?>" class="form-control" name="area" id="exampleInputEmail1" >
+	    <label for="exampleInputCity">Destino</label>
+	    <select class="form-control" name="destination" id="exampleInputCity" >
+	    	<?php foreach ($ctyList as $c) {
+				$selected = ($c["id"]==$daily["destination"])?"selected='selected'":"";
+	    		echo "<option {$selected} value='{$c["id"]}'>{$c["name"]}</option>";
+	    	} ?>
+	    </select>
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputDNI1">Hora de inicio AM</label>
@@ -83,6 +75,7 @@
 	    <label for="exampleInputDNI">Cantidad Personas</label>
 	    <input required type="number" step="1" class="form-control" name="people" id="exampleInputDNI" value="<?= $daily["people"] ?>">
 	  </div>
+	  <input type="hidden" class="form-control" name="report_group" value="<?=$daily["report_group"]?>" id="exampleInputDNI" >
 	  <button type="submit" class="btn btn-primary">Guardar</button>
 	</form>
 	</div>
