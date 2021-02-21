@@ -134,7 +134,8 @@ class DailyController extends Controller
 		$sheet->setCellValue("Z1", "Horas de disponibilidad");
 		$sheet->setCellValue("AA1", "Kilometros Inicio");
 		$sheet->setCellValue("AB1", "Kilometros final");
-		$sheet->setCellValue("AC1", "Cantidad de personas");
+		$sheet->setCellValue("AC1", "Total Kilometros");
+		$sheet->setCellValue("AD1", "Cantidad de personas");
 		foreach ($dailyList as $key => $prd) {
 			$cellNumber = $key + 2;
 			$sheet->setCellValue("A{$cellNumber}", $prd["report_group"]);
@@ -168,7 +169,8 @@ class DailyController extends Controller
 			$sheet->setCellValue("Z{$cellNumber}", $prd["abble_hours"]);
 			$sheet->setCellValue("AA{$cellNumber}", $prd["km_start"]);
 			$sheet->setCellValue("AB{$cellNumber}", $prd["km_end"]);
-			$sheet->setCellValue("AC{$cellNumber}", $prd["people"]);
+			$sheet->setCellValue("AC{$cellNumber}", $prd["km_end"]-$prd["km_start"]);
+			$sheet->setCellValue("AD{$cellNumber}", $prd["people"]);
 		}
 		// Write an .xlsx file  
 		$writer = new Xlsx($spreadsheet);

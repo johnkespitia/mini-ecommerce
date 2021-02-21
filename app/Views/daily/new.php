@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Nuevo Reporte <a href="/daily/index" class=" float-right btn btn-sm btn-primary">Listado de Reportes Diarios</a></h4>
+    <h4 class="card-title">Nuevo Reporte <a href="/daily/index/<?=$group["id"]?>" class=" float-right btn btn-sm btn-primary">Listado de Reportes Diarios</a></h4>
 	<h6 class="card-subtitle mb-2 text-muted">Registrar un reporte diario </h6>
 	<hr>
 	<form method="post" action="/daily/store">
