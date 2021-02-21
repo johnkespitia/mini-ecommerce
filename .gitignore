@@ -4,5 +4,6 @@ public/images/products/*
 public/files/attachments/*
 public/files/customers/*
 public/files/products/*
+public/files/daily/*
 ./.env
 .env
