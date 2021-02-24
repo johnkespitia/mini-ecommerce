@@ -5,7 +5,7 @@ use Model\CarTypeModel;
 class CartypeController extends Controller{
 
 	public function indexAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Tipo de Vehículos"]["Listar"])){
 			header("location:/");	
 		}
 		$carTypeModel = new CarTypeModel();
@@ -14,14 +14,14 @@ class CartypeController extends Controller{
 	}
 
 	public function newAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Tipo de Vehículos"]["Crear"])){
 			header("location:/");	
 		}
 		return $this->renderHtml("cartypes/new", []);
 	}
 
 	public function storeAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Tipo de Vehículos"]["Crear"])){
 			header("location:/");	
 		}
 		$carType = new CarTypeModel();
@@ -33,7 +33,7 @@ class CartypeController extends Controller{
 	}
 
 	public function updateAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+		if(empty($_SESSION["permissions"]["Tipo de Vehículos"]["Editar"])){
 			header("location:/");	
 		}
 		$carType = new CarTypeModel();
@@ -51,7 +51,7 @@ class CartypeController extends Controller{
 
 
 	public function editAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+		if(empty($_SESSION["permissions"]["Tipo de Vehículos"]["Editar"])){
 			header("location:/");	
 		}
 		$CarType = new CarTypeModel();
@@ -63,7 +63,7 @@ class CartypeController extends Controller{
 	}
 
 	public function deleteAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Tipo de Vehículos"]["Eliminar"])){
 			header("location:/");	
 		}
 		$CarType = new CarTypeModel();

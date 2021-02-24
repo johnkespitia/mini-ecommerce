@@ -5,7 +5,7 @@ use Model\UserModel;
 class UserController extends Controller{
 
 	public function indexAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Usuarios"]["Listar"])){
 			header("location:/");	
 		}
 		$userModel = new UserModel();
@@ -14,14 +14,14 @@ class UserController extends Controller{
 	}
 
 	public function newAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Usuarios"]["Crear"])){
 			header("location:/");	
 		}
 		return $this->renderHtml("user/new", []);
 	}
 
 	public function storeAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Usuarios"]["Crear"])){
 			header("location:/");	
 		}
 		$userModel = new UserModel();
@@ -34,7 +34,7 @@ class UserController extends Controller{
 	}
 
 	public function updateAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+		if(empty($_SESSION["permissions"]["Usuarios"]["Editar"])){
 			header("location:/");	
 		}
 		$userModel = new UserModel();
@@ -53,7 +53,7 @@ class UserController extends Controller{
 
 
 	public function editAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+		if(empty($_SESSION["permissions"]["Usuarios"]["Editar"])){
 			header("location:/");	
 		}
 		$userModel = new UserModel();
@@ -65,7 +65,7 @@ class UserController extends Controller{
 	}
 
 	public function deleteAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Usuarios"]["Eliminar"])){
 			header("location:/");	
 		}
 		$userModel = new userModel();

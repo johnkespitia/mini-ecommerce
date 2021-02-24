@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class EmployeController extends Controller{
 
 	public function indexAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Empleados"]["Listar"])){
 			header("location:/");	
 		}
 		$employeModel = new EmployeModel();
@@ -16,14 +16,14 @@ class EmployeController extends Controller{
 	}
 
 	public function newAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Empleados"]["Crear"])){
 			header("location:/");	
 		}
 		return $this->renderHtml("employe/new", []);
 	}
 
 	public function storeAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Empleados"]["Crear"])){
 			header("location:/");	
 		}
 		$employeModel = new EmployeModel();
@@ -35,7 +35,7 @@ class EmployeController extends Controller{
 	}
 
 	public function updateAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+		if(empty($_SESSION["permissions"]["Empleados"]["Editar"])){
 			header("location:/");	
 		}
 		$employe = new EmployeModel();
@@ -53,7 +53,7 @@ class EmployeController extends Controller{
 
 
 	public function editAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 && $_SESSION["rol_id"] != $params["params"][2] )){
+		if(empty($_SESSION["permissions"]["Empleados"]["Editar"])){
 			header("location:/");	
 		}
 		$employe = new EmployeModel();
@@ -65,7 +65,7 @@ class EmployeController extends Controller{
 	}
 
 	public function deleteAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Empleados"]["Eliminar"])){
 			header("location:/");	
 		}
 		$CarType = new EmployeModel();
@@ -90,11 +90,17 @@ class EmployeController extends Controller{
 	}
 
 	public function loadfileAction($params = []){
+		if(empty($_SESSION["permissions"]["Empleados"]["Crear"])){
+			header("location:/");	
+		}
 		return $this->renderHtml("employe/loadfile",[]);
 	}
 
 
 	public function storexlsAction($params = []){
+		if(empty($_SESSION["permissions"]["Empleados"]["Crear"])){
+			header("location:/");	
+		}
 		$load_file=$this->uploadXls($_FILES);
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 		$spreadsheet = $reader->load($load_file);
@@ -123,6 +129,9 @@ class EmployeController extends Controller{
 	}
 
 	public function exportxlsAction($params=[]){
+		if(empty($_SESSION["permissions"]["Empleados"]["Listar"])){
+			header("location:/");	
+		}
 		$empModel = new EmployeModel();
 		$empList = $empModel->all();
 		$spreadsheet = new Spreadsheet();

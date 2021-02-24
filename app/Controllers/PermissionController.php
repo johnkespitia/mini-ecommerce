@@ -6,7 +6,7 @@ use Model\PermissionModel;
 class PermissionController extends Controller{
 
 	public function indexAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Roles"]["Listar"])){
 			header("location:/");	
 		}
 		$RolModel = new RolModel();
@@ -22,7 +22,7 @@ class PermissionController extends Controller{
 	}
 
 	public function newAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Roles"]["Crear"])){
 			header("location:/");	
 		}
 		$RolModel = new RolModel();
@@ -34,7 +34,7 @@ class PermissionController extends Controller{
 	}
 
 	public function storeAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Roles"]["Listar"])){
 			header("location:/");	
 		}
 		$permissionModel = new PermissionModel();
@@ -46,7 +46,7 @@ class PermissionController extends Controller{
 	}
 
 	public function updateAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 )){
+		if(empty($_SESSION["permissions"]["Roles"]["Editar"])){
 			header("location:/");	
 		}
 		$permissionModel = new PermissionModel();
@@ -64,7 +64,7 @@ class PermissionController extends Controller{
 
 
 	public function editAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 )){
+		if(empty($_SESSION["permissions"]["Roles"]["Editar"])){
 			header("location:/");	
 		}
 		$permissionModel = new PermissionModel();

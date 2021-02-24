@@ -7,12 +7,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CustomerController extends Controller{
-	public function __construct(){
-		if(empty($_SESSION)){
+
+	public function indexAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Listar"])){
 			header("location:/");	
 		}
-	}
-	public function indexAction($params = []){
 		$customerModel = new CustomerModel();
 		$customerList = $customerModel->all();
 		$cityModel = new CityModel();
@@ -25,16 +24,25 @@ class CustomerController extends Controller{
 	}
 
 	public function newAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Crear"])){
+			header("location:/");	
+		}
 		$cityModel = new CityModel();
 		$cityList = $cityModel->all();
 		return $this->renderHtml("customer/new", ["cityList"=>$cityList]);
 	}
 
 	public function loadfileAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Crear"])){
+			header("location:/");	
+		}
 		return $this->renderHtml("customer/loadfile",[]);
 	}
 	
 	public function storexlsAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Crear"])){
+			header("location:/");	
+		}
 		$load_file=$this->uploadXls($_FILES);
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 		$spreadsheet = $reader->load($load_file);
@@ -73,6 +81,9 @@ class CustomerController extends Controller{
 	}
 
 	public function exportxlsAction($params=[]){
+		if(empty($_SESSION["permissions"]["Clientes"]["Listar"])){
+			header("location:/");	
+		}
 		$customerModel = new CustomerModel();
 		$cityModel = new CityModel();
 		$customerList = $customerModel->all();
@@ -118,6 +129,9 @@ class CustomerController extends Controller{
 	}
 
 	public function storeAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Crear"])){
+			header("location:/");	
+		}
 		$customerModel = new CustomerModel();
 		if(!$customerModel->create($params["post"])){
 			throw new \Exception("Error al registrar el cliente, verifique la información proporcionada", 403);
@@ -127,6 +141,9 @@ class CustomerController extends Controller{
 	}
 
 	public function updateAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Editar"])){
+			header("location:/");	
+		}
 		$customerModel = new CustomerModel();
 		$customer = $customerModel->find($params["params"][2]);
 		if(empty($customer)){
@@ -142,6 +159,9 @@ class CustomerController extends Controller{
 
 
 	public function editAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Editar"])){
+			header("location:/");	
+		}
 		$customerModel = new CustomerModel();
 		$customer = $customerModel->find($params["params"][2]);
 		if(empty($customer)){
@@ -153,6 +173,9 @@ class CustomerController extends Controller{
 	}
 
 	public function deleteAction($params = []){
+		if(empty($_SESSION["permissions"]["Clientes"]["Eliminar"])){
+			header("location:/");	
+		}
 		$customerModel = new CustomerModel();
 		$customer = $customerModel->find($params["params"][2]);
 		if(empty($customer)){

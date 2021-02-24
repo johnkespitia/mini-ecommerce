@@ -11,14 +11,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class DailyController extends Controller
 {
-	public function __construct()
-	{
-		if (empty($_SESSION)) {
-			header("location:/");
-		}
-	}
 	public function indexAction($params = [])
 	{
+		if (empty($_SESSION["permissions"]["Planillas"]["Listar"])) {
+			header("location:/");
+		}
 		$modelGroupReport = new ReportGroupModel();
 		$group = $modelGroupReport->find($params["params"][2]);
 
@@ -32,7 +29,7 @@ class DailyController extends Controller
 		foreach ($genemploye as $c) {
 			$employeList[] = $c;
 		}
-		
+
 		$ctyeModel = new CityModel();
 		$genCty = $ctyeModel->all();
 		$ctyList = [];
@@ -43,11 +40,14 @@ class DailyController extends Controller
 
 		$dailyModel = new DailyModel();
 		$dailyList = $dailyModel->findBy([["d.report_group", DailyModel::EQUAL, $params["params"][2]]]);
-		return $this->renderHtml("daily/index", ["ctyList"=>$ctyList , "employeList" => $employeList, "dailyList" => $dailyList, "group" => $group]);
+		return $this->renderHtml("daily/index", ["ctyList" => $ctyList, "employeList" => $employeList, "dailyList" => $dailyList, "group" => $group]);
 	}
 
 	public function newAction($params = [])
 	{
+		if (empty($_SESSION["permissions"]["Planillas"]["Crear"])) {
+			header("location:/");
+		}
 		$modelGroupReport = new ReportGroupModel();
 		$group = $modelGroupReport->find($params["params"][2]);
 
@@ -60,18 +60,21 @@ class DailyController extends Controller
 		foreach ($genemploye as $c) {
 			$employeList[] = $c;
 		}
-		
+
 		$ctyeModel = new CityModel();
 		$genCty = $ctyeModel->all();
 		$ctyList = [];
 		foreach ($genCty as $c) {
 			$ctyList[] = $c;
 		}
-		return $this->renderHtml("daily/new", ["ctyList"=>$ctyList , "employeList" => $employeList, "group" => $group]);
+		return $this->renderHtml("daily/new", ["ctyList" => $ctyList, "employeList" => $employeList, "group" => $group]);
 	}
 
 	public function storeAction($params = [])
 	{
+		if (empty($_SESSION["permissions"]["Planillas"]["Crear"])) {
+			header("location:/");
+		}
 		$dailyModel = new DailyModel();
 		if (!$dailyModel->create($params["post"])) {
 			throw new \Exception("Error al registrar el reporte diario, verifique la información proporcionada", 403);
@@ -82,6 +85,9 @@ class DailyController extends Controller
 
 	public function exportxlsAction($params = [])
 	{
+		if (empty($_SESSION["permissions"]["Planillas"]["Listar"])) {
+			header("location:/");
+		}
 		$modelGroupReport = new ReportGroupModel();
 		$group = $modelGroupReport->find($params["params"][2]);
 
@@ -90,7 +96,7 @@ class DailyController extends Controller
 		}
 		$dailyModel = new DailyModel();
 		$dailyList = $dailyModel->findBy([[
-			"report_group",DailyModel::EQUAL,$params["params"][2]
+			"report_group", DailyModel::EQUAL, $params["params"][2]
 		]]);
 		$spreadsheet = new Spreadsheet();
 
@@ -142,8 +148,8 @@ class DailyController extends Controller
 			$sheet->setCellValue("B{$cellNumber}", $prd["id"]);
 			$sheet->setCellValue("C{$cellNumber}",  \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel(strtotime($prd["date_report"])));
 			$sheet->getStyle("C{$cellNumber}")
-			->getNumberFormat()
-			->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDDSLASH);
+				->getNumberFormat()
+				->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDDSLASH);
 			$sheet->setCellValue("D{$cellNumber}", $prd["service_type"]);
 			$sheet->setCellValue("E{$cellNumber}", $prd["area"]);
 			$sheet->setCellValue("F{$cellNumber}", $prd["origin_name"]);
@@ -169,7 +175,7 @@ class DailyController extends Controller
 			$sheet->setCellValue("Z{$cellNumber}", $prd["abble_hours"]);
 			$sheet->setCellValue("AA{$cellNumber}", $prd["km_start"]);
 			$sheet->setCellValue("AB{$cellNumber}", $prd["km_end"]);
-			$sheet->setCellValue("AC{$cellNumber}", $prd["km_end"]-$prd["km_start"]);
+			$sheet->setCellValue("AC{$cellNumber}", $prd["km_end"] - $prd["km_start"]);
 			$sheet->setCellValue("AD{$cellNumber}", $prd["people"]);
 		}
 		// Write an .xlsx file  
@@ -181,10 +187,13 @@ class DailyController extends Controller
 		header("location:/files/daily/daily-export.xlsx");
 	}
 
-	
+
 
 	public function updateAction($params = [])
 	{
+		if(empty($_SESSION["permissions"]["Planillas"]["Editar"])){
+			header("location:/");	
+		}
 		$dailyModel = new DailyModel();
 		$daily = $dailyModel->find($params["params"][2]);
 		if (empty($daily)) {
@@ -193,20 +202,23 @@ class DailyController extends Controller
 		if (!$dailyModel->update($params["post"], $daily["id"])) {
 			throw new \Exception("Error al actualizar el reporte, verifique la información proporcionada", 403);
 		} else {
-			header("location:/daily/index/".$params["post"]["report_group"]);
+			header("location:/daily/index/" . $params["post"]["report_group"]);
 		}
 	}
 
 
 	public function editAction($params = [])
 	{
+		if(empty($_SESSION["permissions"]["Planillas"]["Editar"])){
+			header("location:/");	
+		}
 		$employeModel = new EmployeModel();
 		$genemploye = $employeModel->all();
 		$employeList = [];
 		foreach ($genemploye as $c) {
 			$employeList[] = $c;
 		}
-		
+
 		$ctyeModel = new CityModel();
 		$genCty = $ctyeModel->all();
 		$ctyList = [];
@@ -218,11 +230,14 @@ class DailyController extends Controller
 		if (empty($daily)) {
 			throw new \Exception("Reporte diario no encontrado", 404);
 		}
-		return $this->renderHtml("daily/edit", ["ctyList"=>$ctyList ,"employeList" => $employeList, "daily" => $daily]);
+		return $this->renderHtml("daily/edit", ["ctyList" => $ctyList, "employeList" => $employeList, "daily" => $daily]);
 	}
 
 	public function deleteAction($params = [])
 	{
+		if(empty($_SESSION["permissions"]["Planillas"]["Eliminar"])){
+			header("location:/");	
+		}
 		$dailyModel = new DailyModel();
 		$daily = $dailyModel->find($params["params"][2]);
 		if (empty($daily)) {
@@ -235,8 +250,12 @@ class DailyController extends Controller
 		}
 	}
 
-	public function storexlsAction($params = []){
-		$load_file=$this->uploadXls($_FILES);
+	public function storexlsAction($params = [])
+	{
+		if(empty($_SESSION["permissions"]["Planillas"]["Crear"])){
+			header("location:/");	
+		}
+		$load_file = $this->uploadXls($_FILES);
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 		$spreadsheet = $reader->load($load_file);
 		$sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, false, true);
@@ -244,74 +263,79 @@ class DailyController extends Controller
 		$employeModel = new EmployeModel();
 		$dailyModel = new DailyModel();
 		$groupReportModel = new ReportGroupModel();
-		$errorMessage=[];
-		$successMessage=[];
+		$errorMessage = [];
+		$successMessage = [];
 		foreach ($sheetData as $key => $value) {
-			if($key == 1){
+			if ($key == 1) {
 				continue;
 			}
 			$origin = $cityModel->findBy([
-				["name",CityModel::EQUAL,$value["C"]]
-			],true);
+				["name", CityModel::EQUAL, $value["C"]]
+			], true);
 			$destination = $cityModel->findBy([
-				["name",CityModel::EQUAL,$value["D"]]
-			],true);
+				["name", CityModel::EQUAL, $value["D"]]
+			], true);
 			$employee = $employeModel->findBy([
-				["dni",EmployeModel::EQUAL,$value["E"]]
-			],true);
+				["dni", EmployeModel::EQUAL, $value["E"]]
+			], true);
 			$planilla = $groupReportModel->find($value["A"]);
-			
-			if(empty($origin->getReturn())){
+
+			if (empty($origin->getReturn())) {
 				$errorMessage[$key] = "tiene errores, no se pudo insertar Ciudad Origen no válida";
-			}elseif(empty($destination->getReturn())){
+			} elseif (empty($destination->getReturn())) {
 				$errorMessage[$key] = "tiene errores, no se pudo insertar Ciudad Destino no válida";
-			}elseif(empty($employee->getReturn())){
+			} elseif (empty($employee->getReturn())) {
 				$errorMessage[$key] = "tiene errores, no se pudo insertar Empleado no válido";
-			}elseif(empty($planilla)){
+			} elseif (empty($planilla)) {
 				$errorMessage[$key] = "tiene errores, no se pudo insertar Planilla no válida";
-			}else{
-				$data=[
-					"report_group"=>$planilla["id"],
-					"origin"=>$origin->getReturn()["id"],
-					"destination"=>$destination->getReturn()["id"],
-					"employe"=>$employee->getReturn()["id"],
-					"date_report"=> date("Y-m-d",\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value["B"],$_ENV["APP_TIMEZONE"])),
-					"time_start_am"=>$value["F"],
-					"time_end_am"=>$value["G"],
-					"time_start_pm"=>$value["I"],
-					"time_end_pm"=>$value["J"],
-					"lunch_time"=>$value["H"],
-					"worked_hours"=>$value["K"],
-					"abble_hours"=>$value["L"],
-					"km_start"=>$value["M"],
-					"km_end"=>$value["N"],
-					"people"=>$value["O"],
+			} else {
+				$data = [
+					"report_group" => $planilla["id"],
+					"origin" => $origin->getReturn()["id"],
+					"destination" => $destination->getReturn()["id"],
+					"employe" => $employee->getReturn()["id"],
+					"date_report" => date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value["B"], $_ENV["APP_TIMEZONE"])),
+					"time_start_am" => $value["F"],
+					"time_end_am" => $value["G"],
+					"time_start_pm" => $value["I"],
+					"time_end_pm" => $value["J"],
+					"lunch_time" => $value["H"],
+					"worked_hours" => $value["K"],
+					"abble_hours" => $value["L"],
+					"km_start" => $value["M"],
+					"km_end" => $value["N"],
+					"people" => $value["O"],
 				];
-				if(!$dailyModel->create($data)){
-					$errorMessage[$key] = "tiene errores, no se pudo insertar ".$dailyModel->getLastError()[2];
-				}else{
+				if (!$dailyModel->create($data)) {
+					$errorMessage[$key] = "tiene errores, no se pudo insertar " . $dailyModel->getLastError()[2];
+				} else {
 					$successMessage[$key] = "Registrados correctamente";
 				}
 			}
 		}
-		return $this->renderHtml("daily/loadfile",["errorMessage"=>$errorMessage,"successMessage"=>$successMessage,"group"=>$planilla]);
+		return $this->renderHtml("daily/loadfile", ["errorMessage" => $errorMessage, "successMessage" => $successMessage, "group" => $planilla]);
 	}
 
-	public function loadfileAction($params = []){
+	public function loadfileAction($params = [])
+	{
+		if(empty($_SESSION["permissions"]["Planillas"]["Crear"])){
+			header("location:/");	
+		}
 		$modelGroupReport = new ReportGroupModel();
 		$group = $modelGroupReport->find($params["params"][2]);
 
 		if (empty($group)) {
 			throw new \Exception("Planilla no encontrada", 404);
 		}
-		return $this->renderHtml("daily/loadfile",["group"=>$group]);
-	} 
+		return $this->renderHtml("daily/loadfile", ["group" => $group]);
+	}
 
-	protected function uploadXls($files){
+	protected function uploadXls($files)
+	{
 		$file_name = $_FILES['load_file']['name'];
-		$file_tmp =$_FILES['load_file']['tmp_name'];
-		$filePath = $_ENV["STORAGE_FILES"]."/daily/".time().$file_name;
-		move_uploaded_file($file_tmp,$filePath);
+		$file_tmp = $_FILES['load_file']['tmp_name'];
+		$filePath = $_ENV["STORAGE_FILES"] . "/daily/" . time() . $file_name;
+		move_uploaded_file($file_tmp, $filePath);
 		return $filePath;
 	}
 }

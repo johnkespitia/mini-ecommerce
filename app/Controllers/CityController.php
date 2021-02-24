@@ -5,7 +5,7 @@ use Model\CityModel;
 class CityController extends Controller{
 
 	public function indexAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Ciudades"]["Listar"])){
 			header("location:/");	
 		}
 		$cityModel = new CityModel();
@@ -14,14 +14,14 @@ class CityController extends Controller{
 	}
 
 	public function newAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Ciudades"]["Crear"])){
 			header("location:/");	
 		}
 		return $this->renderHtml("city/new", []);
 	}
 
 	public function storeAction($params = []){
-		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
+		if(empty($_SESSION["permissions"]["Ciudades"]["Crear"])){
 			header("location:/");	
 		}
 		$cityModel = new CityModel();
@@ -33,7 +33,7 @@ class CityController extends Controller{
 	}
 
 	public function updateAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 )){
+		if(empty($_SESSION["permissions"]["Ciudades"]["Editar"])){
 			header("location:/");	
 		}
 		$cityModel = new CityModel();
@@ -51,7 +51,7 @@ class CityController extends Controller{
 
 
 	public function editAction($params = []){
-		if(empty($_SESSION) || ($_SESSION["rol_id"] != 1 )){
+		if(empty($_SESSION["permissions"]["Ciudades"]["Editar"])){
 			header("location:/");	
 		}
 		$cityModel = new CityModel();
