@@ -29,4 +29,18 @@ class CityModel extends Model{
 		    return $row;
 		}	
 	}
+	public function create($fields){
+		$sql = "INSERT INTO ".self::TABLE." (name) value (
+			'".addslashes($fields["name"])."'
+		)";
+		return $this->db->exec($sql);
+	}
+
+	public function update($fields, $id){
+		$sql = "UPDATE ".self::TABLE." 
+			SET
+			name = '".addslashes($fields["name"])."'
+			WHERE id = {$id}";
+		return $this->db->exec($sql);
+	}
 }
