@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Listado de tipos de vehiculos <a href="/cartype/new" class=" float-right btn btn-sm btn-primary">Nuevo Tipo de Vehículo</a></h4>
+    <h4 class="card-title">Listado de tipos de vehiculos 
+    <a class="btn btn-warning btn-sm" href="/car/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
+      <a href="/cartype/new" class=" float-right btn btn-sm btn-primary">Nuevo Tipo de Vehículo</a>
+    </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los tipos de vehículos registrados</h6>
     <table class="table table-responsive">
     <thead class="thead-light">
