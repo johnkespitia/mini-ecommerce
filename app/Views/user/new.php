@@ -19,8 +19,11 @@
 			<div class="form-group">
 				<label for="exampleInputRol">Rol</label>
 				<select class="form-control" name="rol_id" id="exampleInputRol" >
-					<option value='2'>Asesor</option>
-					<option value='1'>Administrador</option>
+					<?php 
+					foreach($rolsList as $rol){
+						echo "<option value='{$rol['id']}'>{$rol['name']}</option>";
+					}
+					?>
 				</select>
 			</div>
 			<div class="form-group">

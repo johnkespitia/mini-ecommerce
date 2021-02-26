@@ -1,10 +1,10 @@
 <div class="card">
-  <div class="card-body">
-	<h4 class="card-title">Editar Usuario <span  class="badge badge-primary"><?= $customer["name"] ?></span>
-		<?php if($_SESSION["rol_id"] == 1 ){ ?> <a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de usuarios</a> <?php } ?> 
-	</h4>
-	<h6 class="card-subtitle mb-2 text-muted">Editar usuario registrado </h6>
-	<hr>
+	<div class="card-body">
+		<h4 class="card-title">Editar Usuario <span class="badge badge-primary"><?= $customer["name"] ?></span>
+			<?php if (!empty($_SESSION["permissions"]["Usuarios"]["Listar"]) && $_SESSION["permissions"]["Usuarios"]["Listar"] == 1) { ?> <a href="/user/index" class=" float-right btn btn-sm btn-primary">Listado de usuarios</a> <?php } ?>
+		</h4>
+		<h6 class="card-subtitle mb-2 text-muted">Editar usuario registrado </h6>
+		<hr>
 		<form method="post" action="/user/update/<?= $customer["id"] ?>">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Email</label>
@@ -20,23 +20,30 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputRol">Rol</label>
-				<select class="form-control" name="rol_id" id="exampleInputRol" >
-					<option <?= ($customer["rol_id"]=="2")?"selected":"" ?> value='2'>Asesor</option>
-					<option <?= ($customer["rol_id"]=="1")?"selected":"" ?> value='1'>Administrador</option>
+				<select class="form-control" name="rol_id" id="exampleInputRol">
+					<?php
+					foreach ($rolsList as $rol) {
+						if (empty($_SESSION["permissions"]["Usuarios"]["Editar"]) && $_SESSION["rol_id"] != $rol["id"]) {
+							continue;
+						}
+						$selected = ($rol["id"] == $customer["rol_id"]) ? "selected" : "";
+						echo "<option {$selected} value='{$rol['id']}'>{$rol['name']}</option>";
+					}
+					?>
 				</select>
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">Password</label>
 				<input type="password" class="form-control" name="password" id="exampleInputPassword1">
 			</div>
-			<?php if($_SESSION["rol_id"] == 1 ){ ?>
-			<div class="form-group">
-				<label for="exampleInputStatus">Estado</label>
-				<select class="form-control" name="status" id="exampleInputStatus" >
-					<option <?= ($customer["status"]=="1")?"selected":"" ?> value='1'>Activo</option>
-					<option <?= ($customer["status"]=="2")?"selected":"" ?> value='2'>Inactivo</option>
-				</select>
-			</div>
+			<?php if ($_SESSION["rol_id"] == 1) { ?>
+				<div class="form-group">
+					<label for="exampleInputStatus">Estado</label>
+					<select class="form-control" name="status" id="exampleInputStatus">
+						<option <?= ($customer["status"] == "1") ? "selected" : "" ?> value='1'>Activo</option>
+						<option <?= ($customer["status"] == "2") ? "selected" : "" ?> value='2'>Inactivo</option>
+					</select>
+				</div>
 			<?php } ?>
 			<button type="submit" class="btn btn-primary">Guardar</button>
 		</form>

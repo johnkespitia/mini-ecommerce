@@ -1,6 +1,10 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Listado de Roles <span  class="badge badge-primary"><?= $rol["name"] ?></span> <a href="/permission/new/<?= $rol["id"] ?>" class=" float-right btn btn-sm btn-primary mr-2">Nuevo Permiso</a> </h4>
+    <h4 class="card-title">Listado de Roles <span  class="badge badge-primary"><?= $rol["name"] ?></span> 
+    <?php if (!empty($_SESSION["permissions"]["Roles"]["Crear"]) && $_SESSION["permissions"]["Roles"]["Crear"] == 1) { ?>
+      <a href="/permission/new/<?= $rol["id"] ?>" class=" float-right btn btn-sm btn-primary mr-2">Nuevo Permiso</a> 
+      <?php } ?>
+    </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los roles registrados</h6>
     <table class="table table-responsive">
     <thead class="thead-light">
@@ -22,7 +26,9 @@
           <td><?= $cust["permission"] ?></td>
           <td><?= $cust["status"]==1?"<span class='badge bg-success text-dark'>Activo</span>":"<span class='badge bg-danger text-dark'>Inactivo</span>" ?></td>
           <td class="td-actions text-right">
+          <?php if (!empty($_SESSION["permissions"]["Roles"]["Editar"]) && $_SESSION["permissions"]["Roles"]["Editar"] == 1) { ?>
             <a class="btn btn-warning btn-sm" href="/permission/edit/<?=$cust["id"]?>"><i class="fas fa-pencil-alt"></i> Editar</a>
+            <?php } ?>
           </td>
         </tr>
         <?php

@@ -2,11 +2,12 @@
 
 namespace Controller;
 use Model\UserModel;
+use Model\RolModel;
 class UserController extends Controller{
 
 	public function indexAction($params = []){
-		if(empty($_SESSION["permissions"]["Usuarios"]["Listar"])){
-			header("location:/");	
+		if (empty($_SESSION["permissions"]["Usuarios"]["Listar"])) {
+			header("location:/");
 		}
 		$userModel = new UserModel();
 		$userList = $userModel->all();
@@ -14,14 +15,16 @@ class UserController extends Controller{
 	}
 
 	public function newAction($params = []){
-		if(empty($_SESSION["permissions"]["Usuarios"]["Crear"])){
+		$rolModel = new RolModel;
+		$rolsList = $rolModel->all();
+		if (empty($_SESSION["permissions"]["Usuarios"]["Crear"])) {
 			header("location:/");	
 		}
-		return $this->renderHtml("user/new", []);
+		return $this->renderHtml("user/new", ["rolsList"=>$rolsList]);
 	}
 
 	public function storeAction($params = []){
-		if(empty($_SESSION["permissions"]["Usuarios"]["Crear"])){
+		if (empty($_SESSION["permissions"]["Usuarios"]["Crear"])) {
 			header("location:/");	
 		}
 		$userModel = new UserModel();
@@ -34,8 +37,10 @@ class UserController extends Controller{
 	}
 
 	public function updateAction($params = []){
-		if(empty($_SESSION["permissions"]["Usuarios"]["Editar"])){
-			header("location:/");	
+		if(empty($_SESSION["permissions"]["Usuarios"]["Crear"])){
+			if(($_SESSION["id"] != $params["params"][2] )){
+				header("location:/");	
+			}
 		}
 		$userModel = new UserModel();
 		$user = $userModel->find($params["params"][2]);
@@ -54,18 +59,22 @@ class UserController extends Controller{
 
 	public function editAction($params = []){
 		if(empty($_SESSION["permissions"]["Usuarios"]["Editar"])){
-			header("location:/");	
+			if(($_SESSION["id"] != $params["params"][2] )){
+				header("location:/");	
+			}
 		}
+		$rolModel = new RolModel;
+		$rolsList = $rolModel->all();
 		$userModel = new UserModel();
 		$user = $userModel->find($params["params"][2]);
 		if(empty($user)){
 			throw new \Exception("User not found", 404);
 		}
-		return $this->renderHtml("user/edit", ["customer"=>$user]);
+		return $this->renderHtml("user/edit", ["customer"=>$user, "rolsList"=>$rolsList]);
 	}
 
 	public function deleteAction($params = []){
-		if(empty($_SESSION["permissions"]["Usuarios"]["Eliminar"])){
+		if(empty($_SESSION) || $_SESSION["rol_id"] != 1){
 			header("location:/");	
 		}
 		$userModel = new userModel();

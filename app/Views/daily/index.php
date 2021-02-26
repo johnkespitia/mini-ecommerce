@@ -1,8 +1,13 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Reporte Diario  <span  class="badge badge-primary">Planilla # <?= $group["id"] ?> Fecha <?= $group["date_report"] ?> </span>
-    <a href="/daily/exportxls/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-warning mr-2">Exportar listado</a> <a href="/daily/loadfile/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-success mr-2">Reportar por excel</a> <a href="/daily/new/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-primary mr-2">Reportar día</a> 
-    <a href="/report/index" class=" float-right btn btn-sm btn-info mr-2">Listado de Planillas</a> </h4>
+    <h4 class="card-title">Reporte Diario <span class="badge badge-primary">Planilla # <?= $group["id"] ?> Fecha <?= $group["date_report"] ?> </span>
+
+      <a href="/daily/exportxls/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-warning mr-2">Exportar listado</a> <a href="/daily/loadfile/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-success mr-2">Reportar por excel</a>
+      <?php if (!empty($_SESSION["permissions"]["Planillas"]["Crear"]) && $_SESSION["permissions"]["Planillas"]["Crear"] == 1) { ?>
+        <a href="/daily/new/<?= $group["id"] ?>" class=" float-right btn btn-sm btn-primary mr-2">Reportar día</a>
+        <a href="/report/index" class=" float-right btn btn-sm btn-info mr-2">Listado de Planillas</a>
+      <?php } ?>
+    </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los reportes diarios registrados </h6>
     <table class="table table-responsive">
       <thead class="thead-light">
@@ -30,14 +35,16 @@
             <td><?= $cust["origin_name"] ?></td>
             <td><?= $cust["destination_name"] ?></td>
             <td class="td-actions text-right">
-              <a class="btn btn-warning btn-sm" href="/daily/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
+              <?php if (!empty($_SESSION["permissions"]["Planillas"]["Editar"]) && $_SESSION["permissions"]["Planillas"]["Editar"] == 1) { ?>
+                <a class="btn btn-warning btn-sm" href="/daily/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
+              <?php } ?>
               <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#productsModal<?= $cust["id"] ?>"><i class="fas fa-eye"></i> Ver detalles</button>
               <!-- Modal -->
               <div class="modal fade" id="productsModal<?= $cust["id"] ?>" tabindex="-1" role="dialog" aria-labelledby="productsModal<?= $cust["id"] ?>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Detalle de Reporte Diario Planilla #<?=$group["id"]?></h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Detalle de Reporte Diario Planilla #<?= $group["id"] ?></h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
