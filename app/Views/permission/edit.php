@@ -17,6 +17,10 @@
 					<option <?=($permission["module"] == "Vehículos")?"selected":"" ?> value="Vehículos">Vehículos</option>
 					<option <?=($permission["module"] == "Empleados")?"selected":"" ?> value="Empleados">Empleados</option>
 					<option <?=($permission["module"] == "Planillas")?"selected":"" ?> value="Planillas">Planillas</option>
+					<option <?=($permission["module"] == "Combustible")?"selected":"" ?> value="Combustible">Combustible</option>
+					<option <?=($permission["module"] == "Línea")?"selected":"" ?> value="Línea">Línea</option>
+					<option <?=($permission["module"] == "Marca")?"selected":"" ?> value="Marca">Marca</option>
+					<option <?=($permission["module"] == "Tipo de Servicio")?"selected":"" ?> value="Marca">Tipo de Servicio</option>
 				</select>
 			</div>
 			<div class="form-group">

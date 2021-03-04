@@ -49,7 +49,8 @@ class UserController extends Controller{
 		}
 		$params["post"]["password"] = (!empty($params["post"]["password"]))?md5($params["post"]["password"]):$user["password"];
 		if(!$userModel->update($params["post"], $user["id"])){
-			throw new \Exception("No fue posible actualizar el usuario, verifique la información proporcionada", 404);
+			print_r($params["post"]); die;
+			throw new \Exception("No fue posible actualizar el usuario, verifique la información proporcionada ".print_r($userModel->getLastError(), 1), 404);
 		}else{
 			header("location:/user/");
 		}

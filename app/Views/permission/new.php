@@ -15,6 +15,10 @@
 					<option value="Vehículos">Vehículos</option>
 					<option value="Empleados">Empleados</option>
 					<option value="Planillas">Planillas</option>
+					<option value="Combustible">Combustible</option>
+					<option value="Línea">Línea</option>
+					<option value="Marca">Marca</option>
+					<option value="Tipo de Servicio">Tipo de Servicio</option>
 				</select>
 			</div>
 			<div class="form-group">

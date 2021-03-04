@@ -97,6 +97,38 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Combustible"]["Listar"]) && $_SESSION["permissions"]["Combustible"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/fueltype/">
+														<i class="fas fa-gas-pump text-primary"></i> Combustible
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Línea"]["Listar"]) && $_SESSION["permissions"]["Línea"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/line/">
+														<i class="fas fa-truck-monster text-primary"></i> Lineas de Vehículos
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Marca"]["Listar"]) && $_SESSION["permissions"]["Marca"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/brand/">
+														<i class="fas fa-copyright text-primary"></i> Marcas de Vehículos
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Tipo de Servicio"]["Listar"]) && $_SESSION["permissions"]["Tipo de Servicio"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/servicetype/">
+														<i class="fas fa-flag-checkered text-primary"></i> Tipo de Servicio
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>
@@ -151,7 +183,7 @@
 								<div id="operaciones" class="collapse" aria-labelledby="headingThree" data-parent="#menuAccordion">
 									<div class="card-body">
 										<ul class="navbar-nav">
-											<?php if (isset($_SESSION["permissions"]["Empleados"]["Listar"]) && $_SESSION["permissions"]["Empleados"]["Listar"] == 1) {
+											<?php if (isset($_SESSION["permissions"]["Planillas"]["Listar"]) && $_SESSION["permissions"]["Planillas"]["Listar"] == 1) {
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/report/">

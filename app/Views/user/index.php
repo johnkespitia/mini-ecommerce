@@ -26,7 +26,7 @@
             <th class="text-center" scope="row"><?= $cust["id"] ?></th>
             <td><?= $cust["username"] ?></td>
             <td><?= $cust["name"] ?></td>
-            <td><?= $cust["rol_id"] == 1 ? "Administrador" : "Asesor" ?></td>
+            <td><?= $cust["rol_name"] ?></td>
             <td><?= $cust["email"] ?></td>
             <td><?= $cust["status"] == 1 ? "<span class='badge bg-success text-dark'>Activo</span>" : "<span class='badge bg-danger text-dark'>Inactivo</span>" ?></td>
             <td class="td-actions text-right">

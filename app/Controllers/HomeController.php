@@ -36,9 +36,9 @@ class HomeController extends Controller
 		if (!empty($params["post"])) {
 			$userModel = new UserModel;
 			$userSearch = $userModel->findBy([
-				["email", UserModel::CONTAIN, $params["post"]["email"]],
-				["password", UserModel::CONTAIN, md5($params["post"]["password"])],
-				["status", UserModel::EQUAL, 1],
+				["u.email", UserModel::CONTAIN, $params["post"]["email"]],
+				["u.password", UserModel::CONTAIN, md5($params["post"]["password"])],
+				["u.status", UserModel::EQUAL, 1],
 			], true);
 			$userAuth = $userSearch->getReturn();
 			if (!empty($userAuth)) {

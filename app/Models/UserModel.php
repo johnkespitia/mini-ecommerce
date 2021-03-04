@@ -7,21 +7,21 @@ class UserModel extends Model{
 	const TABLE = "users";
 
 	public function all(){
-		$sql = 'SELECT * FROM '.self::TABLE.' ORDER BY id';
+		$sql = 'SELECT u.*, r.name rol_name FROM '.self::TABLE.' u inner join rols r on r.id=u.rol_id  ORDER BY u.id';
 		foreach ($this->db->query($sql) as $row) {
 		    yield $row;
 		}
 	}
 
 	public function find($id){
-		$sql = 'SELECT * FROM '.self::TABLE.' WHERE id='.$id.' ORDER BY id';
+		$sql = 'SELECT u.*, r.name rol_name FROM '.self::TABLE.' u inner join rols r on r.id=u.rol_id WHERE u.id='.$id.'  ORDER BY u.id';
 		foreach ($this->db->query($sql) as $row) {
 		    return $row;
 		}	
 	}
 
 	public function findBy($where, $singleRow = false){
-		$sql = 'SELECT * FROM '.self::TABLE.' '.$this->where($where).' ORDER BY id desc';
+		$sql = 'SELECT u.*, r.name rol_name FROM '.self::TABLE.' u inner join rols r on r.id=u.rol_id '.$this->where($where).' ORDER BY u.id desc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;
