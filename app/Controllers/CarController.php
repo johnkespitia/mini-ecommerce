@@ -4,6 +4,10 @@ namespace Controller;
 
 use Model\CarTypeModel;
 use Model\CarModel;
+use Model\FuelTypeModel;
+use Model\ServiceTypeModel;
+use Model\BrandModel;
+use Model\LineModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -29,7 +33,21 @@ class CarController extends Controller
 		$carTypeList = $carTypeModel->findBy([
 			["status", CarTypeModel::EQUAL, 1]
 		]);
-		return $this->renderHtml("car/new", ["carTypeList" => $carTypeList]);
+
+		$BrandModel = new BrandModel();
+		$BrandList = $BrandModel->all();
+		$ServiceTypeModel = new ServiceTypeModel();
+		$ServiceTypeList = $ServiceTypeModel->all();
+		$LineModel = new LineModel();
+		$LineList = $LineModel->all();
+		$FuelTypeModel = new FuelTypeModel();
+		$FuelTypeList = $FuelTypeModel->all();
+
+
+		return $this->renderHtml("car/new", [
+			"carTypeList" => $carTypeList, "BrandList" => $BrandList, "ServiceTypeList" => $ServiceTypeList,
+			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList
+		]);
 	}
 
 	public function storeAction($params = [])
@@ -77,7 +95,18 @@ class CarController extends Controller
 		if (empty($user)) {
 			throw new \Exception("Vehículo no encontrado", 404);
 		}
-		return $this->renderHtml("car/edit", ["customer" => $user, "carTypeList" => $carTypeList]);
+		$BrandModel = new BrandModel();
+		$BrandList = $BrandModel->all();
+		$ServiceTypeModel = new ServiceTypeModel();
+		$ServiceTypeList = $ServiceTypeModel->all();
+		$LineModel = new LineModel();
+		$LineList = $LineModel->all();
+		$FuelTypeModel = new FuelTypeModel();
+		$FuelTypeList = $FuelTypeModel->all();
+		return $this->renderHtml("car/edit", [
+			"customer" => $user, "carTypeList" => $carTypeList, "BrandList" => $BrandList, "ServiceTypeList" => $ServiceTypeList,
+			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList
+		]);
 	}
 
 	public function deleteAction($params = [])
@@ -123,14 +152,22 @@ class CarController extends Controller
 		$sheet->setCellValue("B1", "Tipo de Vehículo");
 		$sheet->setCellValue("C1", "Placa");
 		$sheet->setCellValue("D1", "Modelo");
-		$sheet->setCellValue("E1", "Estado");
+		$sheet->setCellValue("E1", "Marca");
+		$sheet->setCellValue("F1", "Combustible");
+		$sheet->setCellValue("G1", "Línea");
+		$sheet->setCellValue("H1", "Tipo de Servicio");
+		$sheet->setCellValue("I1", "Estado");
 		foreach ($carList as $key => $prd) {
 			$cellNumber = $key + 2;
 			$sheet->setCellValue("A{$cellNumber}", $prd["id"]);
 			$sheet->setCellValue("B{$cellNumber}", $prd["type_car"]);
 			$sheet->setCellValue("C{$cellNumber}", $prd["dni"]);
 			$sheet->setCellValue("D{$cellNumber}", $prd["modelo"]);
-			$sheet->setCellValue("E{$cellNumber}", ($prd["status"] == 1) ? "Activo" : "Inactivo");
+			$sheet->setCellValue("E{$cellNumber}", $prd["brand_name"]);
+			$sheet->setCellValue("F{$cellNumber}", $prd["fuel_type"]);
+			$sheet->setCellValue("G{$cellNumber}", $prd["line_category_name"]);
+			$sheet->setCellValue("H{$cellNumber}", $prd["service_type_name"]);
+			$sheet->setCellValue("I{$cellNumber}", ($prd["status"] == 1) ? "Activo" : "Inactivo");
 		}
 		// Write an .xlsx file  
 		$writer = new Xlsx($spreadsheet);
@@ -179,21 +216,61 @@ class CarController extends Controller
 			$carType = $carTypeModel->findBy([
 				["name", CarTypeModel::EQUAL, $value["C"]]
 			], true);
+			$BrandModel = new BrandModel();
+			$Brand = $BrandModel->findBy([
+				["name", BrandModel::EQUAL, $value["D"]]
+			], true);
+			$ServiceTypeModel = new ServiceTypeModel();
+			$ServiceType = $ServiceTypeModel->findBy([
+				["name", ServiceTypeModel::EQUAL, $value["E"]]
+			], true);
+			$LineModel = new LineModel();
+			$LineList = $LineModel->findBy([
+				["name", LineModel::EQUAL, $value["F"]]
+			], true);
+			$FuelTypeModel = new FuelTypeModel();
+			$FuelTypeList = $FuelTypeModel->findBy([
+				["name", LineModel::EQUAL, $value["G"]]
+			], true);
 
 			if (empty($carType->getReturn())) {
-				$errorMessage[$key] = "tiene errores, no se pudo insertar, tipo de vehículo no válido";
+				$errorMessage[$key] = "Tipo de Vehículo inválido, no se pudo insertar, tipo de vehículo no válido";
+			} else if (empty($Brand->getReturn())) {
+				$errorMessage[$key] = "Marca inválida, no se pudo insertar, tipo de vehículo no válido";
+			} else if (empty($ServiceType->getReturn())) {
+				$errorMessage[$key] = "Tipo de Servicio inválido, no se pudo insertar, tipo de vehículo no válido";
+			} else if (empty($LineList->getReturn())) {
+				$errorMessage[$key] = "Línea de Vehículo inválida, no se pudo insertar, tipo de vehículo no válido";
+			} else if (empty($FuelTypeList->getReturn())) {
+				$errorMessage[$key] = "Combustible inválido, no se pudo insertar, tipo de vehículo no válido";
 			} else {
 				$data = [
 					"dni" => $value["A"],
 					"modelo" => $value["B"],
-					"status" => $value["D"],
 					"car_type" => $carType->getReturn()["id"],
+					"brand" => $Brand->getReturn()["id"],
+					"fuel_type" => $FuelTypeList->getReturn()["id"],
+					"line_category" => $LineList->getReturn()["id"],
+					"service_type" => $ServiceType->getReturn()["id"],
+					"status" => $value["H"],
 				];
-				if (!$customerModel->create($data)) {
-					$errorMessage[$key] = "tiene errores, no se pudo insertar " . $customerModel->getLastError()[2];
-				} else {
-					$successMessage[$key] = "Registrada correctamente";
+				$car=$customerModel->findBy([
+					["dni",CarModel::EQUAL, $data["dni"]]
+				], true);
+				if(empty($car->getReturn())){
+					if (!$customerModel->create($data)) {
+						$errorMessage[$key] = "tiene errores, no se pudo insertar " . $customerModel->getLastError()[2];
+					} else {
+						$successMessage[$key] = "Registrado correctamente";
+					}
+				}else{
+					if (!$customerModel->update($data, $car->getReturn()["id"])) {
+						$errorMessage[$key] = "tiene errores, no se pudo actualizar " . $customerModel->getLastError()[2];
+					} else {
+						$successMessage[$key] = "Actualizado correctamente";
+					}
 				}
+				
 			}
 		}
 		return $this->renderHtml("car/loadfile", ["errorMessage" => $errorMessage, "successMessage" => $successMessage]);

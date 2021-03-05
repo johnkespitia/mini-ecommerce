@@ -19,6 +19,10 @@
           <th>Placa</th>
           <th>Modelo</th>
           <th>Tipo de Vehículo</th>
+          <th>Marca</th>
+          <th>Combustible</th>
+          <th>Linea</th>
+          <th>Tipo de Servicio</th>
           <th>Estado</th>
           <th class="text-right">Acciones</th>
         </tr>
@@ -32,6 +36,10 @@
             <td><?= $cust["dni"] ?></td>
             <td><?= $cust["modelo"] ?></td>
             <td><?= $cust["type_car"] ?></td>
+            <td><?= $cust["brand_name"] ?></td>
+            <td><?= $cust["fuel_type"] ?></td>
+            <td><?= $cust["line_category_name"] ?></td>
+            <td><?= $cust["service_type_name"] ?></td>
             <td><?= $cust["status"] == 1 ? "<span class='badge bg-success text-dark'>Activo</span>" : "<span class='badge bg-danger text-dark'>Inactivo</span>" ?></td>
             <td class="td-actions text-right">
               <?php

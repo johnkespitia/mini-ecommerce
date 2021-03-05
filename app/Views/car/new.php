@@ -23,6 +23,46 @@
 				</select>
 			</div>
 			<div class="form-group">
+				<label for="brandInputName">Marca</label>
+				<select required class="form-control" name="brand" >
+				<?php 
+					foreach ($BrandList as $ct) {
+						echo "<option value='{$ct["id"]}'>{$ct["name"]}</option>";
+					}
+				?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="lineInputName">Línea</label>
+				<select required class="form-control" name="line_category" >
+				<?php 
+					foreach ($LineList as $ct) {
+						echo "<option value='{$ct["id"]}'>{$ct["name"]}</option>";
+					}
+				?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="fuelInputName">Tipo de Combustible</label>
+				<select required class="form-control" name="fuel_type" >
+				<?php 
+					foreach ($FuelTypeList as $ct) {
+						echo "<option value='{$ct["id"]}'>{$ct["name"]}</option>";
+					}
+				?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="servicetypeInputName">Tipo de Servicio</label>
+				<select required class="form-control" name="service_type" >
+				<?php 
+					foreach ($ServiceTypeList as $ct) {
+						echo "<option value='{$ct["id"]}'>{$ct["name"]}</option>";
+					}
+				?>
+				</select>
+			</div>
+			<div class="form-group">
 				<label for="exampleInputStatus">Estado</label>
 				<select class="form-control" name="status" id="exampleInputStatus" >
 					<option value='1'>Activo</option>
