@@ -6,6 +6,50 @@
       <?php } ?>
     </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los Planillas registrados </h6>
+    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Filtrar Planillas
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <form method="POST">
+          <div class="form-group">
+            <label for="exampleInputName">Desde</label>
+            <input type="date" class="form-control" name="date_report_min" id="exampleInputName">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName">Hasta</label>
+            <input type="date" class="form-control" name="date_report_max" id="exampleInputName">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputCity">Cliente</label>
+            <select class="form-control" name="customer" id="exampleInputCity">
+              <option value=""></option>
+              <?php foreach ($customerList as $c) {
+                echo "<option value='{$c["id"]}'>{$c["name"]}</option>";
+              } ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputCity">Vehículo</label>
+            <select class="form-control" name="car" id="exampleInputCity">
+              <option value=""></option>
+              <?php foreach ($carList as $c) {
+                echo "<option value='{$c["id"]}'>{$c["dni"]}</option>";
+              } ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="text-success"><i class="fas fa-file-excel"></i> Exportar Todo a Excel</label> <br/>
+            <label class="custom-toggle">
+              <input type="checkbox" name="export-excel" value="export" >
+              <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Sí"></span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Filtrar</button>
+
+        </form>
+      </div>
+    </div>
     <table class="table table-responsive">
       <thead class="thead-light">
         <tr>
