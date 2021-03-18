@@ -20,7 +20,8 @@
 					<option <?=($permission["module"] == "Combustible")?"selected":"" ?> value="Combustible">Combustible</option>
 					<option <?=($permission["module"] == "Línea")?"selected":"" ?> value="Línea">Línea</option>
 					<option <?=($permission["module"] == "Marca")?"selected":"" ?> value="Marca">Marca</option>
-					<option <?=($permission["module"] == "Tipo de Servicio")?"selected":"" ?> value="Marca">Tipo de Servicio</option>
+					<option <?=($permission["module"] == "Tipo de Servicio")?"selected":"" ?> value="Tipo de Servicio">Tipo de Servicio</option>
+					<option <?=($permission["module"] == "Tipo de Documento")?"selected":"" ?> value="Tipo de Documento">Tipo de Documento</option>
 				</select>
 			</div>
 			<div class="form-group">

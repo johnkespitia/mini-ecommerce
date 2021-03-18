@@ -8,6 +8,11 @@ use Model\FuelTypeModel;
 use Model\ServiceTypeModel;
 use Model\BrandModel;
 use Model\LineModel;
+use Model\CarImageModel;
+use Model\DocumentModel;
+use Model\DocumentTypeModel;
+use Model\FuelCarModel;
+use Model\MaintainceCarModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -22,6 +27,92 @@ class CarController extends Controller
 		$carModel = new CarModel();
 		$carList = $carModel->all();
 		return $this->renderHtml("car/index", ["carList" => $carList]);
+	}
+	public function detailsAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Listar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+
+
+		$documentsModel = new DocumentModel();
+
+		$documents = $documentsModel->findBy([
+			["car", CarImageModel::EQUAL, $car["id"]]
+		]);
+
+		$imageModel = new CarImageModel;
+		$imagesGenerator =  $imageModel->findBy([
+			["car", CarImageModel::EQUAL, $car["id"]]
+		]);
+		$images = [];
+		foreach ($imagesGenerator as $value) {
+			$images[] = $value;
+		}
+		
+		$dtModel = new DocumentTypeModel;
+		$documentTypeList = $dtModel->all();
+		
+		$fuelModel = new FuelCarModel;
+		$fuel_list =  $fuelModel->findBy([
+			["car", FuelCarModel::EQUAL, $car["id"]]
+		]);
+		
+		$maintainceModel = new MaintainceCarModel;
+		$maintainceList =  $maintainceModel->findBy([
+			["car", FuelCarModel::EQUAL, $car["id"]]
+		]);
+
+		return $this->renderHtml("car/details", [
+			"car" => $car, 
+			"images" => $images, 
+			"documentTypeList" => $documentTypeList, 
+			"documents" => $documents, 
+			"fuel"=>$fuel_list,
+			"maintainceList"=>$maintainceList
+		]);
+	}
+
+	public function deleteimageAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new CarImageModel();
+		$carModel->delete($params["params"][2]);
+		header("location:/car/details/" . $params["params"][3]);
+	}
+	public function deletefileAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new DocumentModel();
+		$carModel->delete($params["params"][2]);
+		header("location:/car/details/" . $params["params"][3]);
+	}
+
+	public function carimagesAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Listar"])) {
+			header("location:/");
+		}
+		$carModel = new CarImageModel();
+		$carList = $carModel->findBy([
+			["car", CarImageModel::EQUAL, $params["params"][2]]
+		]);
+		$carResponse = [];
+		foreach ($carList as $value) {
+			$carResponse[] = $value;
+		}
+		return $this->renderJson(["imagesList" => $carResponse]);
 	}
 
 	public function newAction($params = [])
@@ -59,7 +150,85 @@ class CarController extends Controller
 		if (!$carModel->create($params["post"])) {
 			throw new \Exception("No fue posible crear el vehículo, verifique la información proporcionada", 500);
 		} else {
+			if (!empty($params["files"])) {
+				$fileName = $this->uploadImg($params["files"]["photo"]);
+				$carImageModel = new CarImageModel();
+				$carImageModel->create(["car" => $carModel->getLastId(), "url" => $_ENV["SITE_URL"] . "images" . $fileName]);
+			}
 			header("location:/car/");
+		}
+	}
+	public function storeimageAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$fileName = $this->uploadImg($params["files"]["photo"]);
+		$carImageModel = new CarImageModel();
+		$carImageModel->create(["car" => $car["id"], "url" => $_ENV["SITE_URL"] . "images" . $fileName]);
+		header("location:/car/details/" . $car["id"]);
+	}
+	public function storefileAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$fileName = $this->uploadFile($params["files"]["file"]);
+		$params["post"]["url"] = $fileName;
+		$params["post"]["car"] = $car["id"];
+		$params["post"]["date_created"] = date("Y-m-d");
+		$carImageModel = new DocumentModel();
+		$carImageModel->create($params["post"]);
+		header("location:/car/details/" . $car["id"]);
+	}
+	
+	public function storefuelAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$fileName = $this->uploadFile($params["files"]["image"]);
+		$params["post"]["image"] = $fileName;
+		$params["post"]["car"] = $car["id"];
+		$carImageModel = new FuelCarModel();
+		if($carImageModel->create($params["post"])){
+			header("location:/car/details/" . $car["id"]);
+		}else{
+			throw new \Exception("Error registrando el combustible ".print_r($carImageModel->getLastError(),1), 404);
+		}
+	}
+	public function storemaintainceAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$params["post"]["car"] = $car["id"];
+		$params["post"]["status"] = "PROGRAMADO";
+		$carImageModel = new MaintainceCarModel();
+		if($carImageModel->create($params["post"])){
+			header("location:/car/details/" . $car["id"]);
+		}else{
+			throw new \Exception("Error registrando el mantenimiento ".print_r($carImageModel->getLastError(),1), 404);
 		}
 	}
 
@@ -187,6 +356,22 @@ class CarController extends Controller
 		return $filePath;
 	}
 
+	protected function uploadImg($file)
+	{
+		$fileName = "/cars/" . time() . $file['name'];
+		$filePath = $_ENV["STORAGE_IMAGES"]  . $fileName;
+		move_uploaded_file($file['tmp_name'], $filePath);
+		return $fileName;
+	}
+
+	protected function uploadFile($file)
+	{
+		$fileName = "/cars/docs/" . time() . $file['name'];
+		$filePath = $_ENV["STORAGE_FILES"]  . $fileName;
+		move_uploaded_file($file['tmp_name'], $filePath);
+		return $_ENV["SITE_URL"]."files/".$fileName;
+	}
+
 	public function loadfileAction($params = [])
 	{
 		if (empty($_SESSION["permissions"]["Vehículos"]["Crear"])) {
@@ -254,23 +439,22 @@ class CarController extends Controller
 					"service_type" => $ServiceType->getReturn()["id"],
 					"status" => $value["H"],
 				];
-				$car=$customerModel->findBy([
-					["dni",CarModel::EQUAL, $data["dni"]]
+				$car = $customerModel->findBy([
+					["dni", CarModel::EQUAL, $data["dni"]]
 				], true);
-				if(empty($car->getReturn())){
+				if (empty($car->getReturn())) {
 					if (!$customerModel->create($data)) {
 						$errorMessage[$key] = "tiene errores, no se pudo insertar " . $customerModel->getLastError()[2];
 					} else {
 						$successMessage[$key] = "Registrado correctamente";
 					}
-				}else{
+				} else {
 					if (!$customerModel->update($data, $car->getReturn()["id"])) {
 						$errorMessage[$key] = "tiene errores, no se pudo actualizar " . $customerModel->getLastError()[2];
 					} else {
 						$successMessage[$key] = "Actualizado correctamente";
 					}
 				}
-				
 			}
 		}
 		return $this->renderHtml("car/loadfile", ["errorMessage" => $errorMessage, "successMessage" => $successMessage]);

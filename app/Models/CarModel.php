@@ -23,7 +23,7 @@ class CarModel extends Model{
 	}
 
 	public function find($id){
-		$sql = 'SELECT c.*, ft.name fuel_type, 
+		$sql = 'SELECT c.*, ct.name type_car, ft.name fuel_type, 
 		lc.name line_category_name, b.name brand_name, 
 		st.name service_type_name
 		FROM '.self::TABLE.' c

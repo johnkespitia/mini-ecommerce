@@ -16,6 +16,7 @@
       <thead class="thead-light">
         <tr>
           <th class="text-center">#</th>
+          <th>Foto</th>
           <th>Placa</th>
           <th>Modelo</th>
           <th>Tipo de Vehículo</th>
@@ -31,8 +32,16 @@
         <?php
         foreach ($carList as $cust) {
         ?>
+          <script>
+            $.getJSON("/car/carimages/<?= $cust["id"] ?>", function(data, status, xhr) {
+              if (data.imagesList.length > 0) {
+                $("#img_car_<?= $cust["id"] ?>").attr("src", data.imagesList[0].url)
+              }
+            })
+          </script>
           <tr>
             <th class="text-center" scope="row"><?= $cust["id"] ?></th>
+            <td><img src="/themes/argon/assets/img/theme/loading.gif" width="100px" class="img-thumbnail" id="img_car_<?= $cust["id"] ?>" /></td>
             <td><?= $cust["dni"] ?></td>
             <td><?= $cust["modelo"] ?></td>
             <td><?= $cust["type_car"] ?></td>
@@ -42,11 +51,7 @@
             <td><?= $cust["service_type_name"] ?></td>
             <td><?= $cust["status"] == 1 ? "<span class='badge bg-success text-dark'>Activo</span>" : "<span class='badge bg-danger text-dark'>Inactivo</span>" ?></td>
             <td class="td-actions text-right">
-              <?php
-              if (!empty($_SESSION["permissions"]["Vehículos"]["Crear"]) && $_SESSION["permissions"]["Vehículos"]["Editar"] == 1) { ?>
-                <a class="btn btn-warning btn-sm" href="/car/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
-              <?php } ?>
-
+              <a class="btn btn-success btn-sm" href="/car/details/<?= $cust["id"] ?>"><i class="fas fa-eye"></i> Detalle</a>
             </td>
           </tr>
         <?php

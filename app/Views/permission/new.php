@@ -19,6 +19,7 @@
 					<option value="Línea">Línea</option>
 					<option value="Marca">Marca</option>
 					<option value="Tipo de Servicio">Tipo de Servicio</option>
+					<option value="Tipo de Documento">Tipo de Documento</option>
 				</select>
 			</div>
 			<div class="form-group">

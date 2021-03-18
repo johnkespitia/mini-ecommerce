@@ -129,6 +129,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Tipo de Documento"]["Listar"]) && $_SESSION["permissions"]["Tipo de Documento"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/documenttype/">
+														<i class="ni ni-book-bookmark text-primary"></i> Tipo de Documento
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>

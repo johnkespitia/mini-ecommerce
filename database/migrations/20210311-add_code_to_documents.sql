@@ -1,0 +1,2 @@
+ALTER TABLE `documents`
+	ADD COLUMN `code` VARCHAR(50) NULL DEFAULT NULL AFTER `provider`;
