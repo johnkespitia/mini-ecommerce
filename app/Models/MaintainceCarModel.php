@@ -29,7 +29,7 @@ class MaintainceCarModel extends Model{
 	public function find($id){
 		$sql = 'SELECT fc.*, c.dni  FROM '.self::TABLE.' fc
 		INNER JOIN cars c ON c.id = fc.car
-		WHERE id='.$id.' ORDER BY fc.id desc';
+		WHERE fc.id='.$id.' ORDER BY fc.id desc'; 
 		foreach ($this->db->query($sql) as $row) {
 		    return $row;
 		}	

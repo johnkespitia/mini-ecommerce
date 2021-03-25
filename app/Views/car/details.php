@@ -383,11 +383,36 @@
                                       <li><strong>Estado: </strong><?= $doc["status"] ?></li>
                                       <li><strong>Disponible: </strong><?= (!empty($doc["abble"])) ? "<span class='text-success'>Disponible</span>" : "<span class='text-info'>No Disponible</span>"  ?></li>
                                       <li><strong>Descripción: </strong><?= $doc["observations"] ?></li>
-                                      <li><strong>Costo: </strong>$ <?= $doc["cost"] ?></li>
+                                      <li><strong>Costo: </strong>$ <?= number_format($doc["cost"],0,",",".") ?></li>
                                       <li><strong>Resultado: </strong><?= $doc["results"] ?></li>
                                     </ul>
+                                    <?php if ($doc["status"] != 'PROGRAMADO' && $doc["status"] != 'FINALIZADO' && $doc["status"] != 'CANCELADO') { ?>
+                                      <hr />
+                                      <form method="post" action="/car/fillmaintaince/<?= $doc["id"] ?>">
+                                        <div class="form-group">
+                                          <label for="exampleInputFinishDate">Fecha de finalización</label>
+                                          <input required type="date" class="form-control"  name="date_finished" id="exampleInputFinishDate" >
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="exampleInputCost">Costo</label>
+                                          <input required type="number" class="form-control"  name="cost" id="exampleInputCost" >
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="exampleInputObs">Resultado</label>
+                                          <input required type="text" class="form-control"  name="results" id="exampleInputObs" >
+                                        </div>
+                                        <button type="submit" class="btn btn-success" >Registrar Proceso</button>
+                                      </form>
+                                    <?php } ?>
                                   </div>
                                   <div class="modal-footer">
+
+                                    <?php if ($doc["status"] != 'FINALIZADO' && $doc["status"] != 'EN PROCESO' && $doc["status"] != 'CANCELADO') { ?>
+                                      <a href="/car/cancelmaintaince/<?= $doc["id"] ?>" class="btn btn-danger">Cancelar</a>
+                                    <?php } ?>
+                                    <?php if ($doc["status"] == 'PROGRAMADO') { ?>
+                                      <a href="/car/inprocessmaintaince/<?= $doc["id"] ?>" class="btn btn-warning">En Proceso</a>
+                                    <?php } ?>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                   </div>
                                 </div>

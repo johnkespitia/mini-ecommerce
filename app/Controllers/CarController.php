@@ -9,6 +9,7 @@ use Model\ServiceTypeModel;
 use Model\BrandModel;
 use Model\LineModel;
 use Model\CarImageModel;
+use Model\CarOwnerModel;
 use Model\DocumentModel;
 use Model\DocumentTypeModel;
 use Model\FuelCarModel;
@@ -25,7 +26,13 @@ class CarController extends Controller
 			header("location:/");
 		}
 		$carModel = new CarModel();
-		$carList = $carModel->all();
+		if (!empty($params["get"]["dni"])) {
+			$carList = $carModel->findBy([
+				["c.dni", CarModel::CONTAIN, $params["get"]["dni"]]
+			]);
+		} else {
+			$carList = $carModel->all();
+		}
 		return $this->renderHtml("car/index", ["carList" => $carList]);
 	}
 	public function detailsAction($params = [])
@@ -54,27 +61,27 @@ class CarController extends Controller
 		foreach ($imagesGenerator as $value) {
 			$images[] = $value;
 		}
-		
+
 		$dtModel = new DocumentTypeModel;
 		$documentTypeList = $dtModel->all();
-		
+
 		$fuelModel = new FuelCarModel;
 		$fuel_list =  $fuelModel->findBy([
 			["car", FuelCarModel::EQUAL, $car["id"]]
 		]);
-		
+
 		$maintainceModel = new MaintainceCarModel;
 		$maintainceList =  $maintainceModel->findBy([
 			["car", FuelCarModel::EQUAL, $car["id"]]
 		]);
 
 		return $this->renderHtml("car/details", [
-			"car" => $car, 
-			"images" => $images, 
-			"documentTypeList" => $documentTypeList, 
-			"documents" => $documents, 
-			"fuel"=>$fuel_list,
-			"maintainceList"=>$maintainceList
+			"car" => $car,
+			"images" => $images,
+			"documentTypeList" => $documentTypeList,
+			"documents" => $documents,
+			"fuel" => $fuel_list,
+			"maintainceList" => $maintainceList
 		]);
 	}
 
@@ -88,6 +95,67 @@ class CarController extends Controller
 		$carModel->delete($params["params"][2]);
 		header("location:/car/details/" . $params["params"][3]);
 	}
+
+	public function cancelmaintainceAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new MaintainceCarModel();
+		$carMaintaince = $carModel->find($params["params"][2]);
+		if (empty($carMaintaince)) {
+			throw new \Exception("Mantenimiento no encontrado", 404);
+		}
+		$carMaintaince["status"] = 'CANCELADO';
+		if (!$carModel->update($carMaintaince, $params["params"][2])) {
+			throw new \Exception("Mantenimiento no pudo ser actualizado", 404);
+		} else {
+			header("location:/car/details/" . $carMaintaince["car"]);
+		}
+	}
+
+	public function inprocessmaintainceAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new MaintainceCarModel();
+		$carMaintaince = $carModel->find($params["params"][2]);
+		if (empty($carMaintaince)) {
+			throw new \Exception("Mantenimiento no encontrado", 404);
+		}
+		$carMaintaince["status"] = 'EN PROCESO';
+		if (!$carModel->update($carMaintaince, $params["params"][2])) {
+			throw new \Exception("Mantenimiento no pudo ser actualizado", 404);
+		} else {
+			header("location:/car/details/" . $carMaintaince["car"]);
+		}
+	}
+
+	public function fillmaintainceAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new MaintainceCarModel();
+		$carMaintaince = $carModel->find($params["params"][2]);
+		if (empty($carMaintaince)) {
+			throw new \Exception("Mantenimiento no encontrado", 404);
+		}
+		$carMaintaince["status"] = 'FINALIZADO';
+		$carMaintaince["results"] = $params["post"]["results"];
+		$carMaintaince["cost"] = $params["post"]["cost"];
+		$carMaintaince["date_finished"] = $params["post"]["date_finished"];
+		if (!$carModel->update($carMaintaince, $params["params"][2])) {
+			throw new \Exception("Mantenimiento no pudo ser actualizado", 404);
+		} else {
+			header("location:/car/details/" . $carMaintaince["car"]);
+		}
+	}
+
 	public function deletefileAction($params = [])
 	{
 		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
@@ -133,11 +201,13 @@ class CarController extends Controller
 		$LineList = $LineModel->all();
 		$FuelTypeModel = new FuelTypeModel();
 		$FuelTypeList = $FuelTypeModel->all();
+		$CarOwnerModel = new CarOwnerModel();
+		$CarOwnerList = $CarOwnerModel->all();
 
 
 		return $this->renderHtml("car/new", [
 			"carTypeList" => $carTypeList, "BrandList" => $BrandList, "ServiceTypeList" => $ServiceTypeList,
-			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList
+			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList, "CarOwnerList" => $CarOwnerList
 		]);
 	}
 
@@ -191,7 +261,7 @@ class CarController extends Controller
 		$carImageModel->create($params["post"]);
 		header("location:/car/details/" . $car["id"]);
 	}
-	
+
 	public function storefuelAction($params = [])
 	{
 		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
@@ -206,10 +276,10 @@ class CarController extends Controller
 		$params["post"]["image"] = $fileName;
 		$params["post"]["car"] = $car["id"];
 		$carImageModel = new FuelCarModel();
-		if($carImageModel->create($params["post"])){
+		if ($carImageModel->create($params["post"])) {
 			header("location:/car/details/" . $car["id"]);
-		}else{
-			throw new \Exception("Error registrando el combustible ".print_r($carImageModel->getLastError(),1), 404);
+		} else {
+			throw new \Exception("Error registrando el combustible " . print_r($carImageModel->getLastError(), 1), 404);
 		}
 	}
 	public function storemaintainceAction($params = [])
@@ -225,10 +295,10 @@ class CarController extends Controller
 		$params["post"]["car"] = $car["id"];
 		$params["post"]["status"] = "PROGRAMADO";
 		$carImageModel = new MaintainceCarModel();
-		if($carImageModel->create($params["post"])){
+		if ($carImageModel->create($params["post"])) {
 			header("location:/car/details/" . $car["id"]);
-		}else{
-			throw new \Exception("Error registrando el mantenimiento ".print_r($carImageModel->getLastError(),1), 404);
+		} else {
+			throw new \Exception("Error registrando el mantenimiento " . print_r($carImageModel->getLastError(), 1), 404);
 		}
 	}
 
@@ -272,9 +342,11 @@ class CarController extends Controller
 		$LineList = $LineModel->all();
 		$FuelTypeModel = new FuelTypeModel();
 		$FuelTypeList = $FuelTypeModel->all();
+		$CarOwnerModel = new CarOwnerModel();
+		$CarOwnerList = $CarOwnerModel->all();
 		return $this->renderHtml("car/edit", [
 			"customer" => $user, "carTypeList" => $carTypeList, "BrandList" => $BrandList, "ServiceTypeList" => $ServiceTypeList,
-			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList
+			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList, "CarOwnerList" => $CarOwnerList
 		]);
 	}
 
@@ -325,7 +397,22 @@ class CarController extends Controller
 		$sheet->setCellValue("F1", "Combustible");
 		$sheet->setCellValue("G1", "Línea");
 		$sheet->setCellValue("H1", "Tipo de Servicio");
-		$sheet->setCellValue("I1", "Estado");
+		$sheet->setCellValue("I1", "Número Interno");
+		$sheet->setCellValue("J1", "Tipo de Relación");
+		$sheet->setCellValue("K1", "Cilindraje");
+		$sheet->setCellValue("L1", "Color");
+		$sheet->setCellValue("M1", "Servicio");
+		$sheet->setCellValue("N1", "Tipo de Carrocería");
+		$sheet->setCellValue("O1", "Número de Puertas");
+		$sheet->setCellValue("P1", "Número de Motor");
+		$sheet->setCellValue("Q1", "Vin");
+		$sheet->setCellValue("R1", "Número de serie");
+		$sheet->setCellValue("S1", "Toneladas Carga");
+		$sheet->setCellValue("T1", "Número de Chasis");
+		$sheet->setCellValue("U1", "Fecha de Matricula");
+		$sheet->setCellValue("V1", "Kilometros para cambio de aceite");
+		$sheet->setCellValue("W1", "Propietario");
+		$sheet->setCellValue("X1", "Estado");
 		foreach ($carList as $key => $prd) {
 			$cellNumber = $key + 2;
 			$sheet->setCellValue("A{$cellNumber}", $prd["id"]);
@@ -336,7 +423,22 @@ class CarController extends Controller
 			$sheet->setCellValue("F{$cellNumber}", $prd["fuel_type"]);
 			$sheet->setCellValue("G{$cellNumber}", $prd["line_category_name"]);
 			$sheet->setCellValue("H{$cellNumber}", $prd["service_type_name"]);
-			$sheet->setCellValue("I{$cellNumber}", ($prd["status"] == 1) ? "Activo" : "Inactivo");
+			$sheet->setCellValue("I{$cellNumber}", $prd["internal_number"]);
+			$sheet->setCellValue("J{$cellNumber}", $prd["relationship"]);
+			$sheet->setCellValue("K{$cellNumber}", $prd["cc"]);
+			$sheet->setCellValue("L{$cellNumber}", $prd["color"]);
+			$sheet->setCellValue("M{$cellNumber}", $prd["service_permission"]);
+			$sheet->setCellValue("N{$cellNumber}", $prd["body_type"]);
+			$sheet->setCellValue("O{$cellNumber}", $prd["no_doors"]);
+			$sheet->setCellValue("P{$cellNumber}", $prd["no_engine"]);
+			$sheet->setCellValue("Q{$cellNumber}", $prd["vin"]);
+			$sheet->setCellValue("R{$cellNumber}", $prd["no_serie"]);
+			$sheet->setCellValue("S{$cellNumber}", $prd["tn_charge"]);
+			$sheet->setCellValue("T{$cellNumber}", $prd["no_chasis"]);
+			$sheet->setCellValue("U{$cellNumber}", $prd["date_license"]);
+			$sheet->setCellValue("V{$cellNumber}", $prd["oil_change_km"]);
+			$sheet->setCellValue("W{$cellNumber}", $prd["owner_name"]);
+			$sheet->setCellValue("X{$cellNumber}", ($prd["status"] == 1) ? "Activo" : "Inactivo");
 		}
 		// Write an .xlsx file  
 		$writer = new Xlsx($spreadsheet);
@@ -369,7 +471,7 @@ class CarController extends Controller
 		$fileName = "/cars/docs/" . time() . $file['name'];
 		$filePath = $_ENV["STORAGE_FILES"]  . $fileName;
 		move_uploaded_file($file['tmp_name'], $filePath);
-		return $_ENV["SITE_URL"]."files/".$fileName;
+		return $_ENV["SITE_URL"] . "files/" . $fileName;
 	}
 
 	public function loadfileAction($params = [])
@@ -417,6 +519,10 @@ class CarController extends Controller
 			$FuelTypeList = $FuelTypeModel->findBy([
 				["name", LineModel::EQUAL, $value["G"]]
 			], true);
+			$CarOwnerModel = new CarOwnerModel();
+			$CarOwner = $CarOwnerModel->findBy([
+				["name", LineModel::EQUAL, $value["V"]]
+			], true);
 
 			if (empty($carType->getReturn())) {
 				$errorMessage[$key] = "Tipo de Vehículo inválido, no se pudo insertar, tipo de vehículo no válido";
@@ -428,6 +534,8 @@ class CarController extends Controller
 				$errorMessage[$key] = "Línea de Vehículo inválida, no se pudo insertar, tipo de vehículo no válido";
 			} else if (empty($FuelTypeList->getReturn())) {
 				$errorMessage[$key] = "Combustible inválido, no se pudo insertar, tipo de vehículo no válido";
+			} else if (empty($CarOwner->getReturn())) {
+				$errorMessage[$key] = "Propietario inválido, no se pudo insertar, Propietario no encontrado";
 			} else {
 				$data = [
 					"dni" => $value["A"],
@@ -437,11 +545,27 @@ class CarController extends Controller
 					"fuel_type" => $FuelTypeList->getReturn()["id"],
 					"line_category" => $LineList->getReturn()["id"],
 					"service_type" => $ServiceType->getReturn()["id"],
-					"status" => $value["H"],
+					"car_owner" => $CarOwner->getReturn()["id"],
+					"internal_number" => $value["H"],
+					"relationship" => $value["I"],
+					"cc" => $value["J"],
+					"color" => $value["K"],
+					"service_permission" => $value["L"],
+					"body_type" => $value["M"],
+					"no_doors" => $value["N"],
+					"no_engine" => $value["O"],
+					"vin" => $value["P"],
+					"no_serie" => $value["Q"],
+					"tn_charge" => $value["R"],
+					"no_chasis" => $value["S"],
+					"date_license" => date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value["T"], $_ENV["APP_TIMEZONE"])),
+					"oil_change_km" => $value["U"],
+					"status" => $value["W"],
 				];
 				$car = $customerModel->findBy([
-					["dni", CarModel::EQUAL, $data["dni"]]
+					["c.dni", CarModel::EQUAL, $data["dni"]]
 				], true);
+
 				if (empty($car->getReturn())) {
 					if (!$customerModel->create($data)) {
 						$errorMessage[$key] = "tiene errores, no se pudo insertar " . $customerModel->getLastError()[2];

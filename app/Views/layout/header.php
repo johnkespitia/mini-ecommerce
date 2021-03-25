@@ -160,6 +160,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Propietarios"]["Listar"]) && $_SESSION["permissions"]["Propietarios"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/owner/">
+														<i class="far fa-address-book text-primary"></i> Propietarios
+													</a>
+												</li>
+											<?php } ?>
 											<?php if (isset($_SESSION["permissions"]["Vehículos"]["Listar"]) && $_SESSION["permissions"]["Vehículos"]["Listar"] == 1) {
 											?>
 												<li class="nav-item">

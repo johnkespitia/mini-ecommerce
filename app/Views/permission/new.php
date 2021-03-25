@@ -20,6 +20,7 @@
 					<option value="Marca">Marca</option>
 					<option value="Tipo de Servicio">Tipo de Servicio</option>
 					<option value="Tipo de Documento">Tipo de Documento</option>
+					<option value="Propietarios">Propietarios</option>
 				</select>
 			</div>
 			<div class="form-group">

@@ -22,6 +22,7 @@
 					<option <?=($permission["module"] == "Marca")?"selected":"" ?> value="Marca">Marca</option>
 					<option <?=($permission["module"] == "Tipo de Servicio")?"selected":"" ?> value="Tipo de Servicio">Tipo de Servicio</option>
 					<option <?=($permission["module"] == "Tipo de Documento")?"selected":"" ?> value="Tipo de Documento">Tipo de Documento</option>
+					<option <?=($permission["module"] == "Propietarios")?"selected":"" ?> value="Propietarios">Propietarios</option>
 				</select>
 			</div>
 			<div class="form-group">
