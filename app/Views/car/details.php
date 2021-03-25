@@ -364,6 +364,10 @@ $cust = $planilla->getReturn();
                       <input required type="text" class="form-control" name="code" id="exampleInputName">
                     </div>
                     <div class="form-group">
+                      <label for="exampleInputName">Expedición</label>
+                      <input required type="date" class="form-control" name="date_expedition" id="exampleInputName">
+                    </div>
+                    <div class="form-group">
                       <label for="exampleInputName">Expiración</label>
                       <input required type="date" class="form-control" name="date_expiration" id="exampleInputName">
                     </div>
@@ -383,6 +387,7 @@ $cust = $planilla->getReturn();
                         <th>Código</th>
                         <th>Estado</th>
                         <th>Registro</th>
+                        <th>Expedición</th>
                         <th>Vencimiento</th>
                         <th>Acciones</th>
                       </tr>
@@ -397,6 +402,7 @@ $cust = $planilla->getReturn();
                           <td><?= $doc["code"] ?></td>
                           <td><?= (!empty($doc["date_expiration"]) && strtotime($doc["date_expiration"]) < time()) ? "<span class='text-danger'>Expirado</span>" : "<span class='text-success'>Vigente</span>"  ?></td>
                           <td><?= $doc["date_created"] ?></td>
+                          <td><?= $doc["date_expedition"] ?></td>
                           <td><?= $doc["date_expiration"] ?></td>
                           <td>
                             <a href='<?= $doc["url"] ?>' class='btn btn-sm btn-success mb-2'>Descargar</a>

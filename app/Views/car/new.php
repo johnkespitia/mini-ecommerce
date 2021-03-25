@@ -102,7 +102,7 @@
 			</div>
 			<div class="form-group">
 				<label for="engine_nr">Número de Motor</label>
-				<input required type="number" min="0" class="form-control" name="no_engine" />
+				<input required type="text" min="0" class="form-control" name="no_engine" />
 			</div>
 			<div class="form-group">
 				<label for="vin">Vin</label>
@@ -110,7 +110,7 @@
 			</div>
 			<div class="form-group">
 				<label for="noSerieName">Número de serie</label>
-				<input required type="number" min="0" class="form-control" name="no_serie" />
+				<input required type="text" min="0" class="form-control" name="no_serie" />
 			</div>
 			<div class="form-group">
 				<label for="tnCharge">Toneladas Carga</label>
@@ -118,7 +118,7 @@
 			</div>
 			<div class="form-group">
 				<label for="noChasis">Número de Chasis</label>
-				<input required type="number" min="0" class="form-control" name="no_chasis" />
+				<input required type="text" min="0" class="form-control" name="no_chasis" />
 			</div>
 			<div class="form-group">
 				<label for="date_license">Fecha de Matricula</label>
