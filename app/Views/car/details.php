@@ -1,4 +1,12 @@
+<?php
+$cust = $planilla->getReturn();
+?>
 <!-- Header -->
+<script>
+  function setTab(tabId) {
+    $(`#tabs-icons-text a[href='#${tabId}']`).tab('show');
+  }
+</script>
 <!-- Header -->
 <div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-image: url(<?= $images[0]["url"] ?>); background-size: cover; background-position: center top;">
   <!-- Mask -->
@@ -6,9 +14,10 @@
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
-      <div class="col-lg-7 col-md-10">
+      <div class="col-lg-12 col-md-12">
         <h1 class="display-2 text-white"><?= $car["dni"] ?></h1>
-        <p class="text-white mt-0 mb-5"><?= $car["brand_name"] ?></p>
+        <p class="text-white mt-0 mb-1"><?= $car["brand_name"] ?></p>
+        <p class="text-white mt-0 mb-5"><?= number_format(($cust["km_end"] ?? "0"), 0, ",", ".") ?> Kilometros recorridos</p>
         <?php if (!empty($_SESSION["permissions"]["Vehículos"]["Editar"]) && $_SESSION["permissions"]["Vehículos"]["Editar"] == 1) { ?>
           <a href="/car/edit/<?= $car["id"] ?>" class="btn btn-neutral">Editar Vehículo</a>
         <?php } ?>
@@ -48,6 +57,102 @@
                 <div>
                   <span class="heading"><?= $car["type_car"] ?></span>
                   <span class="description">Tipo de Vehículo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><?= $car["internal_number"] ?></span>
+                  <span class="description">Número Interno</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["relationship"] ?></span>
+                  <span class="description">Tipo de Relación</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["cc"] ?></span>
+                  <span class="description">Cilindraje</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><?= $car["color"] ?></span>
+                  <span class="description">Color</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["service_permission"] ?></span>
+                  <span class="description">Servicio</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["body_type"] ?></span>
+                  <span class="description">Tipo de Carrocería</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><?= $car["no_doors"] ?></span>
+                  <span class="description">Número de Puertas</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["no_engine"] ?></span>
+                  <span class="description">Número de Motor</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["vin"] ?></span>
+                  <span class="description">Vin</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><?= $car["no_serie"] ?></span>
+                  <span class="description">Número de serie</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["tn_charge"] ?></span>
+                  <span class="description">Toneladas Carga</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["no_chasis"] ?></span>
+                  <span class="description">Número de Chasis</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><?= $car["date_license"] ?></span>
+                  <span class="description">Fecha de Matricula</span>
+                </div>
+                <div>
+                  <span class="heading"><?= $car["oil_change_km"] ?></span>
+                  <span class="description">Km cambio de aceite</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><?= $car["owner_name"] ?></span>
+                  <span class="description">Propietario</span>
                 </div>
               </div>
             </div>
@@ -105,7 +210,92 @@
             <div class="card-body">
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                  <p class="description">Proximamente</p>
+
+                  <h3>Alertas</h3>
+                  <table class="table table-responsive">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Tipo</th>
+                        <th>Detalle</th>
+                        <th>Fecha/Momento</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php if (!empty($car["oil_change_km"]) && !empty($cust["km_end"])) { ?>
+                        <tr>
+                          <td>Mantenimiento</td>
+                          <td>Preventivo: Cambio de aceite</td>
+                          <td>Faltan: <?= number_format($car["oil_change_km"] - ($cust["km_end"] % $car["oil_change_km"]), 0, ",", ".") ?> KM</td>
+                          <td>
+                            <a class="btn btn-sm btn-warning text-white" onclick="setTab('maintenance')"><i class="fa fa-wrench mr-2"></i>Crear Mantenimiento</a>
+                          </td>
+                        </tr>
+                      <?php } ?>
+                      <?php foreach ($docsExpired as $doc){ 
+                      ?>
+                      <tr>
+                        <td>Documentos por expirar</td>
+                        <td><?= $doc["document_name"] ?></td>
+                        <td><?= $doc["date_expiration"]?></td>
+                        <td>
+                          <a class="btn btn-sm btn-warning text-white" onclick="setTab('documents')"><i class="ni ni-collection mr-2"></i>Renovar Documento</a>
+                        </td>
+                      </tr>
+                      <?php  } 
+                      ?>
+                    </tbody>
+                  </table>
+                  <hr />
+                  <h3>Mantenimientos</h3>
+                  <table class="table table-responsive">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Tipo</th>
+                        <th>Detalle</th>
+                        <th>Fecha</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($maintainceListProgramed as $mto) {
+                        $class = (strtotime($mto["date_maintaince"] . "-3 days") < time()) ? "text-danger" : "";
+                      ?>
+                        <tr class="<?= $class ?>">
+                          <td>Mantenimiento <?= $mto["type_maintance"] ?></td>
+                          <td><?= $mto["observations"] ?></td>
+                          <td><?= $mto["date_maintaince"] ?></td>
+                        </tr>
+                      <?php
+                      } ?>
+                    </tbody>
+                  </table>
+                  <hr />
+                  <h3>Ultimo recorrido</h3>
+                  <?php
+                  if (!empty($cust)) { ?>
+                    <h3 class="text-left">Fecha de reporte: <span class="badge badge-info"><?= $cust["date_report"] ?></span></h3>
+                    <ul style="text-align: left;">
+                      <li><strong>Tipo de Servicio</strong> <?= $cust["service_type"] ?></li>
+                      <li><strong>Área</strong> <?= $cust["area"] ?></li>
+                      <li><strong>Origen</strong> <?= $cust["origin_name"] ?></li>
+                      <li><strong>Destino</strong> <?= $cust["destination_name"] ?></li>
+                      <li><strong>Hora de Inicio AM</strong> <?= $cust["time_start_am"] ?></li>
+                      <li><strong>Hora de Final AM</strong> <?= $cust["time_end_am"] ?></li>
+                      <li><strong>Tiempo de Almuerzo</strong> <?= $cust["lunch_time"] ?></li>
+                      <li><strong>Hora de Inicio PM</strong> <?= $cust["time_start_pm"] ?></li>
+                      <li><strong>Hora de Final PM</strong> <?= $cust["time_end_pm"] ?></li>
+                      <li><strong>Horas Trabajadas</strong> <?= $cust["worked_hours"] ?></li>
+                      <li><strong>Horas de disponibilidad</strong> <?= $cust["abble_hours"] ?></li>
+                      <li><strong>Kilometros Inicio</strong> <?= $cust["km_start"] ?></li>
+                      <li><strong>Kilometros final</strong> <?= $cust["km_end"] ?></li>
+                      <li><strong>Total Kilometros</strong> <?= $cust["km_end"] - $cust["km_start"] ?></li>
+                      <li><strong>Cantidad de personas</strong> <?= $cust["people"] ?></li>
+                    </ul>
+                  <?php } else {
+                    echo "<h5>Vehículo sin recorridos</h5>";
+                  }
+                  ?>
+                  <hr />
                 </div>
                 <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                   <?php
@@ -383,7 +573,7 @@
                                       <li><strong>Estado: </strong><?= $doc["status"] ?></li>
                                       <li><strong>Disponible: </strong><?= (!empty($doc["abble"])) ? "<span class='text-success'>Disponible</span>" : "<span class='text-info'>No Disponible</span>"  ?></li>
                                       <li><strong>Descripción: </strong><?= $doc["observations"] ?></li>
-                                      <li><strong>Costo: </strong>$ <?= number_format($doc["cost"],0,",",".") ?></li>
+                                      <li><strong>Costo: </strong>$ <?= number_format($doc["cost"], 0, ",", ".") ?></li>
                                       <li><strong>Resultado: </strong><?= $doc["results"] ?></li>
                                     </ul>
                                     <?php if ($doc["status"] != 'PROGRAMADO' && $doc["status"] != 'FINALIZADO' && $doc["status"] != 'CANCELADO') { ?>
@@ -391,17 +581,17 @@
                                       <form method="post" action="/car/fillmaintaince/<?= $doc["id"] ?>">
                                         <div class="form-group">
                                           <label for="exampleInputFinishDate">Fecha de finalización</label>
-                                          <input required type="date" class="form-control"  name="date_finished" id="exampleInputFinishDate" >
+                                          <input required type="date" class="form-control" name="date_finished" id="exampleInputFinishDate">
                                         </div>
                                         <div class="form-group">
                                           <label for="exampleInputCost">Costo</label>
-                                          <input required type="number" class="form-control"  name="cost" id="exampleInputCost" >
+                                          <input required type="number" class="form-control" name="cost" id="exampleInputCost">
                                         </div>
                                         <div class="form-group">
                                           <label for="exampleInputObs">Resultado</label>
-                                          <input required type="text" class="form-control"  name="results" id="exampleInputObs" >
+                                          <input required type="text" class="form-control" name="results" id="exampleInputObs">
                                         </div>
-                                        <button type="submit" class="btn btn-success" >Registrar Proceso</button>
+                                        <button type="submit" class="btn btn-success">Registrar Proceso</button>
                                       </form>
                                     <?php } ?>
                                   </div>

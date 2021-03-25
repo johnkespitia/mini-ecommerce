@@ -10,6 +10,7 @@ use Model\BrandModel;
 use Model\LineModel;
 use Model\CarImageModel;
 use Model\CarOwnerModel;
+use Model\DailyModel;
 use Model\DocumentModel;
 use Model\DocumentTypeModel;
 use Model\FuelCarModel;
@@ -46,12 +47,29 @@ class CarController extends Controller
 			throw new \Exception("Vehículo no encontrado", 404);
 		}
 
-
 		$documentsModel = new DocumentModel();
 
-		$documents = $documentsModel->findBy([
+		$documentsGen = $documentsModel->findBy([
 			["car", CarImageModel::EQUAL, $car["id"]]
 		]);
+
+		$docsExpired = [];
+		$docsRenewaled = [];
+		$documents = [];
+		foreach ($documentsGen as  $mto) {
+			$documents[] = $mto;
+			if(strtotime($mto["date_expiration"]." -30 days") < time() && !in_array($mto["document_name"],$docsRenewaled)){
+				$docsExpired[] = $mto;
+			}else{
+				$docsRenewaled[] = $mto["document_name"];
+			}
+		}
+
+
+		$planillaModel = new DailyModel();
+		$daily = $planillaModel->findBy([
+			["rg.car", CarImageModel::EQUAL, $car["id"]]
+		], true);
 
 		$imageModel = new CarImageModel;
 		$imagesGenerator =  $imageModel->findBy([
@@ -71,17 +89,29 @@ class CarController extends Controller
 		]);
 
 		$maintainceModel = new MaintainceCarModel;
-		$maintainceList =  $maintainceModel->findBy([
-			["car", FuelCarModel::EQUAL, $car["id"]]
+		$maintainceListGen =  $maintainceModel->findBy([
+			["car", MaintainceCarModel::EQUAL, $car["id"]]
 		]);
+
+		$maintainceListProgramed = [];
+		$maintainceList = [];
+		foreach ($maintainceListGen as  $mto) {
+			$maintainceList[] = $mto;
+			if ($mto["status"] == "PROGRAMADO") {
+				$maintainceListProgramed[] = $mto;
+			}
+		}
 
 		return $this->renderHtml("car/details", [
 			"car" => $car,
 			"images" => $images,
 			"documentTypeList" => $documentTypeList,
 			"documents" => $documents,
+			"docsExpired" => $docsExpired,
 			"fuel" => $fuel_list,
-			"maintainceList" => $maintainceList
+			"maintainceList" => $maintainceList,
+			"maintainceListProgramed" => $maintainceListProgramed,
+			"planilla" => $daily
 		]);
 	}
 
