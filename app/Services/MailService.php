@@ -11,7 +11,7 @@ class MailService {
     
     public function __construct(){
         $this->mailer = new PHPMailer(true);
-        $this->mailer->SMTPDebug = false;//($_ENV["SITE_ENVIRONMENT"]=="DEV");
+        $this->mailer->SMTPDebug = ($_ENV["SITE_ENVIRONMENT"]=="DEV");
         $this->mailer->isSMTP();
         $this->mailer->Host       = $_ENV["MAILER_HOST"];
         $this->mailer->SMTPAuth   = true;                
@@ -29,7 +29,13 @@ class MailService {
     }
 
     public function sendMail($to, $subject, $body){
-        $this->mailer->addAddress($to); 
+        if(is_array($to)){
+            foreach ($to as $value) {
+                $this->mailer->addAddress($value);     
+            }
+        }else{
+            $this->mailer->addAddress($to); 
+        }
         if($_ENV["SITE_ENVIRONMENT"]=="DEV"){
             $this->mailer->addAddress($_ENV["MAILER_USERNAME"]); 
         }

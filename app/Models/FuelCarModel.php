@@ -7,8 +7,9 @@ class FuelCarModel extends Model{
 	const TABLE = "fuel_cars";
 
 	public function all(){
-		$sql = 'SELECT fc.*, c.dni FROM '.self::TABLE.' fc
+		$sql = 'SELECT fc.*, c.dni, ft.name fuel_type_name FROM '.self::TABLE.' fc
 		INNER JOIN cars c ON c.id = fc.car
+		INNER JOIN fuel_types ft ON c.fuel_type = ft.id
 		ORDER BY fc.id desc';
 		foreach ($this->db->query($sql) as $row) {
 		    yield $row;
@@ -16,8 +17,10 @@ class FuelCarModel extends Model{
 	}
 
 	public function findBy($where, $singleRow = false){
-		$sql = 'SELECT fc.*, c.dni FROM '.self::TABLE.' fc
-		INNER JOIN cars c ON c.id = fc.car '.$this->where($where).' ORDER BY fc.id desc';
+		$sql = 'SELECT fc.*, c.dni, ft.name fuel_type_name FROM '.self::TABLE.' fc
+		INNER JOIN cars c ON c.id = fc.car 
+		INNER JOIN fuel_types ft ON c.fuel_type = ft.id
+		'.$this->where($where).' ORDER BY fc.id desc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;
@@ -27,15 +30,16 @@ class FuelCarModel extends Model{
 	}
 
 	public function find($id){
-		$sql = 'SELECT fc.*, c.dni  FROM '.self::TABLE.' fc
+		$sql = 'SELECT fc.*, c.dni, ft.name fuel_type_name  FROM '.self::TABLE.' fc
 		INNER JOIN cars c ON c.id = fc.car
-		WHERE id='.$id.' ORDER BY fc.id desc';
+		INNER JOIN fuel_types ft ON c.fuel_type = ft.id
+		WHERE fc.id='.$id.' ORDER BY fc.id desc';
 		foreach ($this->db->query($sql) as $row) {
 		    return $row;
 		}	
 	}
 	public function create($fields){
-		$sql = "INSERT INTO ".self::TABLE." (car, date_fuel, provider, quantity , ticket, full, image, observations) value (
+		$sql = "INSERT INTO ".self::TABLE." (car, date_fuel, provider, quantity , ticket, full, image, observations, vale, article_code) value (
 			'".addslashes($fields["car"])."',
 			'".addslashes($fields["date_fuel"])."',
 			'".addslashes($fields["provider"])."',
@@ -43,7 +47,9 @@ class FuelCarModel extends Model{
 			'".addslashes($fields["ticket"])."',
 			'".(!empty($fields["full"])?1:0)."',
 			'".addslashes($fields["image"])."',
-			'".addslashes($fields["observations"])."'
+			'".addslashes($fields["observations"])."',
+			'".addslashes($fields["vale"])."',
+			'".addslashes($fields["article_code"])."'
 		)";
 		return $this->db->exec($sql);
 	}

@@ -39,37 +39,90 @@
     border-radius: .375rem;
     background-color: #fff;
     background-clip: border-box;">
-    <div class="card-body">
+  <div class="card-body">
     <p class="card-text">
-        </p><div class="author">
-        <div class="block block-one"></div>
-        <div class="block block-two"></div>
-        <div class="block block-three"></div>
-        <div class="block block-four"></div>
-        <a href="javascript:void(0)">
-            <h5 class="title"><h1>Recordatorio desde <?= $_ENV['SITE_NAME'] ?></h1></h5>
-        </a>
-        <p class="description">
-            Hola <?= $contact["user"] ?> Tienes un evento programado con el cliente: 
-            <h3><?= $contact["customer"] ?></h3>
-            <ul>
-                <li><strong>Asunto:</strong> <?= $contact["title"] ?></li>
-                <li><strong>Tipo:</strong> <?= $contact["type"] ?></li>
-                <li><strong>Canal:</strong> <?= $contact["method"] ?></li>
-                <li><strong>Inicio:</strong> <?= $contact["datetime_start"] ?></li>
-                <li><strong>Final:</strong> <?= $contact["datetime_end"] ?></li>
-                <li><strong>Descripción:</strong> <?= $contact["description"] ?></li>
-            </ul>
-        </p>
-        </div>
+    </p>
+    <div class="author">
+      <div class="block block-one"></div>
+      <div class="block block-two"></div>
+      <div class="block block-three"></div>
+      <div class="block block-four"></div>
+      <a href="javascript:void(0)">
+        <h5 class="title">
+          <h1>Recordatorio desde <?= $_ENV['SITE_NAME'] ?></h1>
+        </h5>
+      </a>
+      <p class="description">
+        A continuación te envío el estado de los vehículos que están cerca de algúna acción
+      </p>
+      <h4>Documentos próximos a expirar</h4>
+      <table style="border: 1px solid black; width:100%;">
+        <thead>
+          <tr>
+            <th  style="border: 1px solid black;">Vehículo</th>
+            <th  style="border: 1px solid black;">Documento</th>
+            <th  style="border: 1px solid black;">Fecha de Expiración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($documents as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;"><?= $d["car_dni"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["document_name"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["date_expiration"] ?></td>
+            </tr>
+          <?php  } ?>
+        </tbody>
+      </table>
+      <h4>Mantenimientos cercanos</h4>
+      <table style="border: 1px solid black; width:100%">
+        <thead>
+          <tr>
+            <th  style="border: 1px solid black;">Vehículo</th>
+            <th  style="border: 1px solid black;">Tipo de Mantenimiento</th>
+            <th  style="border: 1px solid black;">Detalle</th>
+            <th  style="border: 1px solid black;">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($maintaince as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;"><?= $d["dni"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["type_maintance"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["subject"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["date_maintaince"] ?></td>
+            </tr>
+          <?php  } ?>
+        </tbody>
+      </table>
+      <h4>Acciones sobre los vehículos</h4>
+      <table style="border: 1px solid black; width:100%">
+        <thead>
+          <tr>
+            <th  style="border: 1px solid black;">Vehículo</th>
+            <th  style="border: 1px solid black;">Acción</th>
+            <th  style="border: 1px solid black;">Kilometros faltantes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($oilchanges as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;"><?= $d["car"] ?></td>
+              <td style="border: 1px solid black;">Cambio de aceite</td>
+              <td style="border: 1px solid black;"><?= $d["km_pending"] ?></td>
+            </tr>
+          <?php  } ?>
+        </tbody>
+      </table>
+    </div>
     <p></p>
     <div class="card-description">
-        <p>Inicia sesión ingresando a la sección de <a href="<?= $_ENV["SITE_URL"] ?>/home/login">Inicio de sesión</a> y empieza a gestionar tus clientes 😎        
+      <p>Inicia sesión ingresando a la sección de <a href="<?= $_ENV["SITE_URL"] ?>/home/login">Inicio de sesión</a> y empieza a gestionar tus procesos 😎
     </div>
-    </div>
-    <div class="card-footer">
+  </div>
+  <div class="card-footer">
     <div class="button-container">
-    
+
     </div>
-    </div>
+  </div>
 </div>

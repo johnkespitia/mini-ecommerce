@@ -154,6 +154,10 @@ $cust = $planilla->getReturn();
                   <span class="heading"><?= $car["owner_name"] ?></span>
                   <span class="description">Propietario</span>
                 </div>
+                <div>
+                  <span class="heading"><?= $car["cag_name"]??"Sin Convenio" ?></span>
+                  <span class="description">Convenio</span>
+                </div>
               </div>
             </div>
           </div>
@@ -432,12 +436,24 @@ $cust = $planilla->getReturn();
                       <input required type="text" class="form-control" name="provider" id="providerInputName">
                     </div>
                     <div class="form-group">
+                      <label for="quantityInputName">Articulo</label>
+                      <input required type="text" class="form-control" name="article_code" id="quantityInputName">
+                    </div>
+                    <div class="form-group">
+                      <label for="quantityInputName">Costo</label>
+                      <input required type="number" class="form-control" name="value" id="quantityInputName">
+                    </div>
+                    <div class="form-group">
                       <label for="quantityInputName">Cantidad (Galones)</label>
                       <input required type="text" class="form-control" name="quantity" id="quantityInputName">
                     </div>
                     <div class="form-group">
                       <label for="ticketInputName">Código/Serial Tiquete</label>
                       <input required type="text" class="form-control" name="ticket" id="ticketInputName">
+                    </div>
+                    <div class="form-group">
+                      <label for="ticketInputName">Vale</label>
+                      <input required type="text" class="form-control" name="vale" id="ticketInputName">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName">Tanqueada Completa</label>

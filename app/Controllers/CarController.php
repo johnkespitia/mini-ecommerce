@@ -10,6 +10,7 @@ use Model\BrandModel;
 use Model\LineModel;
 use Model\CarImageModel;
 use Model\CarOwnerModel;
+use Model\CompanyAgreementModel;
 use Model\DailyModel;
 use Model\DocumentModel;
 use Model\DocumentTypeModel;
@@ -58,9 +59,9 @@ class CarController extends Controller
 		$documents = [];
 		foreach ($documentsGen as  $mto) {
 			$documents[] = $mto;
-			if(strtotime($mto["date_expiration"]." -30 days") < time() && !in_array($mto["document_name"],$docsRenewaled)){
+			if (strtotime($mto["date_expiration"] . " -30 days") < time() && !in_array($mto["document_name"], $docsRenewaled)) {
 				$docsExpired[] = $mto;
-			}else{
+			} else {
 				$docsRenewaled[] = $mto["document_name"];
 			}
 		}
@@ -233,11 +234,13 @@ class CarController extends Controller
 		$FuelTypeList = $FuelTypeModel->all();
 		$CarOwnerModel = new CarOwnerModel();
 		$CarOwnerList = $CarOwnerModel->all();
+		$CompanyAgreementModel = new CompanyAgreementModel();
+		$companyAgreementList = $CompanyAgreementModel->all();
 
 
 		return $this->renderHtml("car/new", [
 			"carTypeList" => $carTypeList, "BrandList" => $BrandList, "ServiceTypeList" => $ServiceTypeList,
-			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList, "CarOwnerList" => $CarOwnerList
+			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList, "CarOwnerList" => $CarOwnerList, "companyAgreementList" => $companyAgreementList
 		]);
 	}
 
@@ -374,9 +377,11 @@ class CarController extends Controller
 		$FuelTypeList = $FuelTypeModel->all();
 		$CarOwnerModel = new CarOwnerModel();
 		$CarOwnerList = $CarOwnerModel->all();
+		$CompanyAgreementModel = new CompanyAgreementModel();
+		$companyAgreementList = $CompanyAgreementModel->all();
 		return $this->renderHtml("car/edit", [
 			"customer" => $user, "carTypeList" => $carTypeList, "BrandList" => $BrandList, "ServiceTypeList" => $ServiceTypeList,
-			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList, "CarOwnerList" => $CarOwnerList
+			"LineList" => $LineList, "FuelTypeList" => $FuelTypeList, "CarOwnerList" => $CarOwnerList, "companyAgreementList" => $companyAgreementList
 		]);
 	}
 

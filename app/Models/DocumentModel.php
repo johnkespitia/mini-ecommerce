@@ -20,9 +20,10 @@ class DocumentModel extends Model
 
 	public function findBy($where, $singleRow = false)
 	{
-		$sql = 'SELECT d.* , dt.name document_name
+		$sql = 'SELECT d.* , dt.name document_name, c.dni car_dni
 		FROM ' . self::TABLE . ' d
 		INNER JOIN document_types dt ON dt.id = d.document_type
+		INNER JOIN cars c ON c.id = d.car
 		' . $this->where($where) . ' ORDER BY id desc';
 		foreach ($this->db->query($sql) as $row) {
 			if ($singleRow)

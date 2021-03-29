@@ -1,3 +1,17 @@
+<script>
+	$(document).ready(function() {
+		$("#ConvenioEMpresarialfield").hide();
+	})
+
+	function showConvenios(combo) {
+		if (combo.value == "CONVENIO EMPRESARIAL") {
+			$("#ConvenioEMpresarialfield").show();
+		} else {
+			$("#ConvenioEMpresarial").val("");
+			$("#ConvenioEMpresarialfield").hide();
+		}
+	}
+</script>
 <div class="card">
 	<div class="card-body">
 		<h4 class="card-title">Nuevo Vehículo <a href="/car/index" class=" float-right btn btn-sm btn-primary">Listado de Vehículos</a></h4>
@@ -68,10 +82,21 @@
 			</div>
 			<div class="form-group">
 				<label for="relationship">Tipo de Relación</label>
-				<select required class="form-control" name="relationship">
+				<select required class="form-control" name="relationship" onchange="showConvenios(this)">
 					<option value='VEHÍCULO PROPIO'>VEHÍCULO PROPIO</option>
 					<option value='VEHÍCULO AFILIADO'>VEHÍCULO AFILIADO</option>
 					<option value='CONVENIO EMPRESARIAL'>CONVENIO EMPRESARIAL</option>
+				</select>
+			</div>
+			<div class="form-group" id="ConvenioEMpresarialfield">
+				<label for="ConvenioEMpresarial">Convenio Empresarial</label>
+				<select class="form-control" id="ConvenioEMpresarial" name="company_agreement">
+					<option value=''></option>
+					<?php
+					foreach ($companyAgreementList as $ct) {
+						echo "<option value='{$ct["id"]}'>{$ct["name"]}</option>";
+					}
+					?>
 				</select>
 			</div>
 			<div class="form-group">

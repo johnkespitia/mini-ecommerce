@@ -10,7 +10,8 @@ class CarModel extends Model{
 		$sql = 'SELECT c.*, ct.name type_car, ft.name fuel_type, 
 		lc.name line_category_name, b.name brand_name, 
 		st.name service_type_name,
-		con.dni owner_id, con.name owner_name, con.email owner_email
+		con.dni owner_id, con.name owner_name, con.email owner_email, 
+		cag.name cag_name, cag.email cag_email, cag.dni cag_dni
 		FROM '.self::TABLE.' c
 		INNER JOIN car_types ct on c.car_type = ct.id
 		LEFT JOIN fuel_types ft on c.fuel_type = ft.id
@@ -18,6 +19,7 @@ class CarModel extends Model{
 		LEFT JOIN brands b on c.brand = b.id
 		LEFT JOIN service_types st on c.service_type = st.id
 		LEFT JOIN car_owner con on c.car_owner = con.id
+		LEFT JOIN companies_agreement cag on c.company_agreement = cag.id
 		ORDER BY id';
 		foreach ($this->db->query($sql) as $row) {
 		    yield $row;
@@ -28,7 +30,8 @@ class CarModel extends Model{
 		$sql = 'SELECT c.*, ct.name type_car, ft.name fuel_type, 
 		lc.name line_category_name, b.name brand_name, 
 		st.name service_type_name,
-		con.dni owner_id, con.name owner_name, con.email owner_email
+		con.dni owner_id, con.name owner_name, con.email owner_email,
+		cag.name cag_name, cag.email cag_email, cag.dni cag_dni
 		FROM '.self::TABLE.' c
 		INNER JOIN car_types ct on c.car_type = ct.id
 		LEFT JOIN fuel_types ft on c.fuel_type = ft.id
@@ -36,6 +39,7 @@ class CarModel extends Model{
 		LEFT JOIN brands b on c.brand = b.id
 		LEFT JOIN service_types st on c.service_type = st.id
 		LEFT JOIN car_owner con on c.car_owner = con.id
+		LEFT JOIN companies_agreement cag on c.company_agreement = cag.id
 		WHERE c.id='.$id.' ORDER BY id';
 		foreach ($this->db->query($sql) as $row) {
 		    return $row;
@@ -46,7 +50,8 @@ class CarModel extends Model{
 		$sql = 'SELECT c.*, ct.name type_car, ft.name fuel_type, 
 		lc.name line_category_name, b.name brand_name, 
 		st.name service_type_name,
-		con.dni owner_id, con.name owner_name, con.email owner_email
+		con.dni owner_id, con.name owner_name, con.email owner_email,
+		cag.name cag_name, cag.email cag_email, cag.dni cag_dni
 		FROM '.self::TABLE.' c
 		INNER JOIN car_types ct on c.car_type = ct.id
 		LEFT JOIN fuel_types ft on c.fuel_type = ft.id
@@ -54,6 +59,7 @@ class CarModel extends Model{
 		LEFT JOIN brands b on c.brand = b.id
 		LEFT JOIN service_types st on c.service_type = st.id
 		LEFT JOIN car_owner con on c.car_owner = con.id
+		LEFT JOIN companies_agreement cag on c.company_agreement = cag.id
 		'.$this->where($where).' ORDER BY id desc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
@@ -66,7 +72,7 @@ class CarModel extends Model{
 	public function create($fields){
 		$sql = "INSERT INTO ".self::TABLE." (dni, car_type,modelo ,status, fuel_type, line_category, brand, service_type,
 		internal_number, relationship, cc, color, service_permission, body_type, no_doors, no_engine, vin, no_serie, tn_charge, 
-		no_chasis, date_license, car_owner, oil_change_km
+		no_chasis, date_license, car_owner, oil_change_km, company_agreement
 		) value (
 			'".addslashes($fields["dni"])."', 
 			".addslashes($fields["car_type"]).",
@@ -90,7 +96,8 @@ class CarModel extends Model{
 			'".addslashes($fields["no_chasis"])."',
 			'".addslashes($fields["date_license"])."',
 			'".addslashes($fields["car_owner"])."',
-			'".addslashes($fields["oil_change_km"])."'
+			'".addslashes($fields["oil_change_km"])."',
+			".((!empty($fields["company_agreement"]))?"'".addslashes($fields["company_agreement"])."'":" NULL")."
 		)";
 		return $this->db->exec($sql);
 	}
@@ -120,8 +127,9 @@ class CarModel extends Model{
 			no_chasis = '".addslashes($fields["no_chasis"])."',
 			date_license = '".addslashes($fields["date_license"])."',
 			car_owner = '".addslashes($fields["car_owner"])."',
-			oil_change_km = '".addslashes($fields["oil_change_km"])."'
-			WHERE id = {$id}";
+			oil_change_km = '".addslashes($fields["oil_change_km"])."',
+			company_agreement = ".((!empty($fields["company_agreement"]))?"'".addslashes($fields["company_agreement"])."'":" NULL")."
+			WHERE id = {$id}"; 
 		return $this->db->exec($sql);
 	}
 

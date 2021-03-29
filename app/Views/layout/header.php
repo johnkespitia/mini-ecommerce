@@ -101,7 +101,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/fueltype/">
-														<i class="fas fa-gas-pump text-primary"></i> Combustible
+														<i class="fas fa-gas-pump text-primary"></i>Tipos de Combustible
 													</a>
 												</li>
 											<?php } ?>
@@ -137,6 +137,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Emails Notificacione"]["Listar"]) && $_SESSION["permissions"]["Emails Notificacione"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/notificationemail/">
+														<i class="fas fa-envelope-square text-primary"></i> Emails de notificaciones
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>
@@ -165,6 +173,14 @@
 												<li class="nav-item">
 													<a class="nav-link" href="/owner/">
 														<i class="far fa-address-book text-primary"></i> Propietarios
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Aliados"]["Listar"]) && $_SESSION["permissions"]["Aliados"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/companyagreement/">
+														<i class="far fa-building text-primary"></i> Aliados
 													</a>
 												</li>
 											<?php } ?>
@@ -204,6 +220,14 @@
 												<li class="nav-item">
 													<a class="nav-link" href="/report/">
 														<i class="fas fa-clipboard-list text-primary"></i> Planillas
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Combustible"]["Listar"]) && $_SESSION["permissions"]["Combustible"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/fuel/">
+														<i class="fas fa-gas-pump text-primary"></i> Combustible
 													</a>
 												</li>
 											<?php } ?>
