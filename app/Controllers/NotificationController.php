@@ -42,7 +42,7 @@ class NotificationController extends Controller
 
         $NotModel = new NotificationModel();
         $oilResult = $NotModel->getOilChanges();
-
+        $notificationsResult = $NotModel->getNotifications();
 
         $NotEmailModel = new NotificationEmailModel();
         $emailList = $NotEmailModel->findBy([
@@ -52,7 +52,7 @@ class NotificationController extends Controller
         foreach ($emailList as $email) {
             $emails[] = $email["email"];
         }
-        $content = $this->renderEmail("mail/reminder", ["documents" => $documentsResult, "maintaince" => $maintanceResult, "oilchanges" => $oilResult]);
+        $content = $this->renderEmail("mail/reminder", ["documents" => $documentsResult, "maintaince" => $maintanceResult, "oilchanges" => $oilResult, "notificationsResult" => $notificationsResult]);
         $title = "Recordatorios de estado de vehiculos";
         $mailer->sendMail($emails, $title, $content);
         die;

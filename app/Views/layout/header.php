@@ -145,6 +145,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Tipo Notificación"]["Listar"]) && $_SESSION["permissions"]["Tipo Notificación"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/notificationemail/">
+														<i class="far fa-sticky-note text-primary"></i> Tipos de notificaciones
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>

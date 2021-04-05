@@ -16,6 +16,8 @@ use Model\DocumentModel;
 use Model\DocumentTypeModel;
 use Model\FuelCarModel;
 use Model\MaintainceCarModel;
+use Model\NotificationCarModel;
+use Model\NotificationTypeModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -37,6 +39,79 @@ class CarController extends Controller
 		}
 		return $this->renderHtml("car/index", ["carList" => $carList]);
 	}
+
+	public function notificationsAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Listar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+
+		$modelNotifications = new NotificationCarModel();
+
+		$notCar = $modelNotifications->findBy([
+			["car", NotificationCarModel::EQUAL, $car["id"]]
+		]);
+
+		return $this->renderHtml("car/notifications", ["car" => $car, "notifications" => $notCar]);
+	}
+
+	public function createnotificationAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Listar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+
+		$notificationTypeModel = new NotificationTypeModel();
+		$notificationTypes = $notificationTypeModel->all();
+
+		return $this->renderHtml("car/createnotifications", ["car" => $car, "typeNotifications" => $notificationTypes]);
+	}
+
+	public function storenotificationAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["post"]["car"]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+
+		$notificationCarModel = new NotificationCarModel();
+		if (!$notificationCarModel->create($params["post"], $car["id"])) {
+			throw new \Exception("Error al crear la notificación", 500);
+		}
+		header("location:/car/notifications/" . $car["id"]);
+	}
+
+	public function deletenotificationAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+		$notificationCarModel = new NotificationCarModel();
+		$car = $notificationCarModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Notificación no encontrada", 404);
+		}
+
+		if (!$notificationCarModel->delete($car["id"])) {
+			throw new \Exception("Error al eliminar la notificación", 500);
+		}
+		header("location:/car/notifications/" . $car["car"]);
+	}
+
 	public function detailsAction($params = [])
 	{
 		if (empty($_SESSION["permissions"]["Vehículos"]["Listar"])) {
@@ -103,6 +178,11 @@ class CarController extends Controller
 			}
 		}
 
+		$notificationCarModel = new NotificationCarModel;
+		$notificationsList = $notificationCarModel->findBy([
+			["car", NotificationCarModel::EQUAL, $car["id"]]
+		]);
+
 		return $this->renderHtml("car/details", [
 			"car" => $car,
 			"images" => $images,
@@ -112,7 +192,8 @@ class CarController extends Controller
 			"fuel" => $fuel_list,
 			"maintainceList" => $maintainceList,
 			"maintainceListProgramed" => $maintainceListProgramed,
-			"planilla" => $daily
+			"planilla" => $daily,
+			"notificationsList" => $notificationsList
 		]);
 	}
 

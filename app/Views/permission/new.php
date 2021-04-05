@@ -22,7 +22,8 @@
 					<option value="Tipo de Documento">Tipo de Documento</option>
 					<option value="Propietarios">Propietarios</option>
 					<option value="Aliados">Aliados</option>
-					<option value="Emails Notificaciones">Emails Notificaciones</option>
+					<option value="Emails Notificacione">Emails Notificaciones</option>
+					<option value="Tipo Notificación">Tipo Notificación</option>
 				</select>
 			</div>
 			<div class="form-group">

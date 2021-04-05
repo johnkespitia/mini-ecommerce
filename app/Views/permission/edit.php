@@ -24,7 +24,8 @@
 					<option <?=($permission["module"] == "Tipo de Documento")?"selected":"" ?> value="Tipo de Documento">Tipo de Documento</option>
 					<option <?=($permission["module"] == "Propietarios")?"selected":"" ?> value="Propietarios">Propietarios</option>
 					<option <?=($permission["module"] == "Aliados")?"selected":"" ?> value="Aliados">Aliados</option>
-					<option <?=($permission["module"] == "Emails Notificaciones")?"selected":"" ?> value="Emails Notificaciones">Emails Notificaciones</option>
+					<option <?=($permission["module"] == "Emails Notificacione")?"selected":"" ?> value="Emails Notificacione">Emails Notificaciones</option>
+					<option <?=($permission["module"] == "Tipo Notificación")?"selected":"" ?> value="Tipo Notificación">Tipo Notificación</option>
 				</select>
 			</div>
 			<div class="form-group">

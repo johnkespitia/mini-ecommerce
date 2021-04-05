@@ -53,15 +53,15 @@
         </h5>
       </a>
       <p class="description">
-        A continuación te envío el estado de los vehículos que están cerca de algúna acción
+        A continuaci&oacute;n te env&iacute;o el estado de los veh&iacute;culos que est&aacute;n cerca de alg&uacute;na acci&oacute;n
       </p>
-      <h4>Documentos próximos a expirar</h4>
+      <h4>Documentos pr&oacute;ximos a expirar</h4>
       <table style="border: 1px solid black; width:100%;">
         <thead>
           <tr>
-            <th  style="border: 1px solid black;">Vehículo</th>
+            <th  style="border: 1px solid black;">Veh&iacute;culo</th>
             <th  style="border: 1px solid black;">Documento</th>
-            <th  style="border: 1px solid black;">Fecha de Expiración</th>
+            <th  style="border: 1px solid black;">Fecha de Expiraci&oacute;n</th>
           </tr>
         </thead>
         <tbody>
@@ -78,7 +78,7 @@
       <table style="border: 1px solid black; width:100%">
         <thead>
           <tr>
-            <th  style="border: 1px solid black;">Vehículo</th>
+            <th  style="border: 1px solid black;">Veh&iacute;culo</th>
             <th  style="border: 1px solid black;">Tipo de Mantenimiento</th>
             <th  style="border: 1px solid black;">Detalle</th>
             <th  style="border: 1px solid black;">Fecha</th>
@@ -95,12 +95,12 @@
           <?php  } ?>
         </tbody>
       </table>
-      <h4>Acciones sobre los vehículos</h4>
+      <h4>Acciones sobre los veh&iacute;culos</h4>
       <table style="border: 1px solid black; width:100%">
         <thead>
           <tr>
-            <th  style="border: 1px solid black;">Vehículo</th>
-            <th  style="border: 1px solid black;">Acción</th>
+            <th  style="border: 1px solid black;">Veh&iacute;culo</th>
+            <th  style="border: 1px solid black;">Acci&oacute;n</th>
             <th  style="border: 1px solid black;">Kilometros faltantes</th>
           </tr>
         </thead>
@@ -112,12 +112,19 @@
               <td style="border: 1px solid black;"><?= $d["km_pending"] ?></td>
             </tr>
           <?php  } ?>
+          <?php foreach ($notificationsResult as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;"><?= $d["car"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["not_type"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["km_pending"] ?></td>
+            </tr>
+          <?php  } ?>
         </tbody>
       </table>
     </div>
     <p></p>
     <div class="card-description">
-      <p>Inicia sesión ingresando a la sección de <a href="<?= $_ENV["SITE_URL"] ?>/home/login">Inicio de sesión</a> y empieza a gestionar tus procesos 😎
+      <p>Inicia sesi&oacute;n ingresando a la secci&oacute;n de <a href="<?= $_ENV["SITE_URL"] ?>/home/login">Inicio de sesi&oacute;n</a> y empieza a gestionar tus procesos 😎
     </div>
   </div>
   <div class="card-footer">

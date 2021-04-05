@@ -20,6 +20,7 @@ $cust = $planilla->getReturn();
         <p class="text-white mt-0 mb-5"><?= number_format(($cust["km_end"] ?? "0"), 0, ",", ".") ?> Kilometros recorridos</p>
         <?php if (!empty($_SESSION["permissions"]["Vehículos"]["Editar"]) && $_SESSION["permissions"]["Vehículos"]["Editar"] == 1) { ?>
           <a href="/car/edit/<?= $car["id"] ?>" class="btn btn-neutral">Editar Vehículo</a>
+          <a href="/car/notifications/<?= $car["id"] ?>" class="btn btn-warning">Administrar Notificaciones</a>
         <?php } ?>
       </div>
     </div>
@@ -155,7 +156,7 @@ $cust = $planilla->getReturn();
                   <span class="description">Propietario</span>
                 </div>
                 <div>
-                  <span class="heading"><?= $car["cag_name"]??"Sin Convenio" ?></span>
+                  <span class="heading"><?= $car["cag_name"] ?? "Sin Convenio" ?></span>
                   <span class="description">Convenio</span>
                 </div>
               </div>
@@ -228,25 +229,37 @@ $cust = $planilla->getReturn();
                     <tbody>
                       <?php if (!empty($car["oil_change_km"]) && !empty($cust["km_end"])) { ?>
                         <tr>
-                          <td>Mantenimiento</td>
+                          <td>Alerta de Mantenimiento</td>
                           <td>Preventivo: Cambio de aceite</td>
                           <td>Faltan: <?= number_format($car["oil_change_km"] - ($cust["km_end"] % $car["oil_change_km"]), 0, ",", ".") ?> KM</td>
                           <td>
                             <a class="btn btn-sm btn-warning text-white" onclick="setTab('maintenance')"><i class="fa fa-wrench mr-2"></i>Crear Mantenimiento</a>
                           </td>
                         </tr>
-                      <?php } ?>
-                      <?php foreach ($docsExpired as $doc){ 
+
+                        <?php foreach ($notificationsList as $not) {
+                        ?>
+                          <tr>
+                            <td>Alerta de Mantenimiento</td>
+                            <td>Preventivo: <?= $not["not_type"] ?></td>
+                            <td>Faltan: <?= number_format($not["value_compare"] - ($cust["km_end"] % $not["value_compare"]), 0, ",", ".") ?> KM</td>
+                            <td>
+                              <a class="btn btn-sm btn-warning text-white" onclick="setTab('maintenance')"><i class="fa fa-wrench mr-2"></i>Crear Mantenimiento</a>
+                            </td>
+                          </tr>
+                      <?php  }
+                      } ?>
+                      <?php foreach ($docsExpired as $doc) {
                       ?>
-                      <tr>
-                        <td>Documentos por expirar</td>
-                        <td><?= $doc["document_name"] ?></td>
-                        <td><?= $doc["date_expiration"]?></td>
-                        <td>
-                          <a class="btn btn-sm btn-warning text-white" onclick="setTab('documents')"><i class="ni ni-collection mr-2"></i>Renovar Documento</a>
-                        </td>
-                      </tr>
-                      <?php  } 
+                        <tr>
+                          <td>Documentos por expirar</td>
+                          <td><?= $doc["document_name"] ?></td>
+                          <td><?= $doc["date_expiration"] ?></td>
+                          <td>
+                            <a class="btn btn-sm btn-warning text-white" onclick="setTab('documents')"><i class="ni ni-collection mr-2"></i>Renovar Documento</a>
+                          </td>
+                        </tr>
+                      <?php  }
                       ?>
                     </tbody>
                   </table>
