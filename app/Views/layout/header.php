@@ -153,6 +153,54 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Eps"]["Listar"]) && $_SESSION["permissions"]["Eps"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/eps/">
+													<i class="fas fa-heartbeat text-primary"></i> Eps
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Banco"]["Listar"]) && $_SESSION["permissions"]["Banco"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/bank/">
+													<i class="fas fa-piggy-bank text-primary"></i> Bancos
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Area"]["Listar"]) && $_SESSION["permissions"]["Area"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/area/">
+													<i class="fas fa-crosshairs text-primary"></i> Area
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Cesantias"]["Listar"]) && $_SESSION["permissions"]["Cesantias"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/cesantia/">
+													<i class="fas fa-wallet text-primary"></i> Cesantias
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Pension"]["Listar"]) && $_SESSION["permissions"]["Pension"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/pension/">
+													<i class="fas fa-coins text-primary"></i> Pensiones
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Caja de Compensacion"]["Listar"]) && $_SESSION["permissions"]["Caja de Compensacion"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/cajacompensacion/">
+													<i class="fas fa-cash-register text-primary"></i> Caja de Compensación
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>

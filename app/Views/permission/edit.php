@@ -26,6 +26,13 @@
 					<option <?=($permission["module"] == "Aliados")?"selected":"" ?> value="Aliados">Aliados</option>
 					<option <?=($permission["module"] == "Emails Notificacione")?"selected":"" ?> value="Emails Notificacione">Emails Notificaciones</option>
 					<option <?=($permission["module"] == "Tipo Notificación")?"selected":"" ?> value="Tipo Notificación">Tipo Notificación</option>
+					<option <?=($permission["module"] == "Cargo")?"selected":"" ?> value="Cargo">Cargo</option>
+					<option <?=($permission["module"] == "Eps")?"selected":"" ?> value="Eps">Eps</option>
+					<option <?=($permission["module"] == "Pension")?"selected":"" ?> value="Pension">Pension</option>
+					<option <?=($permission["module"] == "Cesantias")?"selected":"" ?> value="Cesantias">Cesantias</option>
+					<option <?=($permission["module"] == "Area")?"selected":"" ?> value="Area">Area</option>
+					<option <?=($permission["module"] == "Banco")?"selected":"" ?> value="Banco">Banco</option>
+					<option <?=($permission["module"] == "Caja de Compensacion")?"selected":"" ?> value="Caja de Compensacion">Caja de Compensacion</option>
 				</select>
 			</div>
 			<div class="form-group">

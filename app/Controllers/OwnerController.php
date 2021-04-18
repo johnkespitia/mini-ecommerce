@@ -26,7 +26,7 @@ class OwnerController extends Controller{
 		}
 		$CarOwnerModel = new CarOwnerModel();
 		if(!$CarOwnerModel->create($params["post"])){
-			throw new \Exception("No fue posible crear la ciudad, verifique la información proporcionada", 500);
+			throw new \Exception("No fue posible crear la propietario, verifique la información proporcionada", 500);
 		}else{
 			header("location:/owner/");
 		}
@@ -39,10 +39,10 @@ class OwnerController extends Controller{
 		$CarOwnerModel = new CarOwnerModel();
 		$cityRes = $CarOwnerModel->find($params["params"][2]);
 		if(empty($cityRes)){
-			throw new \Exception("Ciudad no encontrada", 404);
+			throw new \Exception("propietario no encontrada", 404);
 		}
 		if(!$CarOwnerModel->update($params["post"], $cityRes["id"])){
-			throw new \Exception("No fue posible actualizar la ciudad, verifique la información proporcionada", 500);
+			throw new \Exception("No fue posible actualizar la propietario, verifique la información proporcionada", 500);
 		}else{
 			header("location:/owner/");
 		}
@@ -57,7 +57,7 @@ class OwnerController extends Controller{
 		$CarOwnerModel = new CarOwnerModel();
 		$city = $CarOwnerModel->find($params["params"][2]);
 		if(empty($city)){
-			throw new \Exception("Ciudad no encontrada", 404);
+			throw new \Exception("propietario no encontrada", 404);
 		}
 		return $this->renderHtml("car_owner/edit", ["city" => $city]);
 	}

@@ -24,6 +24,13 @@
 					<option value="Aliados">Aliados</option>
 					<option value="Emails Notificacione">Emails Notificaciones</option>
 					<option value="Tipo Notificación">Tipo Notificación</option>
+					<option value="Cargo">Cargo</option>
+					<option value="Eps">Eps</option>
+					<option value="Pension">Pension</option>
+					<option value="Cesantias">Cesantias</option>
+					<option value="Area">Area</option>
+					<option value="Banco">Banco</option>
+					<option value="Caja de Compensacion">Caja de Compensacion</option>
 				</select>
 			</div>
 			<div class="form-group">
