@@ -2,7 +2,7 @@
 
 namespace Controller;
 use Model\AreaModel;
-class PositionController extends Controller{
+class AreaController extends Controller{
 
 	public function indexAction($params = []){
 		if(empty($_SESSION["permissions"]["Area"]["Listar"])){
@@ -10,14 +10,14 @@ class PositionController extends Controller{
 		}
 		$AreaModel = new AreaModel();
 		$cityList = $AreaModel->all();
-		return $this->renderHtml("position/index", ["cityList"=>$cityList]);
+		return $this->renderHtml("areas/index", ["cityList"=>$cityList]);
 	}
 
 	public function newAction($params = []){
 		if(empty($_SESSION["permissions"]["Area"]["Crear"])){
 			header("location:/");	
 		}
-		return $this->renderHtml("position/new", []);
+		return $this->renderHtml("areas/new", []);
 	}
 
 	public function storeAction($params = []){
@@ -28,7 +28,7 @@ class PositionController extends Controller{
 		if(!$AreaModel->create($params["post"])){
 			throw new \Exception("No fue posible crear la Area, verifique la información proporcionada", 500);
 		}else{
-			header("location:/position/");
+			header("location:/area/");
 		}
 	}
 
@@ -44,7 +44,7 @@ class PositionController extends Controller{
 		if(!$AreaModel->update($params["post"], $cityRes["id"])){
 			throw new \Exception("No fue posible actualizar la Area, verifique la información proporcionada", 500);
 		}else{
-			header("location:/position/");
+			header("location:/area/");
 		}
 		
 	}
@@ -59,6 +59,6 @@ class PositionController extends Controller{
 		if(empty($city)){
 			throw new \Exception("Area no encontrada", 404);
 		}
-		return $this->renderHtml("position/edit", ["city" => $city]);
+		return $this->renderHtml("areas/edit", ["city" => $city]);
 	}
 }

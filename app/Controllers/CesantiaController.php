@@ -28,7 +28,7 @@ class CesantiaController extends Controller{
 		if(!$CesantiasModel->create($params["post"])){
 			throw new \Exception("No fue posible crear la Cesantias, verifique la información proporcionada", 500);
 		}else{
-			header("location:/cesantias/");
+			header("location:/cesantia/");
 		}
 	}
 
@@ -44,7 +44,7 @@ class CesantiaController extends Controller{
 		if(!$CesantiasModel->update($params["post"], $cityRes["id"])){
 			throw new \Exception("No fue posible actualizar la Cesantias, verifique la información proporcionada", 500);
 		}else{
-			header("location:/cesantias/");
+			header("location:/cesantia/");
 		}
 		
 	}

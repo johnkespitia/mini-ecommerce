@@ -10,14 +10,14 @@ class BankController extends Controller{
 		}
 		$BankModel = new BankModel();
 		$cityList = $BankModel->all();
-		return $this->renderHtml("position/index", ["cityList"=>$cityList]);
+		return $this->renderHtml("banks/index", ["cityList"=>$cityList]);
 	}
 
 	public function newAction($params = []){
 		if(empty($_SESSION["permissions"]["Banco"]["Crear"])){
 			header("location:/");	
 		}
-		return $this->renderHtml("position/new", []);
+		return $this->renderHtml("banks/new", []);
 	}
 
 	public function storeAction($params = []){
@@ -28,7 +28,7 @@ class BankController extends Controller{
 		if(!$BankModel->create($params["post"])){
 			throw new \Exception("No fue posible crear la Banco, verifique la información proporcionada", 500);
 		}else{
-			header("location:/position/");
+			header("location:/bank/");
 		}
 	}
 
@@ -44,7 +44,7 @@ class BankController extends Controller{
 		if(!$BankModel->update($params["post"], $cityRes["id"])){
 			throw new \Exception("No fue posible actualizar la Banco, verifique la información proporcionada", 500);
 		}else{
-			header("location:/position/");
+			header("location:/bank/");
 		}
 		
 	}
@@ -59,6 +59,6 @@ class BankController extends Controller{
 		if(empty($city)){
 			throw new \Exception("Banco no encontrada", 404);
 		}
-		return $this->renderHtml("position/edit", ["city" => $city]);
+		return $this->renderHtml("banks/edit", ["city" => $city]);
 	}
 }
