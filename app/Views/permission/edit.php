@@ -33,6 +33,7 @@
 					<option <?=($permission["module"] == "Area")?"selected":"" ?> value="Area">Area</option>
 					<option <?=($permission["module"] == "Banco")?"selected":"" ?> value="Banco">Banco</option>
 					<option <?=($permission["module"] == "Caja de Compensacion")?"selected":"" ?> value="Caja de Compensacion">Caja de Compensacion</option>
+					<option <?=($permission["module"] == "Arl")?"selected":"" ?> value="Arl">Arl</option>
 				</select>
 			</div>
 			<div class="form-group">

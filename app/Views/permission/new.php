@@ -31,6 +31,7 @@
 					<option value="Area">Area</option>
 					<option value="Banco">Banco</option>
 					<option value="Caja de Compensacion">Caja de Compensacion</option>
+					<option value="Arl">Arl</option>
 				</select>
 			</div>
 			<div class="form-group">

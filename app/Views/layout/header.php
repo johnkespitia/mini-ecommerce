@@ -201,6 +201,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Arl"]["Listar"]) && $_SESSION["permissions"]["Arl"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/arl/">
+													<i class="fas fa-medkit text-primary"></i> ARL
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>
