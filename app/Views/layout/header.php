@@ -169,6 +169,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Cargo"]["Listar"]) && $_SESSION["permissions"]["Cargo"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/position/">
+													<i class="fas fa-project-diagram text-primary"></i> Cargo
+													</a>
+												</li>
+											<?php } ?>
 											<?php if (isset($_SESSION["permissions"]["Area"]["Listar"]) && $_SESSION["permissions"]["Area"]["Listar"] == 1) {
 											?>
 												<li class="nav-item">

@@ -31,7 +31,7 @@
             <td><?= $cust["status"] == 1 ? "<span class='badge bg-success text-dark'>Activo</span>" : "<span class='badge bg-danger text-dark'>Inactivo</span>" ?></td>
             <td class="td-actions text-right">
               <?php if (!empty($_SESSION["permissions"]["Empleados"]["Editar"]) && $_SESSION["permissions"]["Empleados"]["Editar"] == 1) { ?>
-                <a class="btn btn-warning btn-sm" href="/employe/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
+                <a class="btn btn-info btn-sm" href="/employe/details/<?= $cust["id"] ?>"><i class="fas fa-eye"></i> Detalles</a>
               <?php } ?>
             </td>
           </tr>
