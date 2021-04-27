@@ -66,7 +66,7 @@ class EmployeController extends Controller
 
 		$epsModel = new EpsModel();
 		$epsList = $epsModel->all();
-		
+
 		$cesantiasModel = new CesantiasModel();
 		$cesantiasList = $cesantiasModel->all();
 
@@ -83,15 +83,16 @@ class EmployeController extends Controller
 		$bankList = $bankModel->all();
 
 
-		return $this->renderHtml("employe/new", ["positionsList" => $positionList, 
-			"areaList" => $areaList, 
-			"epsList" => $epsList, 
+		return $this->renderHtml("employe/new", [
+			"positionsList" => $positionList,
+			"areaList" => $areaList,
+			"epsList" => $epsList,
 			"cesantiasList" => $cesantiasList,
 			"pensionList" => $pensionList,
 			"ccompList" => $ccompList,
 			"arlList" => $arlList,
 			"bankList" => $bankList,
-			]);
+		]);
 	}
 
 	public function storeAction($params = [])
@@ -101,7 +102,7 @@ class EmployeController extends Controller
 		}
 		$employeModel = new EmployeModel();
 		if (!$employeModel->create($params["post"])) {
-			throw new \Exception("No fue posible crear el empleado, verifique la información proporcionada ".print_r($employeModel->getLastError(),1), 500);
+			throw new \Exception("No fue posible crear el empleado, verifique la información proporcionada " . print_r($employeModel->getLastError(), 1), 500);
 		} else {
 			header("location:/employe/");
 		}
@@ -132,10 +133,47 @@ class EmployeController extends Controller
 		}
 		$employe = new EmployeModel();
 		$user = $employe->find($params["params"][2]);
+
 		if (empty($user)) {
 			throw new \Exception("Empleado no encontrado", 404);
 		}
-		return $this->renderHtml("employe/edit", ["customer" => $user]);
+
+		$positionModel = new PositionModel();
+		$positionList = $positionModel->all();
+
+		$areaModel = new AreaModel();
+		$areaList = $areaModel->all();
+
+		$epsModel = new EpsModel();
+		$epsList = $epsModel->all();
+
+		$cesantiasModel = new CesantiasModel();
+		$cesantiasList = $cesantiasModel->all();
+
+		$pensionModel = new PensionModel();
+		$pensionList = $pensionModel->all();
+
+		$ccompModel = new CajaCompensacionModel();
+		$ccompList = $ccompModel->all();
+
+		$arlModel = new ArlModel();
+		$arlList = $arlModel->all();
+
+		$bankModel = new BankModel();
+		$bankList = $bankModel->all();
+
+
+		return $this->renderHtml("employe/edit", [
+			"positionsList" => $positionList,
+			"areaList" => $areaList,
+			"epsList" => $epsList,
+			"cesantiasList" => $cesantiasList,
+			"pensionList" => $pensionList,
+			"ccompList" => $ccompList,
+			"arlList" => $arlList,
+			"bankList" => $bankList, 
+			"customer" => $user
+		]);
 	}
 
 	public function deleteAction($params = [])

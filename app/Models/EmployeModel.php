@@ -148,9 +148,9 @@ class EmployeModel extends Model{
 			cesantias = '".addslashes($fields["cesantias"])."',
 			pension = '".addslashes($fields["pension"])."',
 			area = '".addslashes($fields["area"])."',
-			caja_compensacion = '".addslashes($fields["caja_compensacion"])."'
+			caja_compensacion = '".addslashes($fields["caja_compensacion"])."',
 			arl = '".addslashes($fields["arl"])."'
-			WHERE id = {$id}";
+			WHERE id = {$id}"; 
 		return $this->db->exec($sql);
 	}
 
