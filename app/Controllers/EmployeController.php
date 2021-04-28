@@ -171,7 +171,7 @@ class EmployeController extends Controller
 			"pensionList" => $pensionList,
 			"ccompList" => $ccompList,
 			"arlList" => $arlList,
-			"bankList" => $bankList, 
+			"bankList" => $bankList,
 			"customer" => $user
 		]);
 	}
@@ -217,6 +217,7 @@ class EmployeController extends Controller
 		if (empty($_SESSION["permissions"]["Empleados"]["Crear"])) {
 			header("location:/");
 		}
+		ini_set("set_time_limit",0);
 		$load_file = $this->uploadXls($_FILES);
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 		$spreadsheet = $reader->load($load_file);
@@ -228,17 +229,116 @@ class EmployeController extends Controller
 			if ($key == 1) {
 				continue;
 			}
+			$errors = false;
+			$positionModel = new PositionModel();
+			$positionList = $positionModel->findBy([
+				["name", PositionModel::EQUAL, $value["J"]]
+			], true);
+			if (empty($positionList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $positionModel->getLastError()[2];
+			}
+			$areaModel = new AreaModel();
+			$areaList = $areaModel->findBy([
+				["name", AreaModel::EQUAL, $value["Y"]]
+			], true);
+			if (empty($areaList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $areaModel->getLastError()[2];
+			}
+			$epsModel = new EpsModel();
+			$epsList = $epsModel->findBy([
+				["name", EpsModel::EQUAL, $value["V"]]
+			], true);
+			if (empty($epsList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $epsModel->getLastError()[2];
+			}
+			$cesantiasModel = new CesantiasModel();
+			$cesantiasList = $cesantiasModel->findBy([
+				["name", CesantiasModel::EQUAL, $value["W"]]
+			], true);
+			if (empty($cesantiasList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $cesantiasModel->getLastError()[2];
+			}
+			$pensionModel = new PensionModel();
+			$pensionList = $pensionModel->findBy([
+				["name", PensionModel::EQUAL, $value["X"]]
+			], true);
+			if (empty($pensionList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $pensionModel->getLastError()[2];
+			}
+			$ccompModel = new CajaCompensacionModel();
+			$ccompList = $ccompModel->findBy([
+				["name", CajaCompensacionModel::EQUAL, $value["Z"]]
+			], true);
+			if (empty($epsList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $epsModel->getLastError()[2];
+			}
+			$arlModel = new ArlModel();
+			$arlList = $arlModel->findBy([
+				["name", ArlModel::EQUAL, $value["AA"]]
+			], true);
+			if (empty($arlList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $arlModel->getLastError()[2];
+			}
+			$bankModel = new BankModel();
+			$bankList = $bankModel->findBy([
+				["name", BankModel::EQUAL, $value["M"]]
+			], true);
+			if (empty($bankList->getReturn())) {
+				$errors = true;
+				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $bankModel->getLastError()[2];
+			}
+			if (!$errors) {
+				$data = [
+					"dni" => $value["A"],
+					"name" => $value["B"],
+					"email" => $value["C"],
+					"status" => $value["D"],
+					"dni_type" => $value["E"],
+					"city_exp" => $value["F"],
+					"birth_date" => date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value["G"], $_ENV["APP_TIMEZONE"])),
+					"address" => $value["H"],
+					"phone" => $value["I"],
+					"position" => $positionList->getReturn()["id"],
+					"rh" => $value["K"],
+					"payment_method" => $value["L"],
+					"bank" => $bankList->getReturn()["id"],
+					"account_type" => $value["N"],
+					"account_number" => $value["O"],
+					"salary" => $value["P"],
+					"payment_base" => $value["Q"],
+					"start_date" => date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value["R"], $_ENV["APP_TIMEZONE"])),
+					"extra_benefit" => $value["S"],
+					"type_contract" => $value["T"],
+					"contract_agreement" => $value["U"],
+					"eps" => $epsList->getReturn()["id"],
+					"cesantias" => $cesantiasList->getReturn()["id"],
+					"pension" => $pensionList->getReturn()["id"],
+					"area" => $areaList->getReturn()["id"],
+					"caja_compensacion" => $ccompList->getReturn()["id"],
+					"arl" => $arlList->getReturn()["id"]
+				];
 
-			$data = [
-				"dni" => $value["A"],
-				"name" => $value["B"],
-				"email" => $value["C"],
-				"status" => $value["D"],
-			];
-			if (!$employeModel->create($data)) {
-				$errorMessage[$key] = "tiene errores, no se pudo insertar " . $employeModel->getLastError()[2];
-			} else {
-				$successMessage[$key] = "Registrado correctamente";
+				$existEmp = $employeModel->findBy([["dni", EmployeModel::EQUAL, $data["dni"]]], true);
+				if ($existEmp) {
+					if (!$employeModel->update($data, $existEmp->getReturn()["id"])) {
+						$errorMessage[$key] = "tiene errores, no se pudo insertar " . $employeModel->getLastError()[2];
+					} else {
+						$successMessage[$key] = "Registrado correctamente";
+					}
+				} else {
+					if (!$employeModel->create($data)) {
+						$errorMessage[$key] = "tiene errores, no se pudo insertar " . $employeModel->getLastError()[2];
+					} else {
+						$successMessage[$key] = "Registrado correctamente";
+					}
+				}
 			}
 		}
 		return $this->renderHtml("employe/loadfile", ["errorMessage" => $errorMessage, "successMessage" => $successMessage]);

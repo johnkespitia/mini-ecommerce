@@ -133,7 +133,12 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/documenttype/">
-														<i class="ni ni-book-bookmark text-primary"></i> Tipo de Documento
+														<i class="ni ni-book-bookmark text-primary"></i> Tipo de Documento Vehículos
+													</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" href="/employedocumenttype/">
+														<i class="ni ni-book-bookmark text-primary"></i> Tipo de Documento Empleados
 													</a>
 												</li>
 											<?php } ?>
