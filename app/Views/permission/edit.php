@@ -34,6 +34,7 @@
 					<option <?=($permission["module"] == "Banco")?"selected":"" ?> value="Banco">Banco</option>
 					<option <?=($permission["module"] == "Caja de Compensacion")?"selected":"" ?> value="Caja de Compensacion">Caja de Compensacion</option>
 					<option <?=($permission["module"] == "Arl")?"selected":"" ?> value="Arl">Arl</option>
+					<option <?=($permission["module"] == "Cursos")?"selected":"" ?> value="Cursos">Cursos</option>
 				</select>
 			</div>
 			<div class="form-group">

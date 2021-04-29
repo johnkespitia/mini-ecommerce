@@ -173,7 +173,7 @@
                 <a class="nav-link mb-sm-3 mb-md-0" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><i class="ni ni-collection mr-2"></i>Documentos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mb-sm-3 mb-md-0" id="fuel-tab" data-toggle="tab" href="#fuel" role="tab" aria-controls="fuel" aria-selected="false"><i class="fas fa-gas-pump mr-2"></i>Cursos</a>
+                <a class="nav-link mb-sm-3 mb-md-0" id="learning-tab" data-toggle="tab" href="#learning" role="tab" aria-controls="learning" aria-selected="false"><i class="fas fa-graduation-cap mr-2"></i>Cursos</a>
               </li>
             </ul>
           </div>
@@ -193,7 +193,17 @@
                       </tr>
                     </thead>
                     <tbody>
-
+                      <?php foreach ($docsExpired as $doc) {
+                      ?>
+                        <tr>
+                          <td>Documentos por expirar</td>
+                          <td><?= $doc["document_name"] ?></td>
+                          <td><?= $doc["expiration_date"] ?></td>
+                          <td>
+                            <a class="btn btn-sm btn-warning text-white" onclick="setTab('documents')"><i class="ni ni-collection mr-2"></i>Renovar Documento</a>
+                          </td>
+                        </tr>
+                      <?php  } ?>
                     </tbody>
                   </table>
                 </div>
@@ -244,11 +254,14 @@
                 <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                   <h2 class="title">Documentos del Empleado</h2>
                   <h3>Añadir Documento</h3>
-                  <form method="post" action="/car/storefile/<?= $employe["id"] ?>" enctype="multipart/form-data">
+                  <form method="post" action="/employe/storefile/<?= $employe["id"] ?>" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="exampleInputName">Tipo de Documento</label>
                       <select required class="form-control" name="document_type">
-
+                        <?php
+                        foreach ($documentsTypeList as $key => $value) { ?>
+                          <option value='<?= $value["id"] ?>'><?= $value["name"] ?></option>
+                        <?php } ?>
                       </select>
                     </div>
                     <div class="form-group">
@@ -261,11 +274,11 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName">Expedición</label>
-                      <input required type="date" class="form-control" name="date_expedition" id="exampleInputName">
+                      <input required type="date" class="form-control" name="expedition_date" id="exampleInputName">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName">Expiración</label>
-                      <input required type="date" class="form-control" name="date_expiration" id="exampleInputName">
+                      <input required type="date" class="form-control" name="expiration_date" id="exampleInputName">
                     </div>
                     <div class="form-group">
                       <label for="load-file">Documento</label>
@@ -296,15 +309,15 @@
                           <td><?= $doc["document_name"] ?></td>
                           <td><?= $doc["provider"] ?></td>
                           <td><?= $doc["code"] ?></td>
-                          <td><?= (!empty($doc["date_expiration"]) && strtotime($doc["date_expiration"]) < time()) ? "<span class='text-danger'>Expirado</span>" : "<span class='text-success'>Vigente</span>"  ?></td>
+                          <td><?= (!empty($doc["expiration_date"]) && strtotime($doc["expiration_date"]) < time()) ? "<span class='text-danger'>Expirado</span>" : "<span class='text-success'>Vigente</span>"  ?></td>
                           <td><?= $doc["date_created"] ?></td>
-                          <td><?= $doc["date_expedition"] ?></td>
-                          <td><?= $doc["date_expiration"] ?></td>
+                          <td><?= $doc["expedition_date"] ?></td>
+                          <td><?= $doc["expiration_date"] ?></td>
                           <td>
-                            <a href='<?= $doc["url"] ?>' class='btn btn-sm btn-success mb-2'>Descargar</a>
+                            <a target="_blank" href='<?= $doc["url"] ?>' class='btn btn-sm btn-success mb-2'>Descargar</a>
                             <?php
                             if (!empty($_SESSION["permissions"]["Empleados"]["Editar"]) && $_SESSION["permissions"]["Empleados"]["Editar"] == 1) { ?>
-                              <br /><a href='/car/deletefile/<?= $doc["id"] ?>/<?= $employe["id"] ?>' class='btn btn-sm btn-danger'>Eliminar</a>
+                              <br /><a href='/employe/deletefile/<?= $doc["id"] ?>/<?= $employe["id"] ?>' class='btn btn-sm btn-danger'>Eliminar</a>
                             <?php
                             }
                             ?>
@@ -315,10 +328,10 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="tab-pane fade" id="fuel" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                <div class="tab-pane fade" id="learning" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                   <h2 class="title">Cursos</h2>
-                  <h2 class="title">Documentos del Empleado</h2>
-                  <h3>Añadir Documento</h3>
+                  <h2 class="title">Cursos del Empleado</h2>
+                  <h3>Añadir Curso</h3>
                   <form method="post" action="/car/storefile/<?= $employe["id"] ?>" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="exampleInputName">Tipo de Documento</label>
@@ -395,12 +408,12 @@
                   <h3>Programar Mantenimiento</h3>
                   <form method="post" action="/car/storemaintaince/<?= $employe["id"] ?>" enctype="multipart/form-data">
                     <div class="form-group">
-                      <label for="subject_fuelInputName">Motivo de Mantenimiento</label>
-                      <input required type="text" class="form-control" name="subject" id="subject_fuelInputName">
+                      <label for="subject_learningInputName">Motivo de Mantenimiento</label>
+                      <input required type="text" class="form-control" name="subject" id="subject_learningInputName">
                     </div>
                     <div class="form-group">
-                      <label for="date_fuelInputName">Fecha de Mantenimiento</label>
-                      <input required type="date" class="form-control" name="date_maintaince" id="date_fuelInputName">
+                      <label for="date_learningInputName">Fecha de Mantenimiento</label>
+                      <input required type="date" class="form-control" name="date_maintaince" id="date_learningInputName">
                     </div>
                     <div class="form-group">
                       <label for="providerInputName">Proveedor</label>

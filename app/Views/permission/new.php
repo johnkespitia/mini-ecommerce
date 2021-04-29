@@ -32,6 +32,7 @@
 					<option value="Banco">Banco</option>
 					<option value="Caja de Compensacion">Caja de Compensacion</option>
 					<option value="Arl">Arl</option>
+					<option value="Cursos">Cursos</option>
 				</select>
 			</div>
 			<div class="form-group">

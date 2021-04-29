@@ -52,8 +52,8 @@ class EmployeDocumentModel extends Model
 			'" . addslashes($fields["url"]) . "',
 			'" . addslashes($fields["code"]) . "',
 			'" . addslashes($fields["date_created"]) . "',
-			" . ((!empty($fields["date_expiration"])) ? "'" . addslashes($fields["date_expiration"]) . "'" : "NULL") . ",
-			" . ((!empty($fields["date_expedition"])) ? "'" . addslashes($fields["date_expedition"]) . "'" : "NULL") . "
+			" . ((!empty($fields["expiration_date"])) ? "'" . addslashes($fields["expiration_date"]) . "'" : "NULL") . ",
+			" . ((!empty($fields["expedition_date"])) ? "'" . addslashes($fields["expedition_date"]) . "'" : "NULL") . "
 		)";
 		return $this->db->exec($sql);
 	}
@@ -67,8 +67,8 @@ class EmployeDocumentModel extends Model
 			provider = '" . addslashes($fields["provider"]) . "',
 			url = '" . addslashes($fields["url"]) . "',
 			code = '" . addslashes($fields["code"]) . "',
-			date_expiration = " . ((!empty($fields["date_expiration"])) ? "'" . addslashes($fields["date_expiration"]) . "'" : "NULL") . ",
-			date_expedition = " . ((!empty($fields["date_expedition"])) ? "'" . addslashes($fields["date_expedition"]) . "'" : "NULL") . "
+			expiration_date = " . ((!empty($fields["expiration_date"])) ? "'" . addslashes($fields["expiration_date"]) . "'" : "NULL") . ",
+			expedition_date = " . ((!empty($fields["expedition_date"])) ? "'" . addslashes($fields["expedition_date"]) . "'" : "NULL") . "
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}

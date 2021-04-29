@@ -7,6 +7,8 @@ use Model\ArlModel;
 use Model\BankModel;
 use Model\CajaCompensacionModel;
 use Model\CesantiasModel;
+use Model\EmployeDocumentModel;
+use Model\EmployeDocumentTypeModel;
 use Model\EmployeImageModel;
 use Model\EmployeModel;
 use Model\EpsModel;
@@ -47,9 +49,34 @@ class EmployeController extends Controller
 			$images[] = $value;
 		}
 
+		$documentsTypeModel = new EmployeDocumentTypeModel();
+		$documentsTypeList = $documentsTypeModel->all();
+
+		$documentsModel = new EmployeDocumentModel();
 		$documents = [];
+		$docsRenewaled = [];
+		$docsExpired = [];
+		$documentsGen = $documentsModel->findBy([
+			["employe", EmployeDocumentModel::EQUAL, $employeesList["id"]]
+		]);
+
+		foreach ($documentsGen as  $mto) {
+			$documents[] = $mto;
+			if (strtotime($mto["expiration_date"] . " -30 days") < time() && !in_array($mto["document_name"], $docsRenewaled)) {
+				$docsExpired[] = $mto;
+			} else {
+				$docsRenewaled[] = $mto["document_name"];
+			}
+		}
 		$courses = [];
-		return $this->renderHtml("employe/details", ["employe" => $employeesList, "documents" => $documents, "courses" => $courses, "images" => $images]);
+		return $this->renderHtml("employe/details", [
+			"employe" => $employeesList,
+			"documents" => $documents,
+			"docsExpired" => $docsExpired,
+			"courses" => $courses,
+			"images" => $images,
+			"documentsTypeList" => $documentsTypeList
+		]);
 	}
 
 	public function newAction($params = [])
@@ -217,7 +244,7 @@ class EmployeController extends Controller
 		if (empty($_SESSION["permissions"]["Empleados"]["Crear"])) {
 			header("location:/");
 		}
-		ini_set("set_time_limit",0);
+		ini_set("set_time_limit", 0);
 		$load_file = $this->uploadXls($_FILES);
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 		$spreadsheet = $reader->load($load_file);
@@ -480,6 +507,44 @@ class EmployeController extends Controller
 		}
 
 		$carModel = new EmployeImageModel();
+		$carModel->delete($params["params"][2]);
+		header("location:/employe/details/" . $params["params"][3]);
+	}
+
+	public function storefileAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Empleados"]["Editar"])) {
+			header("location:/");
+		}
+		$employeModel = new EmployeModel();
+		$employe = $employeModel->find($params["params"][2]);
+		if (empty($employe)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$fileName = $this->uploadFile($params["files"]["file"]);
+		$params["post"]["url"] = $fileName;
+		$params["post"]["employe"] = $employe["id"];
+		$params["post"]["date_created"] = date("Y-m-d");
+		$employeImageModel = new EmployeDocumentModel();
+		$employeImageModel->create($params["post"]);
+		header("location:/employe/details/" . $employe["id"]);
+	}
+
+	protected function uploadFile($file)
+	{
+		$fileName = "/employees/docs/" . time() . $file['name'];
+		$filePath = $_ENV["STORAGE_FILES"]  . $fileName;
+		move_uploaded_file($file['tmp_name'], $filePath);
+		return $_ENV["SITE_URL"] . "files/" . $fileName;
+	}
+
+	public function deletefileAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Empleados"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new EmployeDocumentModel();
 		$carModel->delete($params["params"][2]);
 		header("location:/employe/details/" . $params["params"][3]);
 	}

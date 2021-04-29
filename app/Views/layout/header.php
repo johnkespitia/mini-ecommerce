@@ -222,6 +222,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Cursos"]["Listar"]) && $_SESSION["permissions"]["Cursos"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/course/">
+													<i class="fas fa-graduation-cap text-primary"></i> Cursos
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>
