@@ -7,6 +7,8 @@ use Model\ArlModel;
 use Model\BankModel;
 use Model\CajaCompensacionModel;
 use Model\CesantiasModel;
+use Model\CourseModel;
+use Model\EmployeCourseModel;
 use Model\EmployeDocumentModel;
 use Model\EmployeDocumentTypeModel;
 use Model\EmployeImageModel;
@@ -68,14 +70,37 @@ class EmployeController extends Controller
 				$docsRenewaled[] = $mto["document_name"];
 			}
 		}
+
+		$courseTypeModel = new CourseModel();
+		$coursesList = $courseTypeModel->all();
+
+		$coursesModel = new EmployeCourseModel;
 		$courses = [];
+		$coursesRenewaled = [];
+		$coursesExpired = [];
+		$coursesGen = $coursesModel->findBy([
+			["employe",EmployeCourseModel::EQUAL,$employeesList["id"]]
+		]);
+
+		foreach ($coursesGen as  $mto) {
+			$courses[] = $mto;
+			if (strtotime($mto["expiration_date"] . " -30 days") < time() && !in_array($mto["course_name"], $coursesRenewaled)) {
+				$coursesExpired[] = $mto;
+			} else {
+				$coursesRenewaled[] = $mto["course_name"];
+			}
+		}
+
 		return $this->renderHtml("employe/details", [
 			"employe" => $employeesList,
 			"documents" => $documents,
 			"docsExpired" => $docsExpired,
 			"courses" => $courses,
 			"images" => $images,
-			"documentsTypeList" => $documentsTypeList
+			"documentsTypeList" => $documentsTypeList,
+			"coursesList" => $coursesList,
+			"courses" => $courses,
+			"coursesExpired" => $coursesExpired
 		]);
 	}
 
@@ -545,6 +570,37 @@ class EmployeController extends Controller
 		}
 
 		$carModel = new EmployeDocumentModel();
+		$carModel->delete($params["params"][2]);
+		header("location:/employe/details/" . $params["params"][3]);
+	}
+
+	public function storecourseAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Empleados"]["Editar"])) {
+			header("location:/");
+		}
+		$employeModel = new EmployeModel();
+		$employe = $employeModel->find($params["params"][2]);
+		if (empty($employe)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$fileName = $this->uploadFile($params["files"]["file"]);
+		$params["post"]["url"] = $fileName;
+		$params["post"]["employe"] = $employe["id"];
+		$params["post"]["date_created"] = date("Y-m-d");
+		$employeImageModel = new EmployeCourseModel();
+		$employeImageModel->create($params["post"]);
+		header("location:/employe/details/" . $employe["id"]);
+	}
+
+
+	public function courseAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Empleados"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new EmployeCourseModel();
 		$carModel->delete($params["params"][2]);
 		header("location:/employe/details/" . $params["params"][3]);
 	}

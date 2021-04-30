@@ -14,6 +14,7 @@
 				<label for="exampleInputName">Tipo de notificación</label>
 				<select required class="form-control" name="notification_type" id="exampleInputName" >
 					<option <?=($rol["notification_type"]=="VEHICLE_STATUS")?"selected=selected":"" ?> value="VEHICLE_STATUS">Estado de vehículos</option>
+					<option <?=($rol["notification_type"]=="EMPLOYE_STATUS")?"selected=selected":"" ?> value="EMPLOYE_STATUS">Estado de empleados</option>
 				</select>
 			</div>
 			<button type="submit" class="btn btn-primary">Guardar</button>

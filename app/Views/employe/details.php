@@ -77,7 +77,7 @@
             <div class="col">
               <div class="card-profile-stats d-flex justify-content-center">
                 <div>
-                  <span class="heading"><?= $employe["bank"] ?></span>
+                  <span class="heading"><?= $employe["bank_name"] ?></span>
                   <span class="description">Banco</span>
                 </div>
                 <div>
@@ -139,7 +139,7 @@
                   <span class="description">ARL</span>
                 </div>
                 <div>
-                  <span class="heading"><?= $employe["caja_compensacion"] ?></span>
+                  <span class="heading"><?= $employe["caja_compensacion_name"] ?></span>
                   <span class="description">Caja de Compensación</span>
                 </div>
               </div>
@@ -201,6 +201,17 @@
                           <td><?= $doc["expiration_date"] ?></td>
                           <td>
                             <a class="btn btn-sm btn-warning text-white" onclick="setTab('documents')"><i class="ni ni-collection mr-2"></i>Renovar Documento</a>
+                          </td>
+                        </tr>
+                      <?php  } ?>
+                      <?php foreach ($coursesExpired as $doc) {
+                      ?>
+                        <tr>
+                          <td>Cursos por expirar</td>
+                          <td><?= $doc["course_name"] ?></td>
+                          <td><?= $doc["expiration_date"] ?></td>
+                          <td>
+                            <a class="btn btn-sm btn-warning text-white" onclick="setTab('learning')"><i class="fas fa-graduation-cap mr-2"></i>Renovar Curso</a>
                           </td>
                         </tr>
                       <?php  } ?>
@@ -332,11 +343,13 @@
                   <h2 class="title">Cursos</h2>
                   <h2 class="title">Cursos del Empleado</h2>
                   <h3>Añadir Curso</h3>
-                  <form method="post" action="/car/storefile/<?= $employe["id"] ?>" enctype="multipart/form-data">
+                  <form method="post" action="/employe/storecourse/<?= $employe["id"] ?>" enctype="multipart/form-data">
                     <div class="form-group">
-                      <label for="exampleInputName">Tipo de Documento</label>
-                      <select required class="form-control" name="document_type">
-
+                      <label for="exampleInputName">Curso</label>
+                      <select required class="form-control" name="course">
+                            <?php foreach ($coursesList as $key => $c) { ?>
+                              <option value="<?= $c["id"]?>"><?=$c["name"]?></option>
+                            <?php }?>
                       </select>
                     </div>
                     <div class="form-group">
@@ -344,16 +357,20 @@
                       <input required type="text" class="form-control" name="provider" id="exampleInputName">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputName">Código/Serial</label>
+                      <label for="exampleInputName">Código</label>
                       <input required type="text" class="form-control" name="code" id="exampleInputName">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName">Expedición</label>
-                      <input required type="date" class="form-control" name="date_expedition" id="exampleInputName">
+                      <input required type="date" class="form-control" name="expedition_date" id="exampleInputName">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName">Expiración</label>
-                      <input required type="date" class="form-control" name="date_expiration" id="exampleInputName">
+                      <input required type="date" class="form-control" name="expiration_date" id="exampleInputName">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName">Calificación</label>
+                      <input required type="number" min="0" max="100" class="form-control" name="qualification" id="exampleInputName">
                     </div>
                     <div class="form-group">
                       <label for="load-file">Documento</label>
@@ -366,7 +383,7 @@
                     <thead class="thead-light">
                       <tr>
                         <th>#</th>
-                        <th>Documento</th>
+                        <th>Curso</th>
                         <th>Proveedor</th>
                         <th>Código</th>
                         <th>Estado</th>
@@ -381,18 +398,18 @@
                       foreach ($courses as  $doc) { ?>
                         <tr>
                           <td><?= $doc["id"] ?></td>
-                          <td><?= $doc["document_name"] ?></td>
+                          <td><?= $doc["course_name"] ?></td>
                           <td><?= $doc["provider"] ?></td>
                           <td><?= $doc["code"] ?></td>
-                          <td><?= (!empty($doc["date_expiration"]) && strtotime($doc["date_expiration"]) < time()) ? "<span class='text-danger'>Expirado</span>" : "<span class='text-success'>Vigente</span>"  ?></td>
+                          <td><?= (!empty($doc["expiration_date"]) && strtotime($doc["expiration_date"]) < time()) ? "<span class='text-danger'>Expirado</span>" : "<span class='text-success'>Vigente</span>"  ?></td>
                           <td><?= $doc["date_created"] ?></td>
-                          <td><?= $doc["date_expedition"] ?></td>
-                          <td><?= $doc["date_expiration"] ?></td>
+                          <td><?= $doc["expedition_date"] ?></td>
+                          <td><?= $doc["expiration_date"] ?></td>
                           <td>
                             <a href='<?= $doc["url"] ?>' class='btn btn-sm btn-success mb-2'>Descargar</a>
                             <?php
                             if (!empty($_SESSION["permissions"]["Empleados"]["Editar"]) && $_SESSION["permissions"]["Empleados"]["Editar"] == 1) { ?>
-                              <br /><a href='/car/deletefile/<?= $doc["id"] ?>/<?= $employe["id"] ?>' class='btn btn-sm btn-danger'>Eliminar</a>
+                              <br /><a href='/car/deletecourse/<?= $doc["id"] ?>/<?= $employe["id"] ?>' class='btn btn-sm btn-danger'>Eliminar</a>
                             <?php
                             }
                             ?>

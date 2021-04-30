@@ -12,6 +12,7 @@
 				<label for="exampleInputName">Tipo de notificación</label>
 				<select required class="form-control" name="notification_type" id="exampleInputName" >
 					<option value="VEHICLE_STATUS">Estado de vehículos</option>
+					<option value="EMPLOYE_STATUS">Estado de Empleados</option>
 				</select>
 			</div>
 			<button type="submit" class="btn btn-primary">Guardar</button>
