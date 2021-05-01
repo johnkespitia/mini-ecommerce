@@ -28,7 +28,13 @@ class EmployeController extends Controller
 			header("location:/");
 		}
 		$employeModel = new EmployeModel();
-		$employeesList = $employeModel->all();
+		if (!empty($params["get"]["dni"])) {
+			$employeesList = $employeModel->findBy([
+				["e.dni", EmployeModel::CONTAIN, $params["get"]["dni"]]
+			]);
+		} else {
+			$employeesList = $employeModel->all();
+		}
 		return $this->renderHtml("employe/index", ["employeesList" => $employeesList]);
 	}
 	public function detailsAction($params = [])
@@ -79,7 +85,7 @@ class EmployeController extends Controller
 		$coursesRenewaled = [];
 		$coursesExpired = [];
 		$coursesGen = $coursesModel->findBy([
-			["employe",EmployeCourseModel::EQUAL,$employeesList["id"]]
+			["employe", EmployeCourseModel::EQUAL, $employeesList["id"]]
 		]);
 
 		foreach ($coursesGen as  $mto) {
@@ -597,6 +603,17 @@ class EmployeController extends Controller
 	public function courseAction($params = [])
 	{
 		if (empty($_SESSION["permissions"]["Empleados"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new EmployeCourseModel();
+		$carModel->delete($params["params"][2]);
+		header("location:/employe/details/" . $params["params"][3]);
+	}
+
+	public function deletecourseAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
 			header("location:/");
 		}
 

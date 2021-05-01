@@ -8,6 +8,11 @@
       <?php } ?>
     </h4>
     <h6 class="card-subtitle mb-2 text-muted">Todos los empleados registrados </h6>
+    <form method="get" action=""  class="form-inline mb-3">
+      <label for="dniInputName">Filtrar por Cédula</label>
+      <input type="text" class="form-control mr-2 ml-2 " name="dni"/>
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
     <table class="table table-responsive">
       <thead class="thead-light">
         <tr>
