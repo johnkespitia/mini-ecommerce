@@ -38,6 +38,9 @@
               <?php if (!empty($_SESSION["permissions"]["Planillas"]["Editar"]) && $_SESSION["permissions"]["Planillas"]["Editar"] == 1) { ?>
                 <a class="btn btn-warning btn-sm" href="/daily/edit/<?= $cust["id"] ?>"><i class="fas fa-pencil-alt"></i> Editar</a>
               <?php } ?>
+              <?php if (!empty($_SESSION["permissions"]["Planillas"]["Eliminar"]) && $_SESSION["permissions"]["Planillas"]["Eliminar"] == 1) { ?>
+                <a class="btn btn-danger btn-sm" href="/daily/delete/<?= $cust["id"] ?>/<?= $group["id"] ?>"><i class="fas fa-trash-alt"></i> Eliminar</a>
+              <?php } ?>
               <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#productsModal<?= $cust["id"] ?>"><i class="fas fa-eye"></i> Ver detalles</button>
               <!-- Modal -->
               <div class="modal fade" id="productsModal<?= $cust["id"] ?>" tabindex="-1" role="dialog" aria-labelledby="productsModal<?= $cust["id"] ?>" aria-hidden="true">

@@ -246,7 +246,7 @@ class DailyController extends Controller
 		if (!$dailyModel->delete($daily["id"])) {
 			throw new \Exception("Error al eliminar el reporte", 403);
 		} else {
-			header("location:/daily/");
+			header("location:/daily/index/".$params["params"][3]);
 		}
 	}
 

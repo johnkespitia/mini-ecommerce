@@ -610,10 +610,11 @@ $cust = $planilla->getReturn();
                                       <li><strong>Descripción: </strong><?= $doc["observations"] ?></li>
                                       <li><strong>Costo: </strong>$ <?= number_format($doc["cost"], 0, ",", ".") ?></li>
                                       <li><strong>Resultado: </strong><?= $doc["results"] ?></li>
+                                      <li><strong>Evidencia: </strong><?php if (!empty($doc["url"])) { ?><a href="<?= $doc["url"] ?>" target="_blank">Descargar</a></li><?php } ?>
                                     </ul>
                                     <?php if ($doc["status"] != 'PROGRAMADO' && $doc["status"] != 'FINALIZADO' && $doc["status"] != 'CANCELADO') { ?>
                                       <hr />
-                                      <form method="post" action="/car/fillmaintaince/<?= $doc["id"] ?>">
+                                      <form method="post" action="/car/fillmaintaince/<?= $doc["id"] ?>" enctype="multipart/form-data">
                                         <div class="form-group">
                                           <label for="exampleInputFinishDate">Fecha de finalización</label>
                                           <input required type="date" class="form-control" name="date_finished" id="exampleInputFinishDate">
@@ -626,6 +627,10 @@ $cust = $planilla->getReturn();
                                           <label for="exampleInputObs">Resultado</label>
                                           <input required type="text" class="form-control" name="results" id="exampleInputObs">
                                         </div>
+                                        <div class="form-group">
+                                          <label for="exampleInputFile">Evidencia</label>
+                                          <input type="file" class="form-control" name="evidence" id="load-file" accept=".jpg,.png,.gif,.jpeg,.pdf">
+                                        </div>
                                         <button type="submit" class="btn btn-success">Registrar Proceso</button>
                                       </form>
                                     <?php } ?>
@@ -637,6 +642,7 @@ $cust = $planilla->getReturn();
                                     <?php } ?>
                                     <?php if ($doc["status"] == 'PROGRAMADO') { ?>
                                       <a href="/car/inprocessmaintaince/<?= $doc["id"] ?>" class="btn btn-warning">En Proceso</a>
+                                      <a href="/car/deletemaintaince/<?= $car["id"] ?>/<?= $doc["id"] ?>" class="btn btn-danger">Eliminar</a>
                                     <?php } ?>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                   </div>
