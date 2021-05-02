@@ -207,6 +207,16 @@ class CarController extends Controller
 		$carModel->delete($params["params"][2]);
 		header("location:/car/details/" . $params["params"][3]);
 	}
+	public function deletemaintainceAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Vehículos"]["Editar"])) {
+			header("location:/");
+		}
+
+		$carModel = new MaintainceCarModel();
+		$carModel->delete($params["params"][3]);
+		header("location:/car/details/" . $params["params"][2]);
+	}
 
 	public function cancelmaintainceAction($params = [])
 	{
@@ -261,6 +271,9 @@ class CarController extends Controller
 		$carMaintaince["results"] = $params["post"]["results"];
 		$carMaintaince["cost"] = $params["post"]["cost"];
 		$carMaintaince["date_finished"] = $params["post"]["date_finished"];
+
+		$fileUrl = $this->uploadMaintainceFile($params["files"]["evidence"]);
+		$carMaintaince["url"] = $fileUrl;
 		if (!$carModel->update($carMaintaince, $params["params"][2])) {
 			throw new \Exception("Mantenimiento no pudo ser actualizado", 404);
 		} else {
@@ -585,6 +598,13 @@ class CarController extends Controller
 	protected function uploadFile($file)
 	{
 		$fileName = "/cars/docs/" . time() . $file['name'];
+		$filePath = $_ENV["STORAGE_FILES"]  . $fileName;
+		move_uploaded_file($file['tmp_name'], $filePath);
+		return $_ENV["SITE_URL"] . "files/" . $fileName;
+	}
+	protected function uploadMaintainceFile($file)
+	{
+		$fileName = "/cars/maintainces/" . time() . $file['name'];
 		$filePath = $_ENV["STORAGE_FILES"]  . $fileName;
 		move_uploaded_file($file['tmp_name'], $filePath);
 		return $_ENV["SITE_URL"] . "files/" . $fileName;

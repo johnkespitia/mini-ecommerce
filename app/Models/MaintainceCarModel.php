@@ -60,8 +60,16 @@ class MaintainceCarModel extends Model{
 			status = '".addslashes($fields["status"])."',
 			results = '".addslashes($fields["results"])."',
 			cost = '".addslashes($fields["cost"])."',
-			observations = '".addslashes($fields["observations"])."'
+			observations = '".addslashes($fields["observations"])."',
+			date_finished = '".addslashes($fields["date_finished"])."',
+			url = '".addslashes($fields["url"])."'
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
+	}
+
+	public function delete($id){
+		$sql = "DELETE FROM ".self::TABLE." 
+			WHERE id = {$id}";
+		return $this->db->exec($sql);	
 	}
 }
