@@ -25,7 +25,7 @@
             <h5 class="title"><h1>Bienvenido a <?= $_ENV['SITE_NAME'] ?></h1></h5>
         </a>
         <p class="description">
-            Sistema de gestión para PORTRANS 
+            Sistema de gestión para TRANSCARGA 
         </p>
         </div>
     <p></p>
