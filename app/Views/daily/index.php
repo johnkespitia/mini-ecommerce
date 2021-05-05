@@ -61,15 +61,12 @@
                         <li><strong>Destino</strong> <?= $cust["destination_name"] ?></li>
                         <li><strong>Hora de Inicio AM</strong> <?= $cust["time_start_am"] ?></li>
                         <li><strong>Hora de Final AM</strong> <?= $cust["time_end_am"] ?></li>
-                        <li><strong>Tiempo de Almuerzo</strong> <?= $cust["lunch_time"] ?></li>
                         <li><strong>Hora de Inicio PM</strong> <?= $cust["time_start_pm"] ?></li>
                         <li><strong>Hora de Final PM</strong> <?= $cust["time_end_pm"] ?></li>
                         <li><strong>Horas Trabajadas</strong> <?= $cust["worked_hours"] ?></li>
-                        <li><strong>Horas de disponibilidad</strong> <?= $cust["abble_hours"] ?></li>
-                        <li><strong>Kilometros Inicio</strong> <?= $cust["km_start"] ?></li>
-                        <li><strong>Kilometros final</strong> <?= $cust["km_end"] ?></li>
                         <li><strong>Total Kilometros</strong> <?= $cust["km_end"] - $cust["km_start"] ?></li>
-                        <li><strong>Cantidad de personas</strong> <?= $cust["people"] ?></li>
+                        <li><strong>Cantidad de viajes</strong> <?= $cust["trip_qty"] ?></li>
+                        <li><strong>GLS/m3/TON</strong> <?= $cust["weight"] ?></li>
                       </ul>
                       <div class="accordion" id="accordionExample">
                         <div class="card">

@@ -70,22 +70,20 @@ class DailyModel extends Model{
 	}
 
 	public function create($fields){
-		$sql = "INSERT INTO ".self::TABLE." (date_report,  employe, time_start_am, time_end_am, time_start_pm, time_end_pm, lunch_time, 
-		worked_hours, abble_hours, km_start, km_end, people, origin, destination, 	report_group) value (
+		$sql = "INSERT INTO ".self::TABLE." (date_report,  employe, time_start_am, time_end_am, time_start_pm, time_end_pm, km_start, km_end,
+		origin, destination, trip_qty, weight, report_group) value (
 			'".addslashes($fields["date_report"])."', 
 			".addslashes($fields["employe"]).", 
 			".addslashes($fields["time_start_am"]).", 
 			".addslashes($fields["time_end_am"]).", 
 			".addslashes($fields["time_start_pm"]).", 
 			".addslashes($fields["time_end_pm"]).", 
-			".addslashes($fields["lunch_time"]).", 
-			".addslashes($fields["worked_hours"]).",
-			".addslashes($fields["abble_hours"]).",
 			".addslashes($fields["km_start"]).", 
 			".addslashes($fields["km_end"]).", 
-			".addslashes($fields["people"]).",
 			".addslashes($fields["origin"]).",
 			".addslashes($fields["destination"]).",
+			".addslashes($fields["trip_qty"]).",
+			".addslashes($fields["weight"]).",
 			".addslashes($fields["report_group"])."
 		)";
 		return $this->db->exec($sql);
@@ -102,12 +100,10 @@ class DailyModel extends Model{
 			time_end_am = ".addslashes($fields["time_end_am"]).", 
 			time_start_pm = ".addslashes($fields["time_start_pm"]).", 
 			time_end_pm = ".addslashes($fields["time_end_pm"]).", 
-			lunch_time = ".addslashes($fields["lunch_time"]).", 
-			worked_hours = ".addslashes($fields["worked_hours"]).",
-			abble_hours = ".addslashes($fields["abble_hours"]).",
 			km_start = ".addslashes($fields["km_start"]).", 
 			km_end = ".addslashes($fields["km_end"]).", 
-			people = ".addslashes($fields["people"]).",
+			trip_qty = ".addslashes($fields["trip_qty"]).",
+			weight = ".addslashes($fields["weight"]).",
 			report_group = ".addslashes($fields["report_group"])."
 			WHERE id = {$id}";
 		return $this->db->exec($sql);

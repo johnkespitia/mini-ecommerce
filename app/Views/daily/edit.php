@@ -44,24 +44,12 @@
 	    <input required type="number" step="0.5" value="<?= $daily["time_end_am"] ?>" class="form-control" name="time_end_am" id="exampleInputDNI" >
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputDNI2">Tiempo de almuerzo</label>
-	    <input required type="number" step="0.5" class="form-control" value="<?= $daily["lunch_time"] ?>" name="lunch_time" id="exampleInputDNI" >
-	  </div>
-	  <div class="form-group">
 	    <label for="exampleInputDNI">Hora de inicio PM</label>
 	    <input required type="number" step="0.5" class="form-control" name="time_start_pm" value="<?= $daily["time_start_pm"] ?>" id="exampleInputDNI" >
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputDNI">Hora de fin PM</label>
 	    <input required type="number" step="0.5" class="form-control" name="time_end_pm" value="<?= $daily["time_end_pm"] ?>" id="exampleInputDNI" >
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputDNI">Horas Trabajadas</label>
-	    <input required type="number" step="0.5" class="form-control" name="worked_hours" id="exampleInputDNI" value="<?= $daily["worked_hours"] ?>" >
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputDNI">Hora de disponibilidad</label>
-	    <input required type="number" step="0.5" class="form-control" name="abble_hours" id="exampleInputDNI" value="<?= $daily["abble_hours"] ?>" >
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputDNI">Kilometros Inicio</label>
@@ -72,8 +60,12 @@
 	    <input required type="number" step="1" class="form-control" name="km_end" id="exampleInputDNI" value="<?= $daily["km_end"] ?>">
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputDNI">Cantidad Personas</label>
-	    <input required type="number" step="1" class="form-control" name="people" id="exampleInputDNI" value="<?= $daily["people"] ?>">
+	    <label for="exampleInputDNI">Cantidad de viajes</label>
+	    <input required type="number" step="1" class="form-control" name="trip_qty" id="exampleInputDNI"  value="<?= $daily["trip_qty"] ?>" >
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputDNI">GLS/m3/TON</label>
+	    <input required type="number" step="1" class="form-control" name="weight" id="exampleInputDNI"  value="<?= $daily["weight"] ?>" >
 	  </div>
 	  <input type="hidden" class="form-control" name="report_group" value="<?=$daily["report_group"]?>" id="exampleInputDNI" >
 	  <button type="submit" class="btn btn-primary">Guardar</button>

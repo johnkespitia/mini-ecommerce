@@ -133,15 +133,13 @@ class DailyController extends Controller
 		$sheet->setCellValue("S1", "Empleado Email");
 		$sheet->setCellValue("T1", "Hora de Inicio AM");
 		$sheet->setCellValue("U1", "Hora de Final AM");
-		$sheet->setCellValue("V1", "Tiempo de Almuerzo");
-		$sheet->setCellValue("W1", "Hora de Inicio PM");
-		$sheet->setCellValue("X1", "Hora de Final PM");
-		$sheet->setCellValue("Y1", "Horas Trabajadas");
-		$sheet->setCellValue("Z1", "Horas de disponibilidad");
-		$sheet->setCellValue("AA1", "Kilometros Inicio");
-		$sheet->setCellValue("AB1", "Kilometros final");
-		$sheet->setCellValue("AC1", "Total Kilometros");
-		$sheet->setCellValue("AD1", "Cantidad de personas");
+		$sheet->setCellValue("V1", "Hora de Inicio PM");
+		$sheet->setCellValue("W1", "Hora de Final PM");
+		$sheet->setCellValue("Y1", "Kilometros Inicio");
+		$sheet->setCellValue("Z1", "Kilometros final");
+		$sheet->setCellValue("AA1", "Total Kilometros");
+		$sheet->setCellValue("AB1", "Cantidad de viajes");
+		$sheet->setCellValue("AC1", "GLS/m3/TON");
 		foreach ($dailyList as $key => $prd) {
 			$cellNumber = $key + 2;
 			$sheet->setCellValue("A{$cellNumber}", $prd["report_group"]);
@@ -168,15 +166,13 @@ class DailyController extends Controller
 			$sheet->setCellValue("S{$cellNumber}", $prd["employe_email"]);
 			$sheet->setCellValue("T{$cellNumber}", $prd["time_start_am"]);
 			$sheet->setCellValue("U{$cellNumber}", $prd["time_end_am"]);
-			$sheet->setCellValue("V{$cellNumber}", $prd["lunch_time"]);
-			$sheet->setCellValue("W{$cellNumber}", $prd["time_start_pm"]);
-			$sheet->setCellValue("X{$cellNumber}", $prd["time_end_pm"]);
-			$sheet->setCellValue("Y{$cellNumber}", $prd["worked_hours"]);
-			$sheet->setCellValue("Z{$cellNumber}", $prd["abble_hours"]);
-			$sheet->setCellValue("AA{$cellNumber}", $prd["km_start"]);
-			$sheet->setCellValue("AB{$cellNumber}", $prd["km_end"]);
-			$sheet->setCellValue("AC{$cellNumber}", $prd["km_end"] - $prd["km_start"]);
-			$sheet->setCellValue("AD{$cellNumber}", $prd["people"]);
+			$sheet->setCellValue("V{$cellNumber}", $prd["time_start_pm"]);
+			$sheet->setCellValue("W{$cellNumber}", $prd["time_end_pm"]);
+			$sheet->setCellValue("Y{$cellNumber}", $prd["km_start"]);
+			$sheet->setCellValue("Z{$cellNumber}", $prd["km_end"]);
+			$sheet->setCellValue("AA{$cellNumber}", $prd["km_end"] - $prd["km_start"]);
+			$sheet->setCellValue("AB{$cellNumber}", $prd["trip_qty"]);
+			$sheet->setCellValue("AC{$cellNumber}", $prd["weight"]);
 		}
 		// Write an .xlsx file  
 		$writer = new Xlsx($spreadsheet);
@@ -297,14 +293,12 @@ class DailyController extends Controller
 					"date_report" => date("Y-m-d", \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value["B"], $_ENV["APP_TIMEZONE"])),
 					"time_start_am" => $value["F"],
 					"time_end_am" => $value["G"],
-					"time_start_pm" => $value["I"],
-					"time_end_pm" => $value["J"],
-					"lunch_time" => $value["H"],
-					"worked_hours" => $value["K"],
-					"abble_hours" => $value["L"],
-					"km_start" => $value["M"],
-					"km_end" => $value["N"],
-					"people" => $value["O"],
+					"time_start_pm" => $value["H"],
+					"time_end_pm" => $value["I"],
+					"km_start" => $value["J"],
+					"km_end" => $value["K"],
+					"trip_qty" => $value["L"],
+					"weight" => $value["M"],
 				];
 				if (!$dailyModel->create($data)) {
 					$errorMessage[$key] = "tiene errores, no se pudo insertar " . $dailyModel->getLastError()[2];
