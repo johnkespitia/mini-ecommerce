@@ -230,6 +230,22 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Contratista"]["Listar"]) && $_SESSION["permissions"]["Contratista"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/contractor/">
+													<i class="fas fa-user-edit text-primary"></i> Contratista
+													</a>
+												</li>
+											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Tipo de Trailer"]["Listar"]) && $_SESSION["permissions"]["Tipo de Trailer"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/trailertype/">
+													<i class="fas fa-trailer text-primary"></i> Tipo de Trailer
+													</a>
+												</li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>

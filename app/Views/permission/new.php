@@ -33,6 +33,8 @@
 					<option value="Caja de Compensacion">Caja de Compensacion</option>
 					<option value="Arl">Arl</option>
 					<option value="Cursos">Cursos</option>
+					<option value="Contratista">Contratista</option>
+					<option value="Tipo de Trailer">Tipo de Trailer</option>
 				</select>
 			</div>
 			<div class="form-group">
