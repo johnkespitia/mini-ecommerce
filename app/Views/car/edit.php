@@ -161,7 +161,7 @@
 			</div>
 			<div class="form-group">
 				<label for="oilchange">Kilometros para cambio de aceite</label>
-				<input required type="number" min="0" class="form-control" name="oil_change_km" value="<?= $customer["oil_change_km"] ?>" />
+				<input type="number" min="0" class="form-control" name="oil_change_km" value="<?= $customer["oil_change_km"] ?>" />
 			</div>
 			<div class="form-group">
 				<label for="ca_owner">Propietario</label>

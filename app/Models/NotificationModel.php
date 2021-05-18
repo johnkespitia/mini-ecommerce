@@ -11,7 +11,7 @@ class NotificationModel extends Model
 		FROM daily_reports dr
 		INNER JOIN report_groups rg ON  dr.report_group = rg.id
 		INNER JOIN cars c ON  rg.car = c.id
-		WHERE  c.oil_change_km - mod(dr.km_end,c.oil_change_km) < (c.oil_change_km*0.2)
+		WHERE  c.oil_change_km - mod(dr.km_end,c.oil_change_km) < (c.oil_change_km*0.2) and c.oil_change_km is not null and c.oil_change_km > 0 
 		GROUP BY 1';
 		foreach ($this->db->query($sql) as $row) {
 			yield $row;
