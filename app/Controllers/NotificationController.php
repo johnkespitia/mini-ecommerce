@@ -6,8 +6,10 @@ use Model\DocumentModel;
 use Model\EmployeCourseModel;
 use Model\EmployeDocumentModel;
 use Model\MaintainceCarModel;
+use Model\MaintainceTrailerModel;
 use Model\NotificationEmailModel;
 use Model\NotificationModel;
+use Model\TrailerDocumentModel;
 use Services\MailService;
 
 class NotificationController extends Controller
@@ -46,6 +48,30 @@ class NotificationController extends Controller
         $oilResult = $NotModel->getOilChanges();
         $notificationsResult = $NotModel->getNotifications();
 
+
+        $TrailerdocumentModel = new TrailerDocumentModel();
+        $documentsResultTrailer = $TrailerdocumentModel->findBy([
+            ["date_expiration", TrailerDocumentModel::LTE, date('Y-m-d', strtotime($dateFilter . '+ 1 month'))]
+        ]);
+        $documentsResultT = [];
+        $docsRenewaledT = [];
+        foreach ($documentsResultTrailer as  $mto) {
+            if (strtotime($mto["date_expiration"] . " -30 days") < time() && !in_array($mto["document_name"], $docsRenewaledT)) {
+                $documentsResultT[] = $mto;
+            } else {
+                $docsRenewaledT[] = $mto["document_name"];
+            }
+        }
+
+        $TrailerMaintainceModel = new MaintainceTrailerModel();
+        $maintanceTrailerResult = $TrailerMaintainceModel->findBy([
+            ["fc.date_maintaince", MaintainceCarModel::LTE, date('Y-m-d', strtotime($dateFilter . '+ 5 days'))],
+            ["fc.status", MaintainceCarModel::EQUAL, "PROGRAMADO"]
+        ]);
+
+        $notificationsTrailerResult = $NotModel->getTrailerNotifications();
+
+
         $NotEmailModel = new NotificationEmailModel();
         $emailList = $NotEmailModel->findBy([
             ["notification_type", NotificationEmailModel::EQUAL, "VEHICLE_STATUS"]
@@ -54,7 +80,9 @@ class NotificationController extends Controller
         foreach ($emailList as $email) {
             $emails[] = $email["email"];
         }
-        $content = $this->renderEmail("mail/reminder", ["documents" => $documentsResult, "maintaince" => $maintanceResult, "oilchanges" => $oilResult, "notificationsResult" => $notificationsResult]);
+        $content = $this->renderEmail("mail/reminder", ["documents" => $documentsResult, "maintaince" => $maintanceResult, "oilchanges" => $oilResult, "notificationsResult" => $notificationsResult,
+        "trailerDocuments" => $documentsResultT, "trailerMaintaince" => $maintanceTrailerResult, "notificationsTrailerResult" => $notificationsTrailerResult
+        ]);
         $title = "Recordatorios de estado de vehiculos";
         $mailer->sendMail($emails, $title, $content);
         die;

@@ -67,7 +67,14 @@
         <tbody>
           <?php foreach ($documents as $d) { ?>
             <tr>
-              <td style="border: 1px solid black;"><?= $d["car_dni"] ?></td>
+              <td style="border: 1px solid black;">Carro: <?= $d["car_dni"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["document_name"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["date_expiration"] ?></td>
+            </tr>
+          <?php  } ?>
+          <?php foreach ($trailerDocuments as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;">Trailer: <?= $d["car_dni"] ?></td>
               <td style="border: 1px solid black;"><?= $d["document_name"] ?></td>
               <td style="border: 1px solid black;"><?= $d["date_expiration"] ?></td>
             </tr>
@@ -87,7 +94,15 @@
         <tbody>
           <?php foreach ($maintaince as $d) { ?>
             <tr>
-              <td style="border: 1px solid black;"><?= $d["dni"] ?></td>
+              <td style="border: 1px solid black;">Carro: <?= $d["dni"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["type_maintance"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["subject"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["date_maintaince"] ?></td>
+            </tr>
+          <?php  } ?>
+          <?php foreach ($trailerMaintaince as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;">Trailer: <?= $d["dni"] ?></td>
               <td style="border: 1px solid black;"><?= $d["type_maintance"] ?></td>
               <td style="border: 1px solid black;"><?= $d["subject"] ?></td>
               <td style="border: 1px solid black;"><?= $d["date_maintaince"] ?></td>
@@ -114,7 +129,14 @@
           <?php  } ?>
           <?php foreach ($notificationsResult as $d) { ?>
             <tr>
-              <td style="border: 1px solid black;"><?= $d["car"] ?></td>
+              <td style="border: 1px solid black;">Carro: <?= $d["car"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["not_type"] ?></td>
+              <td style="border: 1px solid black;"><?= $d["km_pending"] ?></td>
+            </tr>
+          <?php  } ?>
+          <?php foreach ($notificationsTrailerResult as $d) { ?>
+            <tr>
+              <td style="border: 1px solid black;">Trailer: <?= $d["car"] ?></td>
               <td style="border: 1px solid black;"><?= $d["not_type"] ?></td>
               <td style="border: 1px solid black;"><?= $d["km_pending"] ?></td>
             </tr>
