@@ -37,6 +37,7 @@
 					<option <?=($permission["module"] == "Cursos")?"selected":"" ?> value="Cursos">Cursos</option>
 					<option <?=($permission["module"] == "Contratista")?"selected":"" ?> value="Contratista">Contratista</option>
 					<option <?=($permission["module"] == "Tipo de Trailer")?"selected":"" ?> value="Tipo de Trailer">Tipo de Trailer</option>
+					<option <?=($permission["module"] == "Trailer")?"selected":"" ?> value="Trailer">Trailer</option>
 				</select>
 			</div>
 			<div class="form-group">

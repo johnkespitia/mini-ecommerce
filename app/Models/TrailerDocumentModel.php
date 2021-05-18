@@ -2,10 +2,10 @@
 
 namespace Model;
 
-class DocumentModel extends Model
+class TrailerDocumentModel extends Model
 {
 
-	const TABLE = "documents";
+	const TABLE = "trailer_document";
 
 	public function all()
 	{
@@ -20,11 +20,11 @@ class DocumentModel extends Model
 
 	public function findBy($where, $singleRow = false)
 	{
-		$sql = 'SELECT d.* , dt.name document_name, c.dni car_dni
+		$sql = 'SELECT d.* , dt.name document_name, c.dni trailer_dni
 		FROM ' . self::TABLE . ' d
 		INNER JOIN document_types dt ON dt.id = d.document_type
-		INNER JOIN cars c ON c.id = d.car
-		' . $this->where($where) . ' ORDER BY d.id desc';
+		INNER JOIN trailer c ON c.id = d.trailer
+		' . $this->where($where) . ' ORDER BY d.id desc'; 
 		foreach ($this->db->query($sql) as $row) {
 			if ($singleRow)
 				return $row;
@@ -45,9 +45,9 @@ class DocumentModel extends Model
 	}
 	public function create($fields)
 	{
-		$sql = "INSERT INTO " . self::TABLE . " (document_type, car, provider, url, code, date_created, date_expiration, date_expedition) value (
+		$sql = "INSERT INTO " . self::TABLE . " (document_type, trailer, provider, url, code, date_created, date_expiration, date_expedition) value (
 			" . addslashes($fields["document_type"]) . ",
-			" . addslashes($fields["car"]) . ",
+			" . addslashes($fields["trailer"]) . ",
 			'" . addslashes($fields["provider"]) . "',
 			'" . addslashes($fields["url"]) . "',
 			'" . addslashes($fields["code"]) . "',
@@ -63,7 +63,7 @@ class DocumentModel extends Model
 		$sql = "UPDATE " . self::TABLE . " 
 			SET
 			document_type = " . addslashes($fields["document_type"]) . ",
-			car = " . addslashes($fields["car"]) . ",
+			trailer = " . addslashes($fields["trailer"]) . ",
 			provider = '" . addslashes($fields["provider"]) . "',
 			url = '" . addslashes($fields["url"]) . "',
 			code = '" . addslashes($fields["code"]) . "',

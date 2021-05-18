@@ -35,6 +35,7 @@
 					<option value="Cursos">Cursos</option>
 					<option value="Contratista">Contratista</option>
 					<option value="Tipo de Trailer">Tipo de Trailer</option>
+					<option value="Trailer">Trailer</option>
 				</select>
 			</div>
 			<div class="form-group">

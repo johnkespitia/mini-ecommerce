@@ -126,7 +126,7 @@ class CarController extends Controller
 		$documentsModel = new DocumentModel();
 
 		$documentsGen = $documentsModel->findBy([
-			["car", CarImageModel::EQUAL, $car["id"]]
+			["d.car", CarImageModel::EQUAL, $car["id"]]
 		]);
 
 		$docsExpired = [];
@@ -157,7 +157,9 @@ class CarController extends Controller
 		}
 
 		$dtModel = new DocumentTypeModel;
-		$documentTypeList = $dtModel->all();
+		$documentTypeList = $dtModel->findBy([
+			["car",DocumentTypeModel::EQUAL,"1"]
+		]);
 
 		$fuelModel = new FuelCarModel;
 		$fuel_list =  $fuelModel->findBy([

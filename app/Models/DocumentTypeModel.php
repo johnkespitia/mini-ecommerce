@@ -30,8 +30,10 @@ class DocumentTypeModel extends Model{
 		}	
 	}
 	public function create($fields){
-		$sql = "INSERT INTO ".self::TABLE." (name) value (
-			'".addslashes($fields["name"])."'
+		$sql = "INSERT INTO ".self::TABLE." (name, car, trailer) value (
+			'".addslashes($fields["name"])."',
+			'".addslashes($fields["car"])."',
+			'".addslashes($fields["trailer"])."'
 		)";
 		return $this->db->exec($sql);
 	}
@@ -39,7 +41,9 @@ class DocumentTypeModel extends Model{
 	public function update($fields, $id){
 		$sql = "UPDATE ".self::TABLE." 
 			SET
-			name = '".addslashes($fields["name"])."'
+			name = '".addslashes($fields["name"])."',
+			car = '".addslashes($fields["car"])."',
+			trailer = '".addslashes($fields["trailer"])."'
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}

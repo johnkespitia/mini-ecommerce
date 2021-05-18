@@ -39,6 +39,15 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="exampleInputCity">Trailer</label>
+            <select class="form-control" name="trailer" id="exampleInputCity">
+              <option value=""></option>
+              <?php foreach ($trailerList as $c) {
+                echo "<option value='{$c["id"]}'>{$c["dni"]}</option>";
+              } ?>
+            </select>
+          </div>
+          <div class="form-group">
             <label class="text-success"><i class="fas fa-file-excel"></i> Exportar Todo a Excel</label> <br/>
             <label class="custom-toggle">
               <input type="checkbox" name="export-excel" value="export" >
@@ -59,6 +68,7 @@
           <th>Area</th>
           <th>Cliente</th>
           <th>Vehículo</th>
+          <th>Trailer</th>
           <th>Registros diarios</th>
           <th class="text-right">Acciones</th>
         </tr>
@@ -74,6 +84,7 @@
             <td><?= $cust["area"] ?></td>
             <td><?= $cust["client_name"] ?></td>
             <td><?= $cust["car_dni"] ?></td>
+            <td><?= $cust["trailer_dni"] ?></td>
             <td><?= $cust["rows_report"] ?></td>
             <td class="td-actions text-right">
               <?php if (!empty($_SESSION["permissions"]["Planillas"]["Editar"]) && $_SESSION["permissions"]["Planillas"]["Editar"] == 1) { ?>

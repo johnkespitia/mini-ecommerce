@@ -25,6 +25,8 @@ class DocumenttypeController extends Controller{
 			header("location:/");	
 		}
 		$DocumentTypeModel = new DocumentTypeModel();
+		$params["post"]["car"] = (empty($params["post"]["car"]))?"0":$params["post"]["car"];
+		$params["post"]["trailer"] = (empty($params["post"]["trailer"]))?"0":$params["post"]["trailer"];
 		if(!$DocumentTypeModel->create($params["post"])){
 			throw new \Exception("No fue posible crear el rol, verifique la información proporcionada", 500);
 		}else{
@@ -41,6 +43,8 @@ class DocumenttypeController extends Controller{
 		if(empty($rolRes)){
 			throw new \Exception("Rol no encontrado", 404);
 		}
+		$params["post"]["car"] = (empty($params["post"]["car"]))?"0":$params["post"]["car"];
+		$params["post"]["trailer"] = (empty($params["post"]["trailer"]))?"0":$params["post"]["trailer"];
 		if(!$DocumentTypeModel->update($params["post"], $rolRes["id"])){
 			throw new \Exception("No fue posible actualizar el rol, verifique la información proporcionada", 500);
 		}else{

@@ -293,6 +293,14 @@
 													</a>
 												</li>
 											<?php } ?>
+											<?php if (isset($_SESSION["permissions"]["Trailer"]["Listar"]) && $_SESSION["permissions"]["Trailer"]["Listar"] == 1) {
+											?>
+												<li class="nav-item">
+													<a class="nav-link" href="/trailer/">
+													<i class="fas fa-caravan text-primary"></i> Trailer
+													</a>
+												</li>
+											<?php } ?>
 											<?php if (isset($_SESSION["permissions"]["Empleados"]["Listar"]) && $_SESSION["permissions"]["Empleados"]["Listar"] == 1) {
 											?>
 												<li class="nav-item">

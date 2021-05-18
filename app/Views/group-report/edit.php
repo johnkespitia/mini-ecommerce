@@ -29,6 +29,15 @@
 				</select>
 			</div>
 			<div class="form-group">
+				<label for="exampleInputCity">Trailer</label>
+				<select class="form-control" name="trailer" id="exampleInputCity">
+					<?php foreach ($trailerList as $c) {
+						$selected = ($report["trailer"] == $c["id"])?"selected='selected'":"";
+						echo "<option {$selected} value='{$c["id"]}'>{$c["dni"]}</option>";
+					} ?>
+				</select>
+			</div>
+			<div class="form-group">
 				<label for="exampleInputEmail1">Tipo de servicio</label>
 				<input required type="text" class="form-control" name="service_type" id="exampleInputEmail1" value="<?= $report["service_type"] ?>">
 			</div>

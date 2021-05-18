@@ -6,7 +6,7 @@ use Model\CustomerModel;
 use Model\CarModel;
 use Model\ReportGroupModel;
 use Model\DailyModel;
-
+use Model\TrailerModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -30,6 +30,13 @@ class ReportController extends Controller
 		$CarList = [];
 		foreach ($genCar as $c) {
 			$CarList[] = $c;
+		}
+
+		$trailerModel = new TrailerModel();
+		$genTrailer = $trailerModel->all();
+		$TrailerList = [];
+		foreach ($genTrailer as $c) {
+			$TrailerList[] = $c;
 		}
 
 		$reportGroupModel = new ReportGroupModel();
@@ -61,7 +68,9 @@ class ReportController extends Controller
 		} else {
 			$reportList = $reportGroupModel->all();
 		}
-		return $this->renderHtml("group-report/index", ["reportList" => $reportList, "customerList" => $customerList, "carList" => $CarList]);
+		return $this->renderHtml("group-report/index", ["reportList" => $reportList, "customerList" => $customerList, 
+		"carList" => $CarList, "trailerList" => $TrailerList
+		]);
 	}
 
 	public function newAction($params = [])
@@ -82,8 +91,13 @@ class ReportController extends Controller
 		foreach ($genCar as $c) {
 			$CarList[] = $c;
 		}
-
-		return $this->renderHtml("group-report/new", ["customerList" => $customerList, "carList" => $CarList]);
+		$trailerModel = new TrailerModel();
+		$genTrailer = $trailerModel->all();
+		$TrailerList = [];
+		foreach ($genTrailer as $c) {
+			$TrailerList[] = $c;
+		}
+		return $this->renderHtml("group-report/new", ["customerList" => $customerList, "carList" => $CarList , "trailerList" => $TrailerList]);
 	}
 
 	public function storeAction($params = [])
@@ -135,13 +149,19 @@ class ReportController extends Controller
 		foreach ($genCar as $c) {
 			$CarList[] = $c;
 		}
+		$trailerModel = new TrailerModel();
+		$genTrailer = $trailerModel->all();
+		$TrailerList = [];
+		foreach ($genTrailer as $c) {
+			$TrailerList[] = $c;
+		}
 
 		$reportGroupModel = new ReportGroupModel();
 		$report = $reportGroupModel->find($params["params"][2]);
 		if (empty($report)) {
 			throw new \Exception("Planilla no encontrada", 404);
 		}
-		return $this->renderHtml("group-report/edit", ["customerList" => $customerList, "carList" => $CarList,  "report" => $report]);
+		return $this->renderHtml("group-report/edit", ["customerList" => $customerList, "carList" => $CarList,  "report" => $report , "trailerList" => $TrailerList]);
 	}
 
 	protected function exportxls($filterGroup = [])
