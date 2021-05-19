@@ -74,7 +74,7 @@
           <?php  } ?>
           <?php foreach ($trailerDocuments as $d) { ?>
             <tr>
-              <td style="border: 1px solid black;">Trailer: <?= $d["car_dni"] ?></td>
+              <td style="border: 1px solid black;">Trailer: <?= $d["trailer_dni"] ?></td>
               <td style="border: 1px solid black;"><?= $d["document_name"] ?></td>
               <td style="border: 1px solid black;"><?= $d["date_expiration"] ?></td>
             </tr>
@@ -136,7 +136,7 @@
           <?php  } ?>
           <?php foreach ($notificationsTrailerResult as $d) { ?>
             <tr>
-              <td style="border: 1px solid black;">Trailer: <?= $d["car"] ?></td>
+              <td style="border: 1px solid black;">Trailer: <?= $d["trailer"] ?></td>
               <td style="border: 1px solid black;"><?= $d["not_type"] ?></td>
               <td style="border: 1px solid black;"><?= $d["km_pending"] ?></td>
             </tr>

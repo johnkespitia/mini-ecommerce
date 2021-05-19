@@ -35,11 +35,11 @@ class NotificationModel extends Model
 	
 	public function getTrailerNotifications()
 	{
-		$sql = 'SELECT c.dni car, nt.name not_type , notc.value_compare - mod(max(dr.km_end),notc.value_compare) km_pending
+		$sql = 'SELECT c.dni trailer, nt.name not_type , notc.value_compare - mod(max(dr.km_end),notc.value_compare) km_pending
 		FROM daily_reports dr
 		INNER JOIN report_groups rg ON  dr.report_group = rg.id
-		INNER JOIN trailer c ON  rg.car = c.id
-		INNER JOIN trailer_notifications notc on notc.car = c.id
+		INNER JOIN trailer c ON  rg.trailer = c.id
+		INNER JOIN trailer_notifications notc on notc.trailer = c.id
 		INNER JOIN notification_types nt on nt.id = notc.notification_type
 		WHERE  mod(dr.km_end,notc.value_compare) > avg_reminder
 		GROUP BY 1,2';
