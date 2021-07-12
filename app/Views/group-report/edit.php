@@ -14,7 +14,7 @@
 				<label for="exampleInputCity">Cliente</label>
 				<select class="form-control" name="customer" id="exampleInputCity">
 					<?php foreach ($customerList as $c) {
-						$selected = ($report["customer"] == $c["id"])?"selected='selected'":"";
+						$selected = ($report["client_dni"] == $c["dni"])?"selected='selected'":"";
 						echo "<option {$selected} value='{$c["id"]}'>{$c["name"]}</option>";
 					} ?>
 				</select>

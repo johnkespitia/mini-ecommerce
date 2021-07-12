@@ -13,7 +13,7 @@
 	    <select class="form-control" name="employe" id="exampleInputCity" >
 	    	<?php foreach ($employeList as $c) {
 				$selected = ($c["id"]==$daily["employe"])?"selected='selected'":"";
-	    		echo "<option value='{$c["id"]}'>{$c["name"]}</option>";
+	    		echo "<option {$selected} value='{$c["id"]}'>{$c["name"]}</option>";
 	    	} ?>
 	    </select>
 	  </div>
