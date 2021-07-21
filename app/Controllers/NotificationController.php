@@ -67,6 +67,7 @@ class NotificationController extends Controller{
 
 
 	public function sendreminderAction($params=[]){
+		set_time_limit( 0 );
 		if($params["params"][2]!= md5($_ENV["SITE_HASH"])){
 			throw new \Exception("Acceso no autorizado", 403);
 		}

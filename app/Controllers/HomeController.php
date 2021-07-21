@@ -16,6 +16,7 @@ class HomeController extends Controller{
 	}
 
 	public function testemailAction($params = []){
+		set_time_limit( 0 );
 		if(empty($_SESSION)){
 			return $this->renderHtml("home/index", $params);
 		}else{

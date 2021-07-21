@@ -11,13 +11,13 @@ class MailService {
     
     public function __construct(){
         $this->mailer = new PHPMailer(true);
-        $this->mailer->SMTPDebug = false;//($_ENV["SITE_ENVIRONMENT"]=="DEV");
+        $this->mailer->SMTPDebug = true;//($_ENV["SITE_ENVIRONMENT"]=="DEV");
         $this->mailer->isSMTP();
         $this->mailer->Host       = $_ENV["MAILER_HOST"];
         $this->mailer->SMTPAuth   = true;                
         $this->mailer->Username   = $_ENV["MAILER_USERNAME"];
         $this->mailer->Password   = $_ENV["MAILER_PASSWORD"];
-        $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mailer->Port       = $_ENV["MAILER_PORT"];   
         $this->mailer->setFrom($_ENV["MAILER_USERNAME"], $_ENV["SITE_NAME"]);
         $this->mailer->AddEmbeddedImage($_ENV["STORAGE_IMAGES"].'/email/brand.png', 'brand.png');
