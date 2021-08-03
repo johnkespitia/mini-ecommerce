@@ -1,0 +1,67 @@
+Base:
+    type: entity
+    table: base
+    indexes:
+        FK1_base_user:
+            columns:
+                - seller
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                default: '0'
+        internalId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: internal_id
+        format:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+        delimiter:
+            type: string
+            nullable: false
+            length: 5
+            options:
+                fixed: false
+                default: '0'
+        isTest:
+            type: boolean
+            nullable: true
+            column: is_test
+        originalText:
+            type: text
+            nullable: true
+            length: 0
+            options:
+                fixed: false
+            column: original_text
+    manyToOne:
+        seller:
+            targetEntity: Users
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                seller:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

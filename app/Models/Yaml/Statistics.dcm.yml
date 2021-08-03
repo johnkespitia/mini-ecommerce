@@ -1,0 +1,118 @@
+Statistics:
+    type: entity
+    table: statistics
+    indexes:
+        FK1_user:
+            columns:
+                - user
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        validpercent:
+            type: decimal
+            nullable: false
+            precision: 20
+            scale: 6
+            options:
+                default: '0.000000'
+        refund:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        refundCheck:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: refund_check
+        profit:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        payout:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        credit:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        balance:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        paypercent:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        loaded:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        turnover:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        incorrect:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        invalid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        sold:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        name:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+        date:
+            type: date
+            nullable: true
+    manyToOne:
+        user:
+            targetEntity: Users
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

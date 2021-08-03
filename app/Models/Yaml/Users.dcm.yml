@@ -1,0 +1,50 @@
+Users:
+    type: entity
+    table: users
+    indexes:
+        FK1_rol:
+            columns:
+                - rol
+    uniqueConstraints:
+        username_uk:
+            columns:
+                - username
+        password_uk:
+            columns:
+                - password
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: string
+            nullable: false
+            length: 30
+            options:
+                fixed: false
+                default: '0'
+        password:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                default: ''
+    manyToOne:
+        rol:
+            targetEntity: Rols
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                rol:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

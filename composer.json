@@ -10,13 +10,17 @@
     "require": {
         "vlucas/phpdotenv": "^5.2",
         "phpmailer/phpmailer": "^6.2",
-        "phpoffice/phpspreadsheet": "^1.16"
+        "phpoffice/phpspreadsheet": "^1.16",
+        "doctrine/orm": "^2.6.2",
+        "symfony/yaml": "2.*",
+        "symfony/cache": "*"
     },
     "autoload": {
     	"psr-4": {
             "Controller\\": "app/Controllers/",
             "Model\\": "app/Models/",
             "Services\\": "app/Services/"
-        }
+        },
+        "psr-0": {"": "src/"}
     }
 }

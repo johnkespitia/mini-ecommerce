@@ -5,6 +5,12 @@ namespace Controller;
 class Controller{
 
 	const VIEW_FOLDER=__DIR__."/../Views/";
+	protected $_entityManager;
+
+	public function setEntityManager($entityManager)
+	{
+		$this->_entityManager = $entityManager;
+	}
 
 	protected function renderHtml(string $view, array $vars){
 		extract($vars);
