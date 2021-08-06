@@ -2,8 +2,8 @@
 
 namespace Controller;
 
-use Model\UserModel;
 use Services\MailService;
+use Users;
 
 class HomeController extends Controller{
 	public function indexAction($params = []){
@@ -31,13 +31,8 @@ class HomeController extends Controller{
 			header("location:/");	
 		}
 		if(!empty($params["post"])){
-			$userModel = new UserModel;
-			$userSearch = $userModel->findBy([
-				["email",UserModel::CONTAIN,$params["post"]["email"]],
-				["password",UserModel::CONTAIN,md5($params["post"]["password"])],
-				["status",UserModel::EQUAL,1],
-			], true);
-			$userAuth = $userSearch->getReturn();
+			$userAuth = $this->_entityManager->findOneBy(array('password' => $params["post"]["password"]));
+			print_r($userAuth); die;
 			if(!empty($userAuth)){
 				unset($userAuth["password"]);
 				$_SESSION=$userAuth;
