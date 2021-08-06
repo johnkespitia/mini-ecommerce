@@ -35,6 +35,7 @@
 					<option <?=($permission["module"] == "Caja de Compensacion")?"selected":"" ?> value="Caja de Compensacion">Caja de Compensacion</option>
 					<option <?=($permission["module"] == "Arl")?"selected":"" ?> value="Arl">Arl</option>
 					<option <?=($permission["module"] == "Cursos")?"selected":"" ?> value="Cursos">Cursos</option>
+					<option <?=($permission["module"] == "Checklist Vehículos")?"selected":"" ?> value="Checklist Vehículos">Checklist Vehículos</option>
 				</select>
 			</div>
 			<div class="form-group">

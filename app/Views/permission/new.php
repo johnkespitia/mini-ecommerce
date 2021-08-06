@@ -33,6 +33,7 @@
 					<option value="Caja de Compensacion">Caja de Compensacion</option>
 					<option value="Arl">Arl</option>
 					<option value="Cursos">Cursos</option>
+					<option value="Checklist Vehículos">Checklist Vehículos</option>
 				</select>
 			</div>
 			<div class="form-group">
