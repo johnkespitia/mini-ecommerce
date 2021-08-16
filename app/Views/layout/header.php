@@ -42,7 +42,8 @@
 			</div>
 			<div class="navbar-inner">
 				<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-					<?php if (empty($_SESSION)) { ?>
+					<?php
+					if (empty($_SESSION)) { ?>
 						<ul class="navbar-nav">
 							<li class="nav-item">
 								<a class="nav-link" href="/"><i class="fas fa-home  text-primary"></i> Inicio</a>
@@ -162,7 +163,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/eps/">
-													<i class="fas fa-heartbeat text-primary"></i> Eps
+														<i class="fas fa-heartbeat text-primary"></i> Eps
 													</a>
 												</li>
 											<?php } ?>
@@ -170,7 +171,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/bank/">
-													<i class="fas fa-piggy-bank text-primary"></i> Bancos
+														<i class="fas fa-piggy-bank text-primary"></i> Bancos
 													</a>
 												</li>
 											<?php } ?>
@@ -178,7 +179,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/position/">
-													<i class="fas fa-project-diagram text-primary"></i> Cargo
+														<i class="fas fa-project-diagram text-primary"></i> Cargo
 													</a>
 												</li>
 											<?php } ?>
@@ -186,7 +187,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/area/">
-													<i class="fas fa-crosshairs text-primary"></i> Area
+														<i class="fas fa-crosshairs text-primary"></i> Area
 													</a>
 												</li>
 											<?php } ?>
@@ -194,7 +195,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/cesantia/">
-													<i class="fas fa-wallet text-primary"></i> Cesantias
+														<i class="fas fa-wallet text-primary"></i> Cesantias
 													</a>
 												</li>
 											<?php } ?>
@@ -202,7 +203,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/pension/">
-													<i class="fas fa-coins text-primary"></i> Pensiones
+														<i class="fas fa-coins text-primary"></i> Pensiones
 													</a>
 												</li>
 											<?php } ?>
@@ -210,7 +211,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/cajacompensacion/">
-													<i class="fas fa-cash-register text-primary"></i> Caja de Compensación
+														<i class="fas fa-cash-register text-primary"></i> Caja de Compensación
 													</a>
 												</li>
 											<?php } ?>
@@ -218,7 +219,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/arl/">
-													<i class="fas fa-medkit text-primary"></i> ARL
+														<i class="fas fa-medkit text-primary"></i> ARL
 													</a>
 												</li>
 											<?php } ?>
@@ -226,7 +227,7 @@
 											?>
 												<li class="nav-item">
 													<a class="nav-link" href="/course/">
-													<i class="fas fa-graduation-cap text-primary"></i> Cursos
+														<i class="fas fa-graduation-cap text-primary"></i> Cursos
 													</a>
 												</li>
 											<?php } ?>
@@ -320,6 +321,7 @@
 									</div>
 								</div>
 							</div>
+							<?= Controller\ChecklistController::menuHook(); ?>
 						</div>
 					<?php } ?>
 				</div>

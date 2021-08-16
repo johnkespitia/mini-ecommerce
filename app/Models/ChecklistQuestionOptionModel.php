@@ -2,9 +2,9 @@
 
 namespace Model;
 
-class ChecklistQuestionModel extends Model{
+class ChecklistQuestionOptionModel extends Model{
 
-	const TABLE = "question_options";
+	const TABLE = "checklist_question_options";
 
 	public function all(){
 		$sql = 'SELECT * FROM '.self::TABLE.' 
@@ -48,6 +48,11 @@ class ChecklistQuestionModel extends Model{
 			question_id = '".addslashes($fields["question_id"])."',
 			option_text = '".addslashes($fields["option_text"])."'
 			WHERE id = {$id}";
+		return $this->db->exec($sql);
+	}
+
+	public function delete($where){
+		$sql = "delete from ".self::TABLE." ".$this->where($where);
 		return $this->db->exec($sql);
 	}
 }

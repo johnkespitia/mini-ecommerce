@@ -3,7 +3,7 @@
 		<h4 class="card-title">Nuevo empleado <a href="/employe/index" class=" float-right btn btn-sm btn-primary">Listado de empleados</a></h4>
 		<h6 class="card-subtitle mb-2 text-muted">Registrar un nuevo empleado </h6>
 		<hr>
-		<form method="post" action="/employe/store">
+		<form method="post" action="/employe/store" enctype="multipart/form-data">
 			<h5>Datos Personales</h5>
 			<hr>
 			<div class="form-group">
@@ -129,8 +129,8 @@
 				<datalist id="arl_list">
 					<?php
 					foreach ($arlList as $position) { ?>
-						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>" >
-					<?php } ?>
+						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>">
+						<?php } ?>
 				</datalist>
 			</div>
 
@@ -140,30 +140,30 @@
 				<datalist id="ccomp_list">
 					<?php
 					foreach ($ccompList as $position) { ?>
-						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>" >
-					<?php } ?>
+						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>">
+						<?php } ?>
 				</datalist>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="exampleInputPens">Pensiones</label>
 				<input list="pension_list" class="form-control" name="pension" id="exampleInputPens">
 				<datalist id="pension_list">
 					<?php
 					foreach ($pensionList as $position) { ?>
-						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>" >
-					<?php } ?>
+						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>">
+						<?php } ?>
 				</datalist>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="exampleInputCesant">Cesantías</label>
 				<input list="cesantias_list" class="form-control" name="cesantias" id="exampleInputCesant">
 				<datalist id="cesantias_list">
 					<?php
 					foreach ($cesantiasList as $position) { ?>
-						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>" >
-					<?php } ?>
+						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>">
+						<?php } ?>
 				</datalist>
 			</div>
 			<h5>Datos Bancarios</h5>
@@ -174,11 +174,11 @@
 				<datalist id="bankList_list">
 					<?php
 					foreach ($bankList as $position) { ?>
-						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>" >
-					<?php } ?>
+						<option value="<?= $position["id"] ?>" label="<?= $position["name"] ?>">
+						<?php } ?>
 				</datalist>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="exampleInputaccount_type">Tipo de Cuenta</label>
 				<select class="form-control" name="account_type" id="account_type">
@@ -193,6 +193,14 @@
 			<div class="form-group">
 				<label for="exampleInputaccount_type">Método de Pago</label>
 				<input required type="text" class="form-control" name="payment_method" id="payment_method">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputpasswordapp">Password App</label>
+				<input type="text" class="form-control" name="app_password" id="app_password">
+			</div>
+			<div class="form-group">
+				<label for="load-file">Archivo firma</label>
+				<input type="file" class="form-control" name="load_file" accept="image/*;capture=camera" id="load-file" />
 			</div>
 			<button type="submit" class="btn btn-primary">Guardar</button>
 		</form>

@@ -5,7 +5,7 @@
 		</h4>
 		<h6 class="card-subtitle mb-2 text-muted">Editar Empleado registrado </h6>
 		<hr>
-		<form method="post" action="/employe/update/<?= $customer["id"] ?>">
+		<form method="post" action="/employe/update/<?= $customer["id"] ?>" enctype="multipart/form-data">
 			<h5>Datos Personales</h5>
 			<hr>
 			<div class="form-group">
@@ -202,6 +202,14 @@
 			<div class="form-group">
 				<label for="exampleInputaccount_type">Método de Pago</label>
 				<input required type="text" class="form-control" value="<?= $customer["payment_method"] ?>" name="payment_method" id="payment_method">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputpasswordapp">Password App</label>
+				<input type="text" class="form-control" name="app_password" id="app_password">
+			</div>
+			<div class="form-group">
+				<label for="load-file">Archivo firma</label>
+				<input type="file" class="form-control" name="load_file" accept="image/*;capture=camera" id="load-file" />
 			</div>
 			<button type="submit" class="btn btn-primary">Guardar</button>
 		</form>

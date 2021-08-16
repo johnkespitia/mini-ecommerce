@@ -37,7 +37,7 @@
           <div class="col-lg-3 order-lg-2">
             <div class="card-profile-image">
               <a href="#">
-                <img src="<?= $images[0]["url"] ?>" class="rounded-circle">
+                <?php if(sizeof($images)>0 ){ ?><img src="<?= $images[0]["url"] ?>" class="rounded-circle"><?php } ?>
               </a>
             </div>
           </div>

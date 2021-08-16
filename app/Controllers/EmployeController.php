@@ -159,6 +159,9 @@ class EmployeController extends Controller
 			header("location:/");
 		}
 		$employeModel = new EmployeModel();
+		$params["post"] = md5($params["post"]["app_password"]);
+		$fileName = $this->uploadImg($params["files"]["load_file"]);
+		$params["post"]["img_signature"] = $_ENV["SITE_URL"] . "images" . $fileName;
 		if (!$employeModel->create($params["post"])) {
 			throw new \Exception("No fue posible crear el empleado, verifique la información proporcionada " . print_r($employeModel->getLastError(), 1), 500);
 		} else {
@@ -175,6 +178,17 @@ class EmployeController extends Controller
 		$employeRes = $employe->find($params["params"][2]);
 		if (empty($employeRes)) {
 			throw new \Exception("Empleado no encontrado", 404);
+		}
+		if(!empty($params["post"]["app_password"])){
+			$params["post"]["app_password"] = md5($params["post"]["app_password"]);
+		}else{
+			$params["post"]["app_password"]= $employeRes["app_password"];
+		}
+		if(!empty($params["files"]["load_file"])){
+		$fileName = $this->uploadImg($params["files"]["load_file"]);
+			$params["post"]["img_signature"] = $_ENV["SITE_URL"] . "images" . $fileName;
+		}else{
+			$params["post"]["img_signature"] = $employeRes["img_signature"];
 		}
 		if (!$employe->update($params["post"], $employeRes["id"])) {
 			throw new \Exception("No fue posible actualizar el Empleado, verifique la información proporcionada", 500);

@@ -88,7 +88,7 @@ class EmployeModel extends Model{
 		$sql = "INSERT INTO ".self::TABLE." (dni, name, email ,status, dni_type, city_exp, birth_date,
 		address, phone, position, rh, payment_method, bank, account_type, account_number,
 		salary, payment_base, start_date, extra_benefit, type_contract, contract_agreement,
-		eps, cesantias, pension, area, caja_compensacion, arl ) value (
+		eps, cesantias, pension, area, caja_compensacion, arl, app_password, img_signature ) value (
 			'".addslashes($fields["dni"])."', 
 			'".addslashes($fields["name"])."',
 			'".addslashes($fields["email"])."', 
@@ -115,7 +115,9 @@ class EmployeModel extends Model{
 			'".addslashes($fields["pension"])."',
 			'".addslashes($fields["area"])."',
 			'".addslashes($fields["caja_compensacion"])."',
-			'".addslashes($fields["arl"])."'
+			'".addslashes($fields["arl"])."',
+			'".addslashes($fields["app_password"])."',
+			'".addslashes($fields["img_signature"])."' 
 		)";
 		return $this->db->exec($sql);
 	}
@@ -149,7 +151,9 @@ class EmployeModel extends Model{
 			pension = '".addslashes($fields["pension"])."',
 			area = '".addslashes($fields["area"])."',
 			caja_compensacion = '".addslashes($fields["caja_compensacion"])."',
-			arl = '".addslashes($fields["arl"])."'
+			arl = '".addslashes($fields["arl"])."',
+			app_password = '".addslashes($fields["app_password"])."',
+			img_signature = '".addslashes($fields["img_signature"])."' 
 			WHERE id = {$id}"; 
 		return $this->db->exec($sql);
 	}
