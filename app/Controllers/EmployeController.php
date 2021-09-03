@@ -159,7 +159,7 @@ class EmployeController extends Controller
 			header("location:/");
 		}
 		$employeModel = new EmployeModel();
-		$params["post"] = md5($params["post"]["app_password"]);
+		$params["post"]["app_password"] = md5($params["post"]["app_password"]);
 		$fileName = $this->uploadImg($params["files"]["load_file"]);
 		$params["post"]["img_signature"] = $_ENV["SITE_URL"] . "images" . $fileName;
 		if (!$employeModel->create($params["post"])) {
@@ -179,15 +179,15 @@ class EmployeController extends Controller
 		if (empty($employeRes)) {
 			throw new \Exception("Empleado no encontrado", 404);
 		}
-		if(!empty($params["post"]["app_password"])){
+		if (!empty($params["post"]["app_password"])) {
 			$params["post"]["app_password"] = md5($params["post"]["app_password"]);
-		}else{
-			$params["post"]["app_password"]= $employeRes["app_password"];
+		} else {
+			$params["post"]["app_password"] = $employeRes["app_password"];
 		}
-		if(!empty($params["files"]["load_file"])){
-		$fileName = $this->uploadImg($params["files"]["load_file"]);
+		if (!empty($params["files"]["load_file"])) {
+			$fileName = $this->uploadImg($params["files"]["load_file"]);
 			$params["post"]["img_signature"] = $_ENV["SITE_URL"] . "images" . $fileName;
-		}else{
+		} else {
 			$params["post"]["img_signature"] = $employeRes["img_signature"];
 		}
 		if (!$employe->update($params["post"], $employeRes["id"])) {
@@ -634,5 +634,21 @@ class EmployeController extends Controller
 		$carModel = new EmployeCourseModel();
 		$carModel->delete($params["params"][2]);
 		header("location:/employe/details/" . $params["params"][3]);
+	}
+
+	public function loginappAction($params = [])
+	{
+		$employe = new EmployeModel();
+		$user = $employe->findBy([
+			["e.dni", EmployeModel::EQUAL, $params["body"]->username],
+			["e.app_password", EmployeModel::EQUAL, md5($params["body"]->password)],
+			["e.status", EmployeModel::EQUAL, 1],
+		], true);
+		$employee = $user->getReturn();
+		if (!empty($employee)) {
+			return $this->renderJson(["code" => 200, "data" => $employee]);
+		} else {
+			return $this->renderJson(["code" => 404, "error" => "User not found"]);
+		}
 	}
 }

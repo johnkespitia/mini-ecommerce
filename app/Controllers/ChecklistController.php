@@ -206,7 +206,22 @@ class ChecklistController extends Controller
 	public static function menuHook()
 	{
 		$checklistTypes = new ChecklistTypeModel;
-		$list = $checklistTypes->all();
+		$list = $checklistTypes->findBy([
+			["q.status", ChecklistTypeModel::EQUAL, "1"]
+		]);
 		return self::renderHook("checklists/hook/menu", ["list" => $list]);
+	}
+
+	public function getlistAction($params = [])
+	{
+		$checklists = new ChecklistTypeModel();
+		$chlists = $checklists->findBy([
+			["q.status", ChecklistTypeModel::EQUAL, "1"]
+		]);
+		$checkListArray = [];
+		foreach($chlists as $ch){
+			$checkListArray[] = $ch;
+		}
+		return $this->renderJson(["code" => 200, "data" => $checkListArray]);
 	}
 }

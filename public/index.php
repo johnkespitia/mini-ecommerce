@@ -25,7 +25,13 @@ try {
 	if (class_exists($controller)) {
 		$handler = new $controller();
 		if (method_exists($handler, $action)) {
-			echo $handler->$action(["post" => $_POST, "get" => $_GET, "files" => $_FILES, "params" => $url]);
+			echo $handler->$action([
+				"post" => $_POST, 
+				"get" => $_GET, 
+				"files" => $_FILES, 
+				"params" => $url, 
+				"body" => json_decode(file_get_contents('php://input'))
+			]);
 			return;
 		}
 	}

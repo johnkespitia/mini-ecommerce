@@ -75,7 +75,7 @@ class EmployeModel extends Model{
 		LEFT JOIN areas a on e.area = a.id
 		LEFT JOIN cajas_compensacion cc on e.caja_compensacion = cc.id
 		LEFT JOIN arl on e.arl = arl.id
-		'.$this->where($where).' ORDER BY id desc';
+		'.$this->where($where).' ORDER BY e.id desc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;
