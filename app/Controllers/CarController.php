@@ -766,8 +766,7 @@ class CarController extends Controller
 			$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
 			$drawing->setName('Foto Vehiculo');
 			$drawing->setDescription('Foto Vehiculo');
-			$img = $_ENV["STORAGE_IMAGES"]  . "/cars/tmpimages.jpg";
-			file_put_contents($img, file_get_contents($first["url"]));
+			$img=str_replace("https://core.portrans.com.co/images/cars/",$_ENV["STORAGE_IMAGES"]  . "/cars/",$first["url"]);
 			$drawing->setPath($img); // put your path and image here
 			$drawing->setCoordinates('H6');
 			$drawing->setHeight(300);
