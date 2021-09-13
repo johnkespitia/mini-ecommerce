@@ -719,4 +719,106 @@ class CarController extends Controller
 		}
 		return $this->renderHtml("car/loadfile", ["errorMessage" => $errorMessage, "successMessage" => $successMessage]);
 	}
+
+	public function getcarcvAction($params){
+		if (empty($_SESSION["permissions"]["Vehículos"]["Listar"])) {
+			header("location:/");
+		}
+		$carModel = new CarModel();
+		$car = $carModel->find($params["params"][2]);
+		if (empty($car)) {
+			throw new \Exception("Vehículo no encontrado", 404);
+		}
+		$template = $_ENV["STORAGE_FILES"] . "/cars/MAN-FO-001-TEMPLATE.xlsx";
+		$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($template);
+		$spreadsheet->getProperties()
+			->setCreator($_ENV["SITE_NAME"])
+			->setLastModifiedBy($_ENV["SITE_NAME"])
+			->setTitle("Hoja de vida del vehículo {$car['dni']}")
+			->setSubject("Hoja de vida del vehículo {$car['dni']}")
+			->setDescription(
+				"Hoja de vida del vehículo {$car['dni']}"
+			)
+			->setCategory("Vehículos");
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue("C6", $car["type_car"]);
+		$sheet->setCellValue("C7", $car["dni"]);
+		$sheet->setCellValue("C8", $car["modelo"]);
+		$sheet->setCellValue("C9", $car["brand_name"]);
+		$sheet->setCellValue("C10", $car["line_category_name"]);
+		$sheet->setCellValue("C11", $car["color"]);
+		$sheet->setCellValue("C12", $car["service_type_name"]);
+		$sheet->setCellValue("C13", $car["fuel_type"]);
+		$sheet->setCellValue("C14", $car["no_engine"]);
+		$sheet->setCellValue("C15", $car["no_chasis"]);
+		$sheet->setCellValue("C16", $car["no_serie"]);
+		$sheet->setCellValue("C17", $car["owner_name"]);
+		$sheet->setCellValue("C18", $car["owner_id"]);
+		$sheet->setCellValue("C19", $car["tn_charge"]);
+		$sheet->setCellValue("C20", $car["date_license"]);
+		//$sheet->setCellValue("C21", $car[""]);
+		$carImageModel = new CarImageModel();
+		$images = $carImageModel->findBy([
+			["car", CarImageModel::EQUAL, $car["id"]]
+		]);
+		if(!empty($images)){
+			$first = $images->current();
+			$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+			$drawing->setName('Foto Vehiculo');
+			$drawing->setDescription('Foto Vehiculo');
+			$img = $_ENV["STORAGE_IMAGES"]  . "/cars/tmpimages.jpg";
+			file_put_contents($img, file_get_contents($first["url"]));
+			$drawing->setPath($img); // put your path and image here
+			$drawing->setCoordinates('H6');
+			$drawing->setHeight(300);
+			$drawing->setWorksheet($spreadsheet->getActiveSheet());
+		}
+		$carDocuments = new DocumentModel();
+		$documents = $carDocuments->findBy([
+			["car", CarImageModel::EQUAL, $car["id"]]
+		]);
+		if(!empty($documents)){
+			foreach ($documents as $doc) {
+				switch($doc["document_type"]){
+					case 3: //soat
+						$sheet->setCellValue("J24", $doc["date_expiration"]);
+						break;
+					case 4: //tecnico mecanica
+						$sheet->setCellValue("J25", $doc["date_expiration"]);
+						break;
+					case 9: //exraconractual
+						$sheet->setCellValue("J26", $doc["date_expiration"]);
+						break;
+					case 5: //contractual 
+						$sheet->setCellValue("J27", $doc["date_expiration"]);
+						break;
+					case 8: //todo riesgo 
+						$sheet->setCellValue("J28", $doc["date_expiration"]);
+						break;
+				}	
+			}
+		}
+
+		$carMaintaince = new MaintainceCarModel();
+		$maintainces = $carMaintaince->findBy([
+			["car", CarImageModel::EQUAL, $car["id"]]
+		]);
+		
+		foreach ($maintainces as $k => $m) {
+			$line = $k + 33;
+			$sheet->setCellValue("A{$line}", $m["date_maintaince"]);
+			$sheet->setCellValue("B{$line}", $m["provider"]);
+			$sheet->setCellValue("D{$line}", "");
+			$sheet->setCellValue("E{$line}", $m["type_maintance"]);
+			$sheet->setCellValue("F{$line}", $m["observations"]);
+			$sheet->setCellValue("H{$line}", "");
+			$sheet->setCellValue("I{$line}", "");
+			$sheet->setCellValue("K{$line}", $m["cost"]);
+		}
+
+		$writer = new Xlsx($spreadsheet);
+		$filePath = $_ENV["STORAGE_FILES"] . "/cars/hv/hv-{$car['dni']}.xlsx";
+		$writer->save($filePath);
+		header("location:/files/cars/hv/hv-{$car['dni']}.xlsx");
+	}
 }

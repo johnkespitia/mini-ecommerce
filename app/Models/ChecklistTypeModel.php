@@ -17,7 +17,7 @@ class ChecklistTypeModel extends Model{
 	public function findBy($where, $singleRow = false){
 		$sql = 'SELECT q.* FROM '.self::TABLE.' q '
 		.$this->where($where).' 
-		ORDER BY q.id desc';
+		ORDER BY q.id asc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;

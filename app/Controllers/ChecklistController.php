@@ -219,7 +219,39 @@ class ChecklistController extends Controller
 			["q.status", ChecklistTypeModel::EQUAL, "1"]
 		]);
 		$checkListArray = [];
-		foreach($chlists as $ch){
+		foreach ($chlists as $ch) {
+			$checkListArray[] = $ch;
+		}
+		return $this->renderJson(["code" => 200, "data" => $checkListArray]);
+	}
+
+	public function getlistsectionAction($params = [])
+	{
+		$checklists = new ChecklistTemplateModel();
+		$checklistQuestionModel = new ChecklistQuestionModel();
+		$checklistOptionModel = new ChecklistQuestionOptionModel();
+		$chlists = $checklists->findBy([
+			["c1.status", ChecklistTemplateModel::EQUAL, "1"],
+			["c1.checklist_type", ChecklistTemplateModel::EQUAL, $params["params"][2]],
+		]);
+		$checkListArray = [];
+		foreach ($chlists as $ch) {
+			$ch["questions"] = [];
+			$questions = $checklistQuestionModel->findBy([
+				["q.checklist_template_id", ChecklistQuestionModel::EQUAL, $ch["id"]],
+			]);
+			foreach ($questions as $qt) {
+				if($qt["question_type_id"] == 4 ){
+					$options=$checklistOptionModel->findBy([
+						["question_id", ChecklistQuestionOptionModel::EQUAL, $qt["id"]],
+					]);
+					$qt["options"] = [];
+					foreach ($options as $op) {
+						$qt["options"][]=$op;
+					}
+				}
+				$ch["questions"][]=$qt;
+			}
 			$checkListArray[] = $ch;
 		}
 		return $this->renderJson(["code" => 200, "data" => $checkListArray]);

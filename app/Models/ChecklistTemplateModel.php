@@ -27,7 +27,7 @@ class ChecklistTemplateModel extends Model{
 		inner join checklist_type ct
 		on ct.id = c1.checklist_type
 		'.$this->where($where).' 
-		ORDER BY c1.id asc';
+		ORDER BY c1.parent asc, c1.id asc';
 		foreach ($this->db->query($sql) as $row) {
 			if($singleRow)
 				return $row;
