@@ -56,6 +56,7 @@
           <th>Tanque lleno?</th>
           <th>Valor</th>
           <th>Observaciones</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -73,8 +74,15 @@
             <td><a href="<?= $cust["image"] ?>" target="_blank"><?= $cust["ticket"] ?></a></td>
             <td><?= $cust["vale"] ?></td>
             <td><?= $cust["full"] == 1 ? "<span class='badge bg-success text-dark'>Lleno</span>" : "<span class='badge bg-danger text-dark'>No</span>" ?></td>
-            <td>$ <?= number_format($cust["value"], 0, ",",'.') ?></td>
+            <td>$ <?= number_format($cust["value"], 0, ",", '.') ?></td>
             <td><?= $cust["observations"] ?></td>
+            <td><?php
+                if (!empty($_SESSION["permissions"]["Combustible"]["Editar"]) && $_SESSION["permissions"]["Combustible"]["Editar"] == 1) { ?>
+                <a href='/fuel/delete/<?= $cust["id"] ?>' class='btn btn-sm btn-danger'>Eliminar</a>
+              <?php
+                }
+              ?>
+            </td>
           </tr>
         <?php
         }

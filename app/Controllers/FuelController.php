@@ -61,6 +61,16 @@ class FuelController extends Controller
 		return $this->renderHtml("fuel/new", []);
 	}
 
+	public function deleteAction($params = [])
+	{
+		if (empty($_SESSION["permissions"]["Combustible"]["Editar"])) {
+			header("location:/");
+		}
+		$FuelCarModel = new FuelCarModel();
+		$FuelCarModel->delete($params["params"][2]);
+		header("location:/fuel/");
+	}
+
 	public function storeAction($params = [])
 	{
 		if (empty($_SESSION["permissions"]["Combustible"]["Crear"])) {
@@ -70,7 +80,7 @@ class FuelController extends Controller
 		if (!$FuelCarModel->create($params["post"])) {
 			throw new \Exception("No fue posible crear el empleado, verifique la información proporcionada", 500);
 		} else {
-			header("location:/employe/");
+			header("location:/fuel/");
 		}
 	}
 

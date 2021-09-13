@@ -22,6 +22,7 @@ $cust = $planilla->getReturn();
           <a href="/car/edit/<?= $car["id"] ?>" class="btn btn-neutral">Editar Vehículo</a>
           <a href="/car/notifications/<?= $car["id"] ?>" class="btn btn-warning">Administrar Notificaciones</a>
         <?php } ?>
+          <a href="/car/getcarcv/<?= $car["id"] ?>" class="btn btn-success">Descargar Hoja de Vida</a>
       </div>
     </div>
   </div>

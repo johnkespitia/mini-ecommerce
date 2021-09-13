@@ -68,4 +68,9 @@ class FuelCarModel extends Model{
 			WHERE id = {$id}";
 		return $this->db->exec($sql);
 	}
+	
+	public function delete($id){
+		$sql = "DELETE FROM ".self::TABLE." WHERE id = {$id}";
+		return $this->db->exec($sql);
+	}
 }
