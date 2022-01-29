@@ -16,6 +16,7 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/themes/<?= $_ENV["THEME"] ?>/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="/themes/<?= $_ENV["THEME"] ?>/assets/css/custom.css" type="text/css">
   <script src="/themes/<?= $_ENV["THEME"] ?>/assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/themes/<?= $_ENV["THEME"] ?>/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/themes/<?= $_ENV["THEME"] ?>/assets/vendor/js-cookie/js.cookie.js"></script>

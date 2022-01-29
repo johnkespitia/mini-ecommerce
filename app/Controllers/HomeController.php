@@ -8,20 +8,9 @@ use Users;
 class HomeController extends Controller{
 	public function indexAction($params = []){
 		if(empty($_SESSION)){
-			return $this->renderHtml("home/index", $params);
+			return $this->renderHtml("home/login", $params);
 		}else{
 			return $this->renderHtml("home/index-logged", $params);
-		}
-		
-	}
-
-	public function testemailAction($params = []){
-		if(empty($_SESSION)){
-			return $this->renderHtml("home/index", $params);
-		}else{
-			$mailer = new MailService();
-			$content = $this->renderEmail("mail/test",[]);
-			$mailer->testMail($_ENV["MAILER_USERNAME"],"test mail",$content);
 		}
 		
 	}
@@ -30,8 +19,10 @@ class HomeController extends Controller{
 		if(!empty($_SESSION)){
 			header("location:/");	
 		}
+		print_r($params);
 		if(!empty($params["post"])){
-			$userAuth = $this->_entityManager->findOneBy(array('password' => $params["post"]["password"]));
+			$userAuth = $this->_entityManager->findOneBy(array('password' => md5($params["post"]["password"])));
+
 			print_r($userAuth); die;
 			if(!empty($userAuth)){
 				unset($userAuth["password"]);
